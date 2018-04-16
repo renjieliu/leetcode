@@ -3,12 +3,15 @@ def findComplement(num):
     :type num: int
     :rtype: int
     """
+    output = ""
     b = str(bin(num)).replace("0b", "")
-    b = b.replace("1","a").replace("0","1").replace("a","0")
+    #print(b)
+    for i in range(0, len(b)):
+        output+= str(0) if b[i] == "1" else str(1)
+    #print(output)
+    return int(output, 2)
 
-    return int(b, 2)
-
-print(findComplement(1))
+print(findComplement(0))
 
 
 
