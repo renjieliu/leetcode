@@ -6,14 +6,14 @@ def fairCandySwap(A: 'List[int]', B: 'List[int]'):
     for i in B:
         sum_B += i
 
-    dict = []
-
     for i in A:
-        dict.append(i - (sum_A - sum_B) / 2)
+        t = int(i - (sum_A - sum_B) / 2)
+        if t in B:
+            return [i, t]
 
-    for i in B:
-        if i in dict:
-            return [int(i + ((sum_A - sum_B) / 2)), i]
+#    for i in B:
+#        if i in dict:
+#            return [int(i + ((sum_A - sum_B) / 2)), i]
 
 
 print(fairCandySwap([1, 1], [2, 2]))
