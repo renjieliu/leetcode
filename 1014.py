@@ -3,8 +3,8 @@ def shipWithinDays(weights: 'List[int]', D: int):
     lower = max(weights)
     #the purpose is to find the minimum number between upper and lower that can partition the group < D.
     #use binary search.
-    w =  (upper+lower )//2
-    while lower<upper :
+    w = (upper+lower )//2
+    while lower <= upper :
         curr = 0
         i = 0
         grp_cnt = 0
@@ -23,13 +23,14 @@ def shipWithinDays(weights: 'List[int]', D: int):
         grp_cnt += 1 if curr != 0 else 0
 
         if grp_cnt <= D:
-            upper = w
+            upper = w-1
+            good = w # in case the w does not fit in the last case. the "good" preserve the last working value.
         else:
             lower = w+1
 
         w = (lower+upper)//2
 
-    return w
+    return good
 
 print(shipWithinDays([1,2,3,4,5,6,7,8,9,10], 5)) #15
 print(shipWithinDays([3,2,2,4,1,4] , 3 )) #6
