@@ -1,20 +1,11 @@
 def lengthOfLIS(nums: 'List[int]'):
     if len(nums) in [0,1]:
         return len(nums)
-    long = [None] * len(nums)
-    long[0] = None
-
+    long = [1] * len(nums)
     for i in range(len(nums)):
-        find = 1
-        tempMax = [-99]
-        for j in range(i, -1, -1):
-            if long[j] != None and nums[j]<nums[i]:
-                tempMax.append(long[j]+find)
-
-            elif nums[j]<nums[i]:
-                find+=1
-
-        long[i] =max(find, max(tempMax) )
+        for j in range(i):
+            if nums[j]<nums[i]:
+                long[i] = max( long[j] +1, long[i] )
 
     return max(long)
 
