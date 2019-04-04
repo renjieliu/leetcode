@@ -10,11 +10,9 @@ def majorityElement(nums: 'List[int]'):
     for i in range(len(nums)):
         if nums[i] == c1:
             c1_cnt +=1
-            continue
 
         elif nums[i] ==c2:
             c2_cnt +=1
-            continue
 
         elif c1_cnt==0:
             c1 = nums[i]
