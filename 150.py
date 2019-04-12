@@ -7,9 +7,16 @@ def evalRPN(tokens: 'List[str]'):
             if len(stk) < 2:
                 return 'Error'
             else:
-                a = stk.pop(-2)
-                b = stk.pop(-1)
-                stk.append(int(eval(str(a) + i + str(b))))
+                a = int(stk.pop(-2))
+                b = int(stk.pop(-1))
+                if i =="+":
+                    stk.append(int(a+b))
+                elif i == "-":
+                    stk.append(int(a - b))
+                elif i == "*":
+                    stk.append(int(a * b))
+                elif i == "/":
+                    stk.append(int(a / b))
 
     return int(stk[-1])
 
