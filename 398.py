@@ -1,17 +1,18 @@
+#reservoir sampling
+
 import random
 class Solution:
     def __init__(self, nums: 'List[int]'):
-        self.map = {}
-        for i in range(len(nums)):
-            if nums[i] not in self.map:
-                self.map[nums[i]] = []
-            self.map[nums[i]].append(i)
-
+        self.nums = nums
     def pick(self, target: int) -> int:
-        start = 0
-        end = len(self.map[target])-1
-        k = random.randint(start, end)
-        return self.map[target][k]
+        cnt = 0
+        for i in range(len(self.nums)):
+            if self.nums[i] == target:
+                cnt+=1
+                k = random.randint(0, cnt-1)
+                if k==0:
+                    output = i
+        return output
 
 # Your Solution object will be instantiated and called as such:
 obj = Solution([1,2,3,3,3])
