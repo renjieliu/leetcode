@@ -1,17 +1,42 @@
-def twoCitySchedCost(costs: 'List[List[int]]'):
-    costs = sorted(costs, key= lambda x : x[0]- x[1] )
-    output = 0
-    cnt = 0
+def getKeys( hash, targetValue):
+    output = []
+    for k, v in hash.items():
+        if v == targetValue:
+            output.append(k)
+    return output
+
+
+def twoCitySchedCost(costs: 'List[List[int]]') -> int:
+    map = {}
     for i in range(len(costs)):
-        if cnt < len(costs)//2:
-            output += costs[i][0]
-        else:
-            output +=costs[i][1]
-        cnt += 1
-    return  output
+        map[i] = costs[i][0] - costs[i][1]
 
+    val = sorted(set(map.values()))
+    cnt = 0
+    s = 0
+    for i in val:
+        for k in getKeys(map, i):
+            if cnt < len(costs) // 2:
+                s += costs[k][0]
+            else:
+                s += costs[k][1]
+            cnt += 1
+    return s
 
+#Below Code also works, in a more elegant way.
 
+# def twoCitySchedCost(costs: 'List[List[int]]'):
+#     costs = sorted(costs, key= lambda x : x[0]- x[1] )
+#     output = 0
+#     cnt = 0
+#     for i in range(len(costs)):
+#         if cnt < len(costs)//2:
+#             output += costs[i][0]
+#         else:
+#             output +=costs[i][1]
+#         cnt += 1
+#     return  output
+#
 
 
 
