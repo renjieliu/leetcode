@@ -4,14 +4,12 @@ class MyCalendarTwo:
         self.cal = []
 
     def book(self, start: int, end: int) -> bool:
-
         if len(self.cal) < 2:
             self.cal.append([start, end - 1])
             self.cal.sort()
             return True
 
         else:
-
             self.cal.append([start, end - 1])
             self.cal.sort()
             pos = self.cal.index([start, end - 1])
@@ -26,7 +24,10 @@ class MyCalendarTwo:
                 if self.cal[i][1] <= end - 1:
                     scan.append(self.cal[i][1])
 
-            scan = sorted(list(set(scan)))
+                if self.cal[i][0] > end - 1:
+                    break
+
+            # scan = sorted(list(set(scan)))
 
             for s in scan:
                 cnt = 0
@@ -41,9 +42,5 @@ class MyCalendarTwo:
             return True
 
 # Your MyCalendarTwo object will be instantiated and called as such:
-obj = MyCalendarTwo()
-print(obj.book(26,35))
-print(obj.book(26,32))
-print(obj.book(25,32))
-
-
+# obj = MyCalendarTwo()
+# param_1 = obj.book(start,end)
