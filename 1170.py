@@ -17,14 +17,19 @@ def numSmallerByFrequency(queries: 'List[str]', words: 'List[str]'):
         t1.append(f(i))
     for i in words:
         t2.append(f(i))
-
+    t2.sort()
+    l = len(t2)
     for i in t1:
         cnt = 0
-        for j in t2:
-            if j > i:
-                cnt+=1
+        find =0
+        for j in range(l):
+            if t2[j] > i:
+                output.append(l-j)
+                find =1
+                break
 
-        output.append(cnt)
+        if find == 0:
+            output.append(cnt)
 
     return output
 
