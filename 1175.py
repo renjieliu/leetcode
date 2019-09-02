@@ -1,9 +1,11 @@
 def numPrimeArrangements(n: int):
-    def fact(n):
-        output = 1
-        for i in range(1, n+1):
-            output *= i
-        return output
+    fact = lambda n: (n*fact(n-1)) if (n > 1) else (1 if n<=1 else n )
+
+    # def fact(n):
+    #     output = 1
+    #     for i in range(1, n+1):
+    #         output *= i
+    #     return output
 
     def primeCnt(n):
         if n <=1:
