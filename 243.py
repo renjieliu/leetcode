@@ -8,7 +8,10 @@ class Solution:
             hmp[words[i]].append(i)
             i += 1
         output = float('inf')
-        for x in hmp[word1]:
-            for y in hmp[word2]:
-                output = min(output, abs(x - y))
+        while hmp[word1] and hmp[word2]:
+            output = min(output, abs(hmp[word1][0] - hmp[word2][0]))
+            if hmp[word1][0] < hmp[word2][0]:
+                hmp[word1].pop(0)
+            else:
+                hmp[word2].pop(0)
         return output
