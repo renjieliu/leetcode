@@ -1,6 +1,6 @@
 class Solution:
     def arrayRankTransform(self, arr: 'List[int]') -> 'List[int]':
-        hmp = {}
+        hmp = {} #used to hold the sorted position of the value
         for a in arr:
             if a not in hmp:
                 hmp[a] = -1
