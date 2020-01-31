@@ -5,8 +5,8 @@ class Solution:
                 return 1
             return 0
 
-        for i in intervals:  # make sure each interval is sorted
-            i.sort()
+        # for i in intervals: #no need to sort? Question raised to Leetcode and discussion board.
+        #     i.sort()
         intervals.sort(key=lambda x: x[0])
         if len(intervals) <= 1:
             return intervals
@@ -25,5 +25,11 @@ class Solution:
                     i += 1
                 j += 1
             return output
+
+
+
+
+
+
 
 
