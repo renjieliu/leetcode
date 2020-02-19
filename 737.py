@@ -1,26 +1,25 @@
 class Solution:
     def areSentencesSimilarTwo(self, words1: 'List[str]', words2: 'List[str]', pairs: 'List[List[str]]') -> bool:
-        def root(curr, hmp):  # this is to find the root of curr in hmp
-            if curr not in hmp:
-                hmp[curr] = curr
-            while hmp[curr] != curr:
-                curr = hmp[curr]
-            return curr
+        def find(a, tree):  # find the root of a in t
+            if a not in tree:
+                tree[a] = a
+                return a
+            while a in tree and tree[a] != a:
+                a = tree[a]
+            return a
 
-        hmp = {}
-        i = 0
-        while i < len(pairs):
-            a = root(pairs[i][0], hmp)
-            b = root(pairs[i][1], hmp)
-            hmp[a] = b
-            i += 1
-
+        tree = {}
+        for a, b in pairs:  # try to link a tree to b tree
+            a1 = find(a, tree)
+            b1 = find(b, tree)
+            tree[a1] = b1
         if len(words1) != len(words2):
             return False
         i = 0
         while i < len(words1):
-            if root(words1[i], hmp) != root(words2[i], hmp):
+            if find(words1[i], tree) != find(words2[i], tree):
                 return False
             i += 1
         return True
+
 
