@@ -1,5 +1,4 @@
 class Solution:
     def sortByBits(self, arr: 'List[int]') -> 'List[int]':
-        arr.sort()
-        arr.sort(key = lambda x: sum(int(_) for _ in list(str(bin(x)).replace('0b','')))) #bin every number, turn to string and and sum
+        arr.sort(key = lambda x: [str(bin(x)).count('1'),x])  #bin every number, turn to string and count 1
         return arr
