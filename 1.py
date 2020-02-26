@@ -1,18 +1,16 @@
-def twoSum(nums, target):
-    """
-    :type nums: List[int]
-    :type target: int
-    :rtype: List[int]
-    """
-    output = []
-    for i in range(0, len(nums)):
-        if target - nums[i] in list(nums) and list(nums).index(target - nums[i]) != i:
-            output.append(i)
-            output.append(list(nums).index(target - nums[i]))
-            break
-
-    return output
-
-
-print(twoSum([2, 7, 11, 15],9))
+class Solution:
+    def twoSum(self, nums: 'List[int]', target: int) -> 'List[int]':
+        hmp = {}
+        i = 0
+        while i < len(nums):
+            if nums[i] not in hmp:
+                hmp[nums[i]] = []
+            hmp[nums[i]].append(i)
+            i += 1
+        for k in hmp.keys():
+            if k * 2 == target:
+                if len(hmp[k]) > 1:
+                    return [hmp[k][0], hmp[k][1]]
+            elif target - k in hmp:
+                return [hmp[target - k][0], hmp[k][0]]
 
