@@ -1,30 +1,17 @@
 class Solution:
     def singleNumber(self, nums: 'List[int]') -> int:
-        if len(nums) < 2: return nums[0]
+        if len(nums) < 2:
+            return nums[0]
         else:
-            curr = nums[0]
             for i in range(1, len(nums)):
-                curr =curr^nums[i]
-            return curr
+                nums[i] = nums[i] ^ nums[i - 1]
+            return nums[-1]
 
-
-
-
-
-# def singleNumber(nums):
-#     """
-#     :type nums: List[int]
-#     :rtype: int
-#     """
-#     dict = {}
-#
-#     for i in nums:
-#         if i not in dict:
-#             dict[i] = 1
-#         else:
-#             dict[i] += 1
-#
-#     for k, v in dict.items():
-#         if v != 2:
-#             return k
-#
+#         hmp = {}
+#         for n in nums:
+#             if n not in hmp :
+#                 hmp[n] =0
+#             hmp[n] +=1
+#         for k, v in hmp.items():
+#             if v ==1 :
+#                 return k
