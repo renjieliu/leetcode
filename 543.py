@@ -7,29 +7,30 @@ class TreeNode:
 
 class Solution:
     def diameterOfBinaryTree(self, root: TreeNode) -> int:
-        def flat(node, pos, curr, output):
+        def compare(c1, c2):
+            A = c1.copy()
+            B = c2.copy()
+            while A and B and A[0] == B[0]:
+                A.pop(0)
+                B.pop(0)
+            return len(A) + len(B)
+
+        def dfs(node, pos, curr, output, ans):
             if node.left == node.right == None:
+                if output:
+                    maxx = -float('inf')
+                    for i in output:
+                        maxx = max(maxx, compare(curr + [pos], i), len(curr + [pos]) - 1)
+                    ans.append(maxx)
                 output.append(curr + [pos])
             else:
-                if node.left != None: flat(node.left, 2 * pos, curr + [pos], output)
-                if node.right != None: flat(node.right, 2 * pos + 1, curr + [pos], output)
+                if node.left:
+                    dfs(node.left, 2 * pos + 1, curr + [pos], output, ans)
+                if node.right:
+                    dfs(node.right, 2 * pos + 2, curr + [pos], output, ans)
 
         if root == None: return 0
         output = []
-        flat(root, 1, [], output)
-        if len(output) == 1: return len(output[0]) - 1
-        ans = 0
-        for i in range(len(output)):
-            for j in range(i + 1, len(output)):
-                curr = output[i].copy()
-                compare = output[j].copy()
-                while curr and compare and curr[0] == compare[
-                    0]:  # remove the common path, the rest is the real path. edges =  left_cnt+1-1 + right_cnt+1-1
-                    curr.pop(0)
-                    compare.pop(0)
-                ans = max(ans, len(curr) + 1 - 1 + len(compare) + 1 - 1, len(output[i]) - 1,
-                          len(output[j]) - 1)  # plus the common node, and the edges is the nodes -1
-                # print(ans, output[i], output[j])
-        return ans
-
-
+        ans = []
+        dfs(root, 0, [], output, ans)
+        return max(ans) if ans else len(output[0]) - 1
