@@ -1,18 +1,18 @@
-def lastStoneWeight(stones: 'List[int]'):
-    S = list(stones.copy())
-    while len(S)>1:
-        S.sort()
-        a = S[-1]
-        b = S[-2]
-        #a >=b
-        S.pop()
-        S.pop()
-        if a==b:
-            pass
-        else:
-            S.append(a-b)
+class Solution:
+    def lastStoneWeight(self, stones: 'List[int]') -> int:
+        stones.sort()
+        if len(stones) == 1: return stones[0]
+        while stones:
+            if stones[-2] == stones[-1]:
+                stones = stones[:-2]
+            else:
+                i = 0
+                while i < len(stones[:-2]):  # find the stone loc after collision
+                    if stones[i] > stones[-1] - stones[-2]:
+                        break
+                    i += 1
+                stones = stones[:i] + [stones[-1] - stones[-2]] + stones[i:-2]
 
-    return S[0] if len(S) >0 else 0
-
-print(lastStoneWeight([2,7,4,1,8,1]))
-print(lastStoneWeight([2,2]))
+            if len(stones) == 1:
+                return stones[0]
+        return 0
