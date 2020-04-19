@@ -13,7 +13,7 @@ class Solution:
             output = firstLetter
             k = k - (k // each) * each
             n -= 1
-            while n > 0:
+            while n > 0:  # same idea as the first letter, to get the follow letters
                 currTotal = 2 ** n
                 each = currTotal // 2
                 segment = ceiling(k / each)
