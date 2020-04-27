@@ -7,7 +7,7 @@ Reason:
 The question is asked during a inteview with a financial institution. It's a good interview question, and it can have multiple follow up questions.
 
 Description:
-"Common Pair" is two numbers appear in the same draw more than once.
+"Common Pair" is two numbers appear in more than one draw.
 
 We have 5 unique numbers for each draw, write a query to return all the Common Pairs in the draw history, along with the occurance. 
 
