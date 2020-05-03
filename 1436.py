@@ -4,4 +4,4 @@ class Solution:
         for p in paths:
             f.add(p[0])
             t.add(p[1])
-        return list(t-f)[0]
+        return (t-f).pop()
