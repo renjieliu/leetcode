@@ -5,16 +5,15 @@ class ListNode:
         self.next = next
 class Solution:
     def removeElements(self, head: ListNode, val: int) -> ListNode:
-        stk = []
+        while head and head.val == val:
+            head = head.next
+        if head == None: return None
+        start = ListNode(head.val)
+        node = start
+        head = head.next
         while head:
             if head.val != val:
-                stk.append(head.val)
-            head = head.next
-        if stk == []:return None
-        else:
-            start = ListNode(stk.pop(0))
-            node = start
-            while stk:
-                node.next = ListNode(stk.pop(0))
+                node.next = ListNode(head.val)
                 node = node.next
-            return start
+            head = head.next
+        return start
