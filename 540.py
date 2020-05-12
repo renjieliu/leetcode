@@ -7,8 +7,8 @@ class Solution:
             if (mid < len(nums)-1 and mid%2 == 0 and nums[mid+1] == nums[mid]) or ( mid > 0 and mid%2 == 1 and nums[mid] == nums[mid-1]): # this is the good part, the problem is on the right
                 s = mid+1
             else:
-                e = mid-1
-        return nums[s]
+                e = mid-1 # omit the possible candidate, if nothing on the left works,then final s or e+1 is the possible candidate.
+        return nums[s] # same as return num[e+1]
 
 
 
