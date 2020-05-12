@@ -1,10 +1,27 @@
 class Solution:
     def singleNonDuplicate(self, nums: 'List[int]') -> int:
-        curr = nums[0]
-        for i in range(1, len(nums)):
-            curr ^= nums[i]
-        return curr
+        s = 0
+        e = len(nums)-1
+        while s<=e :
+            mid = (s+e)//2
+            if (mid < len(nums)-1 and mid%2 == 0 and nums[mid+1] == nums[mid]) or ( mid > 0 and mid%2 == 1 and nums[mid] == nums[mid-1]): # this is the good part, the problem is on the right
+                s = mid+1
+            else:
+                e = mid-1
+        return nums[s]
 
+
+
+
+
+# OLD Solution with O(n)
+# class Solution:
+#     def singleNonDuplicate(self, nums: 'List[int]') -> int:
+#         curr = nums[0]
+#         for i in range(1, len(nums)):
+#             curr ^= nums[i]
+#         return curr
+#
 
 
 #OLD Solution - O(n), T(n)
