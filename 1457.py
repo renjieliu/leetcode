@@ -4,9 +4,10 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+
 class Solution:
     def pseudoPalindromicPaths(self, root: TreeNode) -> int:
-        def isPalin(arr):
+        def isPalin(arr):  # at most, 1 odd occurrence can happen, otherwise, it cannot be a palindrome
             hmp = {}
             for a in arr:
                 if a not in hmp:
