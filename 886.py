@@ -10,18 +10,19 @@ class Solution:
 
         pool = {}
 
-        def dfs(node, c):
+        def dfs(hmp, pool, node, level):
             if node in pool:
-                return pool[node] == c
-            pool[node] = c
+                return pool[node] == level
+            pool[node] = level
             if node in hmp:
                 for x in hmp[node]:
-                    if dfs(x, c ^ 1) == False:
+                    if dfs(hmp, pool, x, (level + 1) % 2) == False:
                         return False
             return True
 
-        for node in range(1, N + 1):
-            if node not in pool:
-                if dfs(node, 0) == False:
+        for i in range(1, N + 1):
+            if i not in pool:
+                if dfs(hmp, pool, i, 0) == False:
                     return False
         return True
+
