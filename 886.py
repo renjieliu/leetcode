@@ -1,28 +1,28 @@
 class Solution:
     def possibleBipartition(self, N: int, dislikes: 'List[List[int]]') -> bool:
-        if dislikes == []: return True
         hmp = {}
-        for a, b in dislikes:  # build hmp for fast lookup
-            if a not in hmp: hmp[a] = []
-            if b not in hmp: hmp[b] = []
-            hmp[a].append(b)
-            hmp[b].append(a)
+        for d in dislikes:
+            if d[0] not in hmp: hmp[d[0]] = []
+            if d[1] not in hmp: hmp[d[1]] = []
+            hmp[d[0]].append(d[1])
+            hmp[d[1]].append(d[0])
 
-        pool = {}
+        placed = {}
 
-        def dfs(hmp, pool, node, level):
-            if node in pool:
-                return pool[node] == level
-            pool[node] = level
-            if node in hmp:
-                for x in hmp[node]:
-                    if dfs(hmp, pool, x, (level + 1) % 2) == False:
-                        return False
-            return True
+        def dfs(placed, hmp, n, level):
+            if n in placed:
+                return level == placed[n]  # to check if it's in the right place
+            else:
+                placed[n] = level
+                if n in hmp:
+                    for c in hmp[n]:
+                        if dfs(placed, hmp, c, level ^ 1) == False:
+                            return False
+                return True
 
         for i in range(1, N + 1):
-            if i not in pool:
-                if dfs(hmp, pool, i, 0) == False:
+            if i not in placed:  # has not placed yet.
+                if dfs(placed, hmp, i, 0) == False:
                     return False
         return True
 
