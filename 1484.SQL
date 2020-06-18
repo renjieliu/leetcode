@@ -66,6 +66,7 @@ insert into Activities (sell_date, product) values ('2020-06-02', 'Mask')
 insert into Activities (sell_date, product) values ('2020-05-30', 'T-Shirt')
 
 /* Write your T-SQL query statement below */
+--Approach 1
 select
 sell_date
 , num_sold = count(product)
@@ -73,4 +74,23 @@ sell_date
 from 
 (select distinct sell_date, product from Activities) t
 group by sell_date
-order by sell_date, num_sold desc
+order by sell_date
+                                                         
+--Approach 2, using XML
+                                                         
+select
+sell_date
+, num_sold = count(distinct product)
+, products =left(
+				(select distinct product + ',' from Activities A2 where A1.sell_date = A2.sell_date order by 1  for xml path ('')) 
+				,
+				len((select distinct product + ',' from Activities A2 where A1.sell_date = A2.sell_date order by 1  for xml path (''))) -1
+			    )
+from Activities A1
+group by sell_date
+order by sell_date
+                                                         
+                                                         
+                                                         
+                                                         
+                                                         
