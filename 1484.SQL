@@ -89,8 +89,19 @@ sell_date
 from Activities A1
 group by sell_date
 order by sell_date
-                                                         
-                                                         
-                                                         
-                                                         
-                                                         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
