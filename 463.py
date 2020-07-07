@@ -1,24 +1,18 @@
-def islandPerimeter(grid):
-    """
-    :type grid: List[List[int]]
-    :rtype: int
-    """
-    sum = 0
-    for i in range(0, len(grid)): # i is line, j is row
-        for j in range(0, len(grid[i])):
-            sum+=grid[i][j]*4
-            if i>0 and grid[i-1][j]==1 and grid[i][j] ==1:
-                sum-=2
-            if j>0 and grid[i][j-1]==1 and grid[i][j] ==1:
-                sum-=2
+class Solution:
+    def islandPerimeter(self, grid: 'List[List[int]]') -> int:
+        deduction = 0
+        total = 0
+        for r in range(len(grid)):
+            for c in range(len(grid[0])):
+                if grid[r][c] == 1:
+                    total += 4
+                    if r == 0:
+                        if c > 0 and grid[r][c - 1] == 1:  # prev col
+                            deduction += 2  # 2 edges are elimiated
+                    else:
+                        if grid[r - 1][c] == 1:  # prev row
+                            deduction += 2
+                        if c > 0 and grid[r][c - 1] == 1:  # prev col
+                            deduction += 2
+        return total - deduction
 
-    return sum
-
-
-
-
-print(islandPerimeter([[0,1,0,0],
-                       [1,1,1,0],
-                       [0,1,0,0],
-                       [1,1,0,0]]
-                    ))
