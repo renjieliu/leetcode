@@ -27,39 +27,22 @@ class Solution:
                 if node.next:
                     dfs(node.next, output)
 
-        if head == None:
-            return None
+        if head == None :return None
         else:
             output = []
             dfs(head, output)
             if len(output) == 1:
                 return Node(output[0], None, None, None)
-            start = Node(output[0], None, None)
+            start = Node(output[0], None , None)
             old = start
             node = start.next
-            output.pop(0)
-            while output:  # Node(val, prev, next, child)
-                node = Node(output[0], old, None, None)
+            output.pop(0) #take out the first node
+            while output: #Node(val, prev, next, child)
+                node = Node(output[0], old, None, None) #prev node would be the old node
                 old.next = node
                 old = node
-                node = node.next
+                node = node.next #make next as the curr node
                 output.pop(0)
             return start
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
