@@ -1,46 +1,20 @@
-def addBinary(a, b):
-    """
-    :type a: str
-    :type b: str
-    :rtype: str
-    """
-    output = ""
-    reg = 0
-
-    n1 = a if len(a) >= len(b) else b
-    n2 = a if len(a) < len(b) else b
-
-    n2 = str(0) * (len(n1) - len(n2)) + n2
-
-    for i in range(len(n2)-1, -1, -1):
-        if int(n2[i]) + int(n1[i]) + int(reg) > 1:
-            output = str( ( int(n2[i]) + int(n1[i]) + int(reg) ) %2) + output
-            reg = 1
-
+class Solution:
+    def addBinary(self, a: str, b: str) -> str:
+        pad = len(a) - len(b)
+        if pad < 0:
+            a = '0' * abs(pad) + a
         else:
-            output = str( int(n2[i]) + int(n1[i]) + int(reg) ) + output
-            reg = 0
+            b = '0' * abs(pad) + b
+        carry = 0
+        output = ''
+        for i in range(len(b) - 1, -1, -1):
+            curr = int(a[i]) + int(b[i]) + carry
+            # print(curr,int(a[i]) ,  int(b[i]) )
+            if curr >= 2:
+                carry = 1
+                output = str(curr % 2) + output
+            else:
+                carry = 0
+                output = str(curr) + output
 
-    return str(reg) + output if reg==1 else output
-
-print(addBinary("1","11"))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return output if carry == 0 else '1' + output
