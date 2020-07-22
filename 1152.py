@@ -47,3 +47,30 @@ class Solution:
         return list(output)
 
 
+#using SQL approach
+# create table visit(users varchar(10), time real, website varchar(2000))
+
+# truncate table visit
+
+# insert into visit values
+# ('joe', 1, 'home'),
+# ('joe', 2, 'about'),
+# ('joe', 3, 'career'),
+# ('james', 4, 'home'),
+# ('james', 5, 'cart'),
+# ('james', 6, 'maps'),
+# ('james', 7, 'home'),
+# ('mary', 8, 'home'),
+# ('mary', 9, 'about'),
+# ('mary', 10, 'career')
+
+
+# select top 1
+# v1.website + '-' + v2.website + '-' + v3.website, count(distinct v1.users)
+# from visit v1 
+# inner join visit v2 on v1.users = v2.users and v2.time > v1.time
+# inner join visit v3 on v2.users = v3.users and v3.time > v2.time
+# group by 
+# v1.website + '-' + v2.website + '-' +  v3.website
+# order by 2 desc , 1
+    
