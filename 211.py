@@ -13,32 +13,32 @@ class WordDictionary:
         if word[0] not in self.trie:
             self.trie[word[0]] = {}
         curr = self.trie[word[0]]
-        for i in range(1, len(word)):
-            if word[i] not in curr:
-                curr[word[i]] = {}
-            curr = curr[word[i]]
-        curr[0] = None  # end of a path
+        for c in word[1:]:
+            if c not in curr:
+                curr[c] = {}
+            curr = curr[c]
+        curr['$'] = None
 
-    def helper(self, curr, trie):
-        if trie == None:
-            return False
-        elif curr == "":
-            return 0 in trie
-        local_trie = trie
-        for i in range(len(curr)):
-            c = curr[i]
-            if c != ".":
-                if c not in local_trie:
+    def helper(self, word, hmp):
+        if len(word) == 0:
+            return True if '$' in hmp else False
+
+        i = 0
+        while i < len(word):
+            if word[i] in hmp:
+                hmp = hmp[word[i]]
+                i += 1
+                if i == len(word):
+                    return True if '$' in hmp else False
+
+            else:
+                if word[i] == ".":
+                    for h in hmp.values():
+                        if h != None and self.helper(word[i + 1:], h) == True:
+                            return True
                     return False
                 else:
-                    local_trie = local_trie[c]
-            elif c == ".":  # to test each key
-                if local_trie == None: return False
-                for k in local_trie.keys():
-                    if self.helper(curr[i + 1:], local_trie[k]) == True:
-                        return True
-                return False
-        return 0 in local_trie
+                    return False
 
     def search(self, word: str) -> bool:
         """
