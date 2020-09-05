@@ -1,24 +1,21 @@
 # Definition for a binary tree node.
 class TreeNode:
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
-
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 class Solution:
     def getAllElements(self, root1: TreeNode, root2: TreeNode) -> 'List[int]':
-        def flat(output, node):
-            if node:
-                if node.left == node.right ==None:
-                    output.append(node.val)
-                else:
-                    output.append(node.val)
-                    if node.left != None:
-                        flat(output, node.left)
-                    if node.right != None:
-                        flat(output, node.right)
-        output_1  = []
-        output_2  = []
-        flat(output_1, root1)
-        flat(output_2, root2)
-        return sorted(output_1+output_2)
+        def dfs(output, node):
+            if node.left == node.right == None:
+                output.append(node.val)
+            else:
+                output.append(node.val)
+                if node.left: dfs(output, node.left)
+                if node.right: dfs(output, node.right)
+
+        output = []
+        for r in (root1, root2):
+            if r: dfs(output, r)
+
+        return sorted(list(output))
