@@ -1,34 +1,27 @@
-def wordPattern(pattern, str):
-    """
-    :type pattern: str
-    :type str: str
-    :rtype: bool
-
-    pattern = "abba", str = "dog cat cat dog" should return true.
-    pattern = "abba", str = "dog cat cat fish" should return false.
-    pattern = "aaaa", str = "dog cat cat dog" should return false.
-    pattern = "abba", str = "dog dog dog dog" should return false.
-
-    """
-    words =  str.split(" ")
-    map= {}
-
-    if len(words) != len(pattern) or len(set(list(pattern))) != len(set(str.split(" "))):
-        return False
-
-    else:
-        for i in range(0, len(pattern)):
-            if pattern[i] not in map:
-                map[pattern[i]] = words[i]
-            else:
-                if map[pattern[i]] != words[i]:
-                    return False
-        return True
-
-print(wordPattern("abba", "dog cat cat dog"))
-print(wordPattern("abba", "dog cat cat fish"))
-print(wordPattern("aaaa", "dog cat cat dog"))
-print(wordPattern("abba", "dog dog dog dog"))
-
-
+class Solution:
+    def wordPattern(self, pattern: str, str: str) -> bool:
+        pattern = list(pattern)
+        arr = str.split(' ')
+        if len(pattern) != len(arr):
+            return False
+        else:
+            hmp_p = {}
+            hmp_a = {}
+            for i, p in enumerate(pattern):
+                # print(hmp_p, hmp_a)
+                if p not in hmp_p:
+                    if arr[i] not in hmp_a:
+                        hmp_p[p] = arr[i]
+                        hmp_a[arr[i]] = p
+                    else:
+                        if hmp_a[arr[i]] != p:
+                            return False
+                        else:
+                            continue
+                else:
+                    if hmp_p[p] != arr[i]:
+                        return False
+                    else:
+                        continue
+            return True
 
