@@ -1,40 +1,16 @@
-def compareVersion(version1: str, version2: str) -> int:
-    arr_1 = version1.split(".")
-    arr_2 = version2.split(".")
-    diff = abs(len(arr_1) - len(arr_2))
-    if len(arr_1)<len(arr_2):
-        j = 0
-        while j<diff:
-            arr_1.append("0")
-            j+=1
-    else:
-        arr_2.append(0*diff)
-        j = 0
-        while j<diff:
-            arr_2.append("0")
-            j+=1
-
-    e_cnt = 0
-    for i in range(len(arr_1)):
-        if int(arr_1[i]) > int(arr_2[i]):
-            return 1
-
-        elif int(arr_1[i]) <int(arr_2[i]):
-            return -1
-
-        elif int(arr_1[i]) == int(arr_2[i]):
-            e_cnt +=1
-
-    if e_cnt == len(arr_1):
+class Solution:
+    def compareVersion(self, version1: str, version2: str) -> int:
+        v1 = version1.split('.')
+        v2 = version2.split('.')
+        if v1 < v2:
+            v1+=[0] * (len(v2) - len(v1))
+        else:
+            v2+=[0] * (len(v1) - len(v2))
+        while v1 and v2:
+            x = int(v1.pop(0))
+            y = int(v2.pop(0))
+            if x < y :
+                return -1
+            elif x > y :
+                return 1
         return 0
-
-    return 1
-
-print(compareVersion("0.1", "1.1"))
-print(compareVersion("1.0.1", "1"))
-print(compareVersion("0.1", "1.1"))
-print(compareVersion("1.01", "1.001"))
-print(compareVersion("1.0", "1.0.0"))
-print(compareVersion("1", "1.1"))
-print(compareVersion("1.0", "0.1"))
-
