@@ -1,21 +1,16 @@
 class Solution:
-    def sequentialDigits(self, low: int, high: int) -> List[int]:
-        def construct(digit):
-            output = []
-            for i in range(1, 10-digit+1): #add first digits
-                temp = str(i)
-                for j in range(1, digit): #add remaining digits
-                    temp+= str(int(temp[-1])+1)
-                output.append(int(temp))
-            return output
-                
-        start = len(str(low))
-        end = len(str(high))
-        pool = []
-        for i in range(start, end+1):
-            pool += construct(i)
-        output =[] 
-        for i in pool:
-            if low<=i <=high:
-                output.append(i)
-        return output
+    def sequentialDigits(self, low: int, high: int) -> 'List[int]':
+        def add(curr, high, output):
+            if int(curr) < high:
+                output.append(curr)
+                if int(curr[-1])<9:
+                    curr+= str(int(curr[-1]) + 1)
+                    add(curr, high, output)
+        output = []
+        for i in range(1, 10):
+            add(str(i), high, output)
+        res = []
+        for o in output:
+            if low <= int(o) <= high :
+                res.append(int(o))
+        return sorted(res)
