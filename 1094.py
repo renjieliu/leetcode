@@ -1,40 +1,32 @@
-def carPooling(trips: 'List[List[int]]', capacity: int):
-    #[3, 2, 7], [8, 3, 9] , [3, 7, 9], 11
-    unload = {}
-    for i in trips:
-        if i[2] not in unload:
-            unload[i[2]] = 0
-        unload[i[2]] += i[0]
-    route = sorted(trips,key=lambda x: x[1])
-    # print(route)
-    # print(unload)
-    curr = route[0][0]
-    kick = [route[0][2]]
+class Solution:
+    def carPooling(self, trips: 'List[List[int]]', capacity: int) -> bool:
+        unload = {}
+        for i in trips:  # for eachs stop, record how many people to be unloaded
+            if i[2] not in unload:
+                unload[i[2]] = 0
+            unload[i[2]] += i[0]
+        trips.sort(key=lambda x: x[1])
 
-    for i in range(1,len(route)):
-        temp = []
-        for k in kick:
-            if k <= route[i][1]:
-                curr-=unload[k]
-            else:
-                temp.append(k)
-        kick = temp.copy()
-        curr += route[i][0]
+        curr = trips[0][0]
+        kick = {trips[0][2]}
 
-        #print(curr)
         if curr > capacity:
             return False
+        else:
+            for num, on, off in trips[1:]:
+                temp = set()
+                for k in kick:
+                    if k <= on:  # these people need to get off
+                        curr -= unload[k]
+                    else:  # these people stay put
+                        temp.add(k)
+                kick = temp.copy()
+                curr += num  # pickup current stop
 
-        if route[i][2] not in kick:
-            kick.append(route[i][2])
+                if curr > capacity:
+                    return False
 
+                if off not in kick:
+                    kick.add(off)
 
-    return True
-
-
-print(carPooling(trips = [[2,1,5],[3,3,7]], capacity = 4))
-print(carPooling(trips = [[2,1,5],[3,3,7]], capacity = 5))
-print(carPooling(trips = [[2,1,5],[3,5,7]], capacity = 3))
-print(carPooling(trips = [[3,2,7],[3,7,9],[8,3,9]], capacity = 11))
-print(carPooling(trips = [[8,2,3],[4,1,3],[1,3,6],[8,4,6],[4,4,8]], capacity = 12))
-print(carPooling(trips = [[3,2,8],[4,4,6],[10,8,9]], capacity = 11))
+        return True
