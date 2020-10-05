@@ -1,21 +1,8 @@
-def bitwiseComplement(N: int):
-    t = str(bin(N)).replace('0b','')
-    output  = 0
-    temp = ""
-    for i in t:
-        temp += str(abs(int(i)-1))
-
-    cnt = 0
-    for k in temp[::-1]:
-        output += int(k)*(2**cnt)
-        cnt+=1
-
-    return output
-
-
-
-
-print(bitwiseComplement(7))
-print(bitwiseComplement(5))
-print(bitwiseComplement(10))
-print(bitwiseComplement(0))
+class Solution:
+    def bitwiseComplement(self, N: int) -> int:
+        digits = 0
+        n = N
+        while n > 0: #find the 1111 to be Xor'ed
+            digits +=1
+            n = n >> 1
+        return 1 if N == 0 else N ^ (2**digits-1)
