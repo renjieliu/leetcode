@@ -11,6 +11,6 @@ class Solution:
                 return True
         output = []
         for i in range(len(l)):
-            check = sorted(nums[l[i]: r[i]+1])
+            check = sorted(nums[l[i]: r[i]+1]) #check if the sorted target arr is Arithmetic
             output.append(isArithmetic(check))
         return output
