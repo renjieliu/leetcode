@@ -1,14 +1,14 @@
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', nodes: 'List[TreeNode]') -> 'TreeNode':
         def flat(arr, node, curr, hmp):
-            if node.val in hmp:
+            if node.val in hmp:  # if the node val is in the target, no need to check it's children. if the children are in the target list, the LCA will be the current node itself, else, it will be on another tree.
                 arr.append(curr + [node.val])
             else:
                 if node.left:
@@ -46,12 +46,12 @@ class Solution:
                     findLCA(output, target, node.right)
 
         arr = []
-        hmp = {n.val for n in nodes}
+        hmp = {n.val for n in nodes}  # the target number hashmap, to reduce the lkp time to O(1)
         flat(arr, root, [], hmp)
 
         # print(arr)
 
-        target = sameHead(arr)
+        target = sameHead(arr)  # for all the path,
         output = []
         findLCA(output, target, root)
         return output[0]
