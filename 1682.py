@@ -1,16 +1,20 @@
 class Solution:
     def longestPalindromeSubseq(self, s: str) -> int:
-        hmp = {}
+        dp = {}
 
-        def dp(l, r, prev):
-            if (l, r, prev) in hmp:
-                return hmp[(l, r, prev)]
+        def helper(s, l, r, left, dp):  # the left is the previous letter
+            if (l, r, left) in dp:
+                return dp[(l, r, left)]
             else:
-                if l >= r: return 0
-                if s[l] == s[r] and (s[l] != prev):
-                    return 2 + dp(l + 1, r - 1, s[l])
-                else:  # it's not the same, so either move the right pointer to the left, or the left pointer to the right
-                    hmp[(l, r, prev)] = max(dp(l + 1, r, prev), dp(l, r - 1, prev))
-                    return hmp[(l, r, prev)]
+                if l >= r:
+                    dp[(l, r, left)] = 0
+                else:
+                    if s[l] == s[r] and s[l] != left:
+                        return 2 + helper(s, l + 1, r - 1, s[l], dp)
+                    else:
+                        dp[(l, r, left)] = max(helper(s, l + 1, r, left, dp), helper(s, l, r - 1, left, dp))
 
-        return dp(0, len(s) - 1, '')
+                return dp[(l, r, left)]
+
+        return helper(s, 0, len(s) - 1, '', dp)
+
