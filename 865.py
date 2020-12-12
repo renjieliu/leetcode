@@ -4,55 +4,41 @@ class TreeNode:
         self.val = val
         self.left = left
         self.right = right
+
 class Solution:
     def subtreeWithAllDeepest(self, root: TreeNode) -> TreeNode:
-        def flat(output, node, curr):
+        def flat(path, curr, node):
             if node.left == node.right == None:
-                output.append(curr + [node.val])
+                path.append(curr + [node.val])
             else:
-                if node.left: flat(output, node.left, curr + [node.val])
-                if node.right: flat(output, node.right, curr + [node.val])
+                if node.left: flat(path, curr + [node.val], node.left)
+                if node.right: flat(path, curr + [node.val], node.right)
 
-        output = []
-        flat(output, root, [])
-        layer = max(map(lambda x: len(x), output))
-        arr = [_ for _ in output if len(_) == layer]
-        if len(arr) == 1:  # only one deepest node
-            v = arr[-1][-1]
-        else:
-            v = arr[0][0]  # find the common ancestor
-            loop = 1
-            commonPath = []
-            while loop == 1:
-                cnt = 0
-                base = arr[0][0]
-                for a in arr:
-                    if a.pop(0) == base:  # the head value should be same for all the path
-                        cnt += 1
-                if cnt == len(arr):
-                    v = base
-                else:
-                    loop = 0
+        path = []
+        flat(path, [], root)
+        maxLevel = max([len(p) for p in path])
+        arr = [p for p in path if len(p) == maxLevel]
+        target = arr[0][0]
+        while arr[0]:
+            curr = arr[0][0]
+            lkp = set()
+            for a in arr:
+                lkp.add(a.pop(0))
+            if len(lkp) == 1:
+                target = curr
+            else:
+                break
 
-        def find(target, ans, node):
+        def findTarget(target, node, output):
             if node.val == target:
-                ans.append(node)
+                output[0] = node
             else:
-                if node.left:
-                    find(target, ans, node.left)
-                if node.right:
-                    find(target, ans, node.right)
+                if node.left: findTarget(target, node.left, output)
+                if node.right: findTarget(target, node.right, output)
 
-        ans = []
-        find(v, ans, root)
-        return ans[0]
-
-
-
-
-
-
-
+        output = [None]
+        findTarget(target, root, output)
+        return output[0]
 
 
 
