@@ -7,7 +7,7 @@ The question was asked by a leading retailer. I think reflects real business sce
 
 Description:
 
-Assuming today's date is Dec-1, 2020, find the largest window between visits for each customer.
+Assuming today's date is Dec-1, 2020, find the largest window between each visit for each customer in the visits table
 
 Order the result by userid.
 
