@@ -8,7 +8,7 @@ class Solution:
                 gap = row - r
                 if row - gap >= 0 and col - gap >= 0 and arr[row - gap][col - gap] == 1:  # check the left above diag
                     return 0
-                if row - gap >= 0 and col + gap < n and arr[row - gap][col + gap] == 1:  # check the left above diag
+                if row - gap >= 0 and col + gap < n and arr[row - gap][col + gap] == 1:  # check the right above diag
                     return 0
             return 1
 
