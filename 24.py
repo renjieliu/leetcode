@@ -1,24 +1,24 @@
 # Definition for singly-linked list.
 class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 class Solution:
     def swapPairs(self, head: ListNode) -> ListNode:
-        if head == None: return head
-        node = head
+        if head == None: return None
         arr = []
-        while node:
-            arr.append(node.val)
-            node = node.next
-        for i, c in enumerate(arr):
-            if i % 2 == 1:
-                arr[i - 1], arr[i] = arr[i], arr[i - 1]
-        output = ListNode(arr[0])
-        node = output
-        for i in range(1, len(arr)):
-            node.next = ListNode(arr[i])
-            node = node.next
-        return output
+        cnt = 0
+        while head:
+            arr.append(head.val)
+            if len(arr) % 2 == 0:
+                arr = arr[:-2] + [arr[-1]] + [arr[-2]]
+            head = head.next
+
+        output = ListNode(arr.pop(0))
+        start = output
+        while arr:
+            output.next = ListNode(arr.pop(0))
+            output = output.next
+        return start
+
 
