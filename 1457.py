@@ -7,28 +7,28 @@ class TreeNode:
 
 class Solution:
     def pseudoPalindromicPaths(self, root: TreeNode) -> int:
-        def isPalin(arr):  # at most, 1 odd occurrence can happen, otherwise, it cannot be a palindrome
-            hmp = {}
-            for a in arr:
-                if a not in hmp:
-                    hmp[a] = 0
-                hmp[a] += 1
-            odd = 0
-            for v in hmp.values():
-                if v % 2 != 0:
-                    odd += 1
-            return 1 if odd < 2 else 0
-
-        def flat(node, curr, output):
+        def flat(output, curr, node):
+            if node.val not in curr:
+                curr[node.val] = 0
+            curr[node.val] += 1
             if node.left == node.right == None:
-                output[0] += isPalin(curr + [node.val])
+                odd = 0
+                for k, v in curr.items():
+                    odd += 1 if v % 2 else 0
+                output[0] += 1 if odd <= 1 else 0
             else:
                 if node.left:
-                    flat(node.left, curr + [node.val], output)
+                    flat(output, curr, node.left)
                 if node.right:
-                    flat(node.right, curr + [node.val], output)
+                    flat(output, curr, node.right)
 
-        if root == None: return 0
+            curr[node.val] -= 1
+            if curr[node.val] == 0:
+                del curr[node.val]
+
         output = [0]
-        flat(root, [], output)
+        flat(output, {}, root)
         return output[0]
+
+
+
