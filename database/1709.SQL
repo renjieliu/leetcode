@@ -83,6 +83,7 @@ group by user_id
 order by 1 
 
 
+--previous approach
 
 /* Write your T-SQL query statement below */
 with base as
