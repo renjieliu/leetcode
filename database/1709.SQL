@@ -68,6 +68,22 @@ insert into UserVisits (user_id, visit_date) values ('2', '2020-12-9')
 insert into UserVisits (user_id, visit_date) values ('3', '2020-11-11')
 
 
+
+/* Write your T-SQL query statement below */
+select 
+user_id 
+, biggest_window = max(calc)
+from
+(select 
+user_id
+, calc = datediff(day, visit_date, lead(visit_date,1,'2021-01-01') over(partition by user_id order by visit_date))
+from UserVisits
+) t
+group by user_id
+order by 1 
+
+
+
 /* Write your T-SQL query statement below */
 with base as
 (
