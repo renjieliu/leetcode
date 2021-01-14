@@ -1,45 +1,24 @@
 class Solution:
     def minOperations(self, nums: 'List[int]', x: int) -> int:
-        if sum(nums) < x:
-            return -1
-        A = float('inf')
-        t = x
-        for i, c in enumerate(nums):  # sliding from the left
-            t -= c
-            if t == 0:
-                A = i + 1
-        B = float('inf')
-        t = x
-        for i, c in enumerate(nums[::-1]):  # sliding from the right
-            t -= c
-            if t == 0:
-                B = i + 1
-                # sliding from both side
-        sum_left = [nums[0]]
-        for n in nums[1:]:
-            sum_left.append(sum_left[-1] + n)
-        right = {}
-        curr = 0
-        find = [float('inf')]
-        for i, c in enumerate(nums[::-1]):
-            curr += c
-            right[curr] = i
+        right = {0:len(nums)} # sum and the index
+        output = float('inf')
+        s = 0
+        a = nums[::-1] #check sum from right end
+        for i, n in enumerate(a):
+            s+=a[i]
+            right[s] = len(a)-1-i
 
-        for i, c in enumerate(sum_left):
-            if x - c in right:  # the combination exists
-                action = i + 1 + right[x - c] + 1
-                if action <= len(nums):
-                    find.append(action)
+        output = (len(nums)- right[x]) if x in right else float('inf')
 
-        C = min(find)
-
-        output = min(A, B, C)
-
-        return -1 if output == float('inf') else output
-
-
-
-
+        s = 0
+        for i, n in enumerate(nums): # to see if x-currsum exists on the right side
+            s+=nums[i]
+            if x-s in right:
+                if right[x-s] > i:
+                    leftOperation = i+1
+                    rightOperation= len(nums)-right[x-s]
+                    output = min(output, leftOperation+rightOperation )
+        return output if output!=float('inf') else -1
 
 
 
