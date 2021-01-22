@@ -1,29 +1,22 @@
 class Solution:
     def closeStrings(self, word1: str, word2: str) -> bool:
-        if len(word1) != len(word2):
+        if len(word1)!= len(word2):
             return False
         else:
-            hmp_a = {}
-            hmp_b = {}
-            for i in range(len(word1)):
-                a = word1[i]
-                b = word2[i]
-                if a not in hmp_a:
-                    hmp_a[a] = 0
-                hmp_a[a] += 1
-                if b not in hmp_b:
-                    hmp_b[b] = 0
-                hmp_b[b] += 1
-
-            if len(hmp_a) != len(hmp_b):
+            arr_a = [0]*26 #to hold occurrence of characters
+            arr_b = [0]*26
+            word2 = list(word2)
+            base = ord('a')
+            for i, c in enumerate(word1):
+                arr_a[ord(c)-base ]+=1
+                arr_b[ord(word2[i])-base]+=1
+            if set(arr_a)!=set(arr_b): #the occurrence numbers needs to be same for them to be close
                 return False
             else:
-                a_v = sorted(hmp_a.values())
-                b_v = sorted(hmp_b.values())
-                a_k = sorted(hmp_a.keys())
-                b_k = sorted(hmp_b.keys())
-                return a_k == b_k and a_v == b_v
-
-
-
+                while arr_a and arr_b:
+                    a = arr_a.pop(0)
+                    b = arr_b.pop(0)
+                    if a*b == 0 and a+b != 0: #one of them is zero
+                        return False
+                return True
 
