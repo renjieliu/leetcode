@@ -9,21 +9,34 @@ class Solution:
         s = float('inf')
         move_a = len(a) #total can be moved
         move_b = 0
-        for i in range(97, 97+25): #make a line from a to y, to check how many need to be moved from
-            move_a -= hmp_a[chr(i)]
-            move_b += hmp_b[chr(i)]
+        for pivot in range(97, 97+25): # make every letter of a to the pivot, and to the right of pivot for b
+            move_a -= hmp_a[chr(pivot)]
+            move_b += hmp_b[chr(pivot)]
             s = min(s, move_a + move_b)
 
         move_a = 0
         move_b = len(b) #total can be moved
 
-        for i in range(97, 97+25):
-            move_a += hmp_a[chr(i)]
-            move_b -= hmp_b[chr(i)]
+        for pivot in range(97, 97+25):
+            move_a += hmp_a[chr(pivot)]
+            move_b -= hmp_b[chr(pivot)]
             s = min(s, move_a+move_b)
 
-
         return min(s, change_to_same)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
