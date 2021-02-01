@@ -1,13 +1,23 @@
-def hammingWeight(n):
-    """
-    :type n: int
-    :rtype: int
-    """
-    sum = 0
-    for i in bin(n).replace("0b",""):
-        sum += int(i)
-    return sum
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        cnt = 0
+        while n != 0:
+            if n%2 ==1:
+                cnt +=1
+            n = n >> 1
+        return cnt
 
-print(hammingWeight(11))
-print(hammingWeight(128))
-
+# previous approach
+# def hammingWeight(n):
+#     """
+#     :type n: int
+#     :rtype: int
+#     """
+#     sum = 0
+#     for i in bin(n).replace("0b",""):
+#         sum += int(i)
+#     return sum
+#
+# print(hammingWeight(11))
+# print(hammingWeight(128))
+#
