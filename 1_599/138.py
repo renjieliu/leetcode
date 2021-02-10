@@ -8,18 +8,18 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Node') -> 'Node':
-        def helper(seen, node):
-            if node in seen:
-                return seen[node]
+        def helper(seen, original):
+            if original in seen:
+                return seen[original]
             else:
-                if node == None:
-                    seen[node] = None
-                    return seen[node]
+                if original== None:
+                    seen[original] = original
+                    return seen[original]
                 else:
-                    curr = Node(node.val, None, None)
-                    seen[node] = curr
-                    curr.next = helper(seen, node.next)
-                    curr.random = helper(seen, node.random)
-                    return seen[node]
-        seen = {}
-        return helper(seen, head)
+                    copied = Node(original.val, None, None)
+                    seen[original] = copied
+                    copied.next = helper(seen, original.next)
+                    copied.random = helper(seen, original.random)
+                    return copied
+
+        return helper({}, head)
