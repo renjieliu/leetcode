@@ -1,23 +1,18 @@
 class Solution:
     def kWeakestRows(self, mat: 'List[List[int]]', k: int) -> 'List[int]':
-        hmp = {}
-        for r in range(len(mat)):
-            s = 0
-            c = 0
-            while c < len(mat[r]):
-                if mat[r][c] == 1:
-                    s += mat[r][c]
+        arr = []
+        for i in range(len(mat)):
+            curr = 0
+            arr.append([i])
+            for c in mat[i]:
+                if c == 1:
+                    curr+=c
                 else:
                     break
-                c += 1
-            if s not in hmp:
-                hmp[s] = []
-            hmp[s].append(r)
+            arr[-1].append(curr)
+        arr.sort(key = lambda x: [x[1], x[0]])
         output = []
-        lst = sorted(hmp.keys())
-        for i in lst:
-            for r in hmp[i]:
-                output.append(r)
-        return output[:k]
-
-
+        #print(arr)
+        for i in range(k):
+            output.append(arr[i][0])
+        return output
