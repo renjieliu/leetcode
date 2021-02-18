@@ -1,32 +1,24 @@
-def numberOfArithmeticSlices(A: "List[int]"):
-    base = 0
-    length = 1
-    output = 0
+class Solution:
+    def numberOfArithmeticSlices(self, A: 'List[int]') -> int:
+        if len(A) < 3: return 0
+        l = 0
+        r = 1
+        cnt = 0
+        currDiff = A[r] - A[l]
+        while r < len(A):
+            if A[r] - A[r-1] != currDiff:
+                length = r-1 -l+1
+                cnt += 0 if length < 3 else (1+length-2) * (length-2)//2 #3-->1, 4-->2...sum = (1+n)*n//2
+                currDiff = A[r] - A[r-1]
+                l = r-1
+            r+=1
+        length = r-1 -l+1
+        cnt += 0 if length < 3 else (1+length-2) * (length-2)//2 #3-->1, 4-->2...sum = (1+n)*n//2
 
-    if len(A)<3 :
-        return 0
+        return cnt
 
-    else:
-        base = A[1] - A[0]
-        for i in range(len(A)-1):
-            if A[i+1] - A[i] ==base:
-                length +=1
-            else:
-                if length < 3:
-                    length = 2
-                    base = A[i+1] - A[i]
-                else:
-                    end = length -2 #  sum(1..X) = (x+1)*x/2
-                    output+= (1+end) * end//2
 
-                    length = 2
-                    base = A[i+1] - A[i]
 
-        if length >=3:
-            end = length -2 #  sum(1..X) = (x+1)*x/2
-            output+= (1+end) * end//2
 
-        return output
 
-print( numberOfArithmeticSlices([1, 2, 3, 4,5,6,6,6,6,6,6,6,6,6,6,6,6,-1,12,12,12]))
 
