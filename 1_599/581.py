@@ -1,30 +1,23 @@
-def findUnsortedSubarray(nums):
-    """
-    :type nums: List[int]
-    :rtype: int
-    """
-    x = sorted(nums)
-    start = 0
-    end = 0
-    for i in range(0, len(nums)):
-        if nums[i] != x[i]:
-            start = i
-            break
-
-    if nums[-1] != x[-1]:
-        end = len(nums) -1
-
-    else:
-        for i in range(len(nums)-1, start-1, -1):
-            if nums[i] != x[i]:
-                end = i
+class Solution:
+    def findUnsortedSubarray(self, nums: 'List[int]') -> int:
+        arr = []
+        for n in nums:
+            arr.append(n)
+        arr.sort() #the reference array
+        right = 0
+        left = len(nums)-1
+        while right < len(arr): #find the first mismatch from right side
+            if arr[right] != nums[right]:
                 break
+            right+=1
+        right = len(nums) - 1 if right == len(nums) else right
 
-    return end - start +1 if end != start else 0
+        while left > -1: #find the first mismatch from left side
+            if arr[left] != nums[left]:
+                break
+            left -= 1
+        left = 0 if left == -1 else left
 
-
-print(findUnsortedSubarray([2,8,7,4,8, 9]))
-print(findUnsortedSubarray([2, 6, 4, 8, 10, 9, 15]))
-print(findUnsortedSubarray([1,2,3,4]))
-print(findUnsortedSubarray([4,3,2,1]))
+        #print(left, right)
+        return 0 if right == len(nums)-1 and left == 0 else abs(left - right) + 1
 
