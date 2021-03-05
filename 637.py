@@ -7,23 +7,18 @@ class TreeNode:
 
 class Solution:
     def averageOfLevels(self, root: TreeNode) -> 'List[float]':
-        def flat(output, node, level):
-            if level >= len(output):
-                output.append([])
-            if node.left == node.right == None:
-                output[level - 1].append(node.val)
-            else:
-                output[level - 1].append(node.val)
-                if node.left:
-                    flat(output, node.left, level + 1)
-                if node.right:
-                    flat(output, node.right, level + 1)
-
+        def dfs(hmp, node, level):
+            if level not in hmp:
+                hmp[level] = []
+            hmp[level].append(node.val)
+            if node.left:
+                dfs(hmp, node.left, level+1)
+            if node.right:
+                dfs(hmp, node.right, level+1)
         if root == None:
             return []
-        else:
-            output = []
-            flat(output, root, 1)
-            res = [sum(o) / len(o) for o in output if o]
-            return res
-
+        hmp = {}
+        dfs(hmp, root, 0)
+        for k, v in hmp.items():
+            hmp[k] = sum(v)/len(v)
+        return [hmp[k] for k in sorted(hmp.keys())]
