@@ -84,6 +84,8 @@ insert into Championships (year, Wimbledon, Fr_open, US_open, Au_open) values ('
 
 
 /* Write your T-SQL query statement below */
+
+-- Approach 1: Using unpivot statement
 select 
 p.player_id
 , p.player_name 
@@ -100,6 +102,33 @@ inner join
 ) up
 on p.player_id = up.id
 group by p.player_id,p.player_name 
+
+
+
+--Approach 2: Traditional SQL
+
+/* Write your T-SQL query statement below */
+select
+p.player_id
+, p.player_name
+, grand_slams_count = w.cnt
+from
+players p 
+inner join 
+(
+    select winner, cnt = count(1)
+    from (
+    select winner = Wimbledon from Championships 
+    union all
+    select Fr_open from Championships 
+    union all
+    select US_open from Championships 
+    union all
+    select Au_open from Championships
+    ) t group by winner 
+) w on p.player_id = w.winner 
+
+
 
 
 
