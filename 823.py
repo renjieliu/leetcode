@@ -14,7 +14,7 @@ class Solution:
             return output
         output = 0
         for a in arr:
-            cnt_root = 1
+            cnt_root = 1 #tree count with current number as root
             for d in divisor(a):
                 currTree = 0
                 if d in pool and a//d in pool:
