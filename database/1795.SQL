@@ -56,6 +56,18 @@ insert into Products (product_id, store1, store2, store3) values ('0', '95', '10
 insert into Products (product_id, store1, store2, store3) values ('1', '70', 'None', '80')
 
 
+--"unpivot" approach
+/* Write your T-SQL query statement below */
+
+select product_id, store, price from 
+(select * from products) base
+unpivot 
+(
+ price for store in ([store1], [store2], [store3])
+) upvt
+
+--"union all" approach
+
 /* Write your T-SQL query statement below */
 select 
 product_id
