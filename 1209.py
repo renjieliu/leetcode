@@ -1,24 +1,34 @@
-def removeDuplicates(s: str, k: int):
-    stk= [{s[0]:1}]
-    for i in range(1, len(s)):
-        if len(stk) > 0:
-            if s[i] in stk[-1]:
-                if stk[-1][s[i]] +1 == k:
-                    stk.pop()
-                else:
-                    stk[-1][s[i]] += 1
-            else:
-                stk.append({s[i]: 1})
-        else:
-            stk.append({s[i]:1})
-    output = ""
-    for i in stk:
-        for k, v in i.items():
-            output+= k*v
+class Solution:
+    def removeDuplicates(self, s: str, k: int) -> str:
+        arr = [chr(_)*k for _ in range(97, 123)]
+        while True:
+            find = 0
+            for a in arr:
+                if a in s:
+                    find = 1
+                    s = s.replace(a, '')
+            if find == 0:
+                return s
 
-    return output
-
-
-print(removeDuplicates(s = "abcd", k = 2))
-print(removeDuplicates(s = "deeedbbcccbdaa", k = 3))
-print(removeDuplicates(s = "pbbcggttciiippooaais", k = 2))
+# previous approach
+# class Solution:
+#     def removeDuplicates(self, s: str, k: int) -> str:
+#         stk= [{s[0]:1}]
+#         for i in range(1, len(s)):
+#             if len(stk) > 0:
+#                 if s[i] in stk[-1]:
+#                     if stk[-1][s[i]] +1 == k:
+#                         stk.pop()
+#                     else:
+#                         stk[-1][s[i]] += 1
+#                 else:
+#                     stk.append({s[i]: 1})
+#             else:
+#                 stk.append({s[i]:1})
+#         output = ""
+#         for i in stk:
+#             for k, v in i.items():
+#                 output+= k*v
+#
+#         return output
+#
