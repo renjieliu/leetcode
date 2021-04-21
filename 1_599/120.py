@@ -1,25 +1,18 @@
-def minimumTotal(triangle: 'List[List[int]]'):
-    if len(triangle)==1 :
-        return min(triangle[0])
-    else:
-        path =0
-        output = triangle.copy()
-        output[1][0] += output[0][0]
-        output[1][1] += output[0][0]
-        for i in range(2, len(triangle)):
-            for j in range(len(triangle[i])):
-                if j==0:
-                    output[i][j] += output[i-1][0]
-                elif j==len(triangle[i])-1:
-                    output[i][j] += output[i-1][-1]
+class Solution:
+    def minimumTotal(self, triangle: 'List[List[int]]') -> int:
+        def helper(hmp, arr, r, c ):
+            if (r,c) in hmp:
+                return hmp[(r,c)]
+            else:
+                if r == len(arr)-1:
+                    hmp[(r,c)] = arr[r][c]
                 else:
-                    output[i][j] += min(output[i-1][j], output[i-1][j-1])
+                    A = arr[r][c] + helper(hmp, arr, r+1, c)
+                    B = arr[r][c] + helper(hmp, arr, r+1, c+1)
+                    hmp[(r,c)] = min(A,B)
+                return hmp[(r,c)]
+        hmp = {}
+        helper(hmp, triangle, 0, 0)
+        return hmp[(0,0)]
 
-        return min(output[-1])
 
-print(minimumTotal([
-     [2],
-    [3,4],
-   [6,5,7],
-  [4,1,8,3]
-]))
