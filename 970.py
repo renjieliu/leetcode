@@ -1,26 +1,21 @@
-def powerfulIntegers(x: 'int', y: 'int', bound: 'int'):
-    output = []
-
-    if x == y and x == 1 and bound >= 2:
-        return [2]
-
-    for i in range(0, bound):
-        if x**i <=bound:
-            for j in range(0, bound):
-                t = x ** i + y ** j
-                if t <= bound and t not in output:
-                    output.append(t)
-
+class Solution:
+    def powerfulIntegers(self, x: int, y: int, bound: int) -> 'List[int]':
+        if bound < 2:
+            return []
+        elif x==1 or y == 1:
+            m = max(x, y)
+            return list({1+ m**_ for _ in range(100) if m**_+1 <=bound})
+        output = set()
+        a = min(x,y)
+        b = max(x,y)
+        for i in range(bound):
+            for j in range(bound):
+                t = a**i + b**j
                 if t > bound:
-                    stop = 1
                     break
-        else:
-            break
+                else:
+                    output.add(t)
+            if a**i > bound:
+                break
+        return list(output)
 
-    output.sort()
-
-    return output
-
-print(powerfulIntegers(3,5,25))
-print(powerfulIntegers(2,3,10))
-print(powerfulIntegers(1,1,0))
