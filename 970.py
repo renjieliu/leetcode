@@ -4,7 +4,7 @@ class Solution:
             return []
         elif x==1 or y == 1:
             m = max(x, y)
-            return list({1+ m**_ for _ in range(100) if m**_+1 <=bound})
+            return list({1+ m**_ for _ in range(20) if m**_+1 <= bound}) # m**20 is >= bound, as constraints: (0 <= bound <= 106)
         output = set()
         a = min(x,y)
         b = max(x,y)
