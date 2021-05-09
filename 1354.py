@@ -1,29 +1,26 @@
 class Solution:
-    def numberOfSubstrings(self, s: str) -> int:
-        a = []
-        b = []
-        c = []
-        i = 0
-        while i < len(s):
-            if s[i] == 'a':
-                a.append(i)
-            elif s[i] == 'b':
-                b.append(i)
-            elif s[i] == 'c':
-                c.append(i)
-            i += 1
-        output = 0
-        end = len(s) - 1
-        while len(a) * len(b) * len(
-                c) != 0:  # find the current least characters to have a b and c. [minn, maxx], everything after the maxx can form a new substring
-            maxx = max(a[0], b[0], c[0])
-            minn = min(a[0], b[0], c[0])
-            output += (end - maxx + 1)
-            if minn == a[0]:
-                a.pop(0)
-            elif minn == b[0]:
-                b.pop(0)
-            elif minn == c[0]:
-                c.pop(0)
-        return output
+    def isPossible(self, target: 'List[int]') -> bool:
+        if len(target) == 1:
+            return target == [1]
+        total_sum = sum(target)
+        target = [-num for num in target]
+        heapq.heapify(target)
+        while -target[0] > 1:
+            largest = -target[0]
+            rest = total_sum - largest
+
+            # This will only occur if n = 2.
+            if rest == 1:
+                return True
+
+            x = largest % rest
+
+            # If x is now 0 (invalid) or didn't
+            # change, then we know this is impossible.
+            if x == 0 or x == largest:
+                return False
+            heapq.heapreplace(target, -x)
+            total_sum = total_sum - largest + x
+
+        return True
 
