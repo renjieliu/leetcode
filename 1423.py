@@ -1,7 +1,15 @@
 class Solution:
     def maxScore(self, cardPoints: 'List[int]', k: int) -> int:
-        output = curr = sum(cardPoints[:k]) # assume all the numbers from left
-        for i in range(k): # move the array to the left, and add the elements from the end
-            curr = curr - cardPoints[k-i-1]  + cardPoints[-(i+1)]
-            output = max(output, curr)
+        s = sum(cardPoints)
+        window = len(cardPoints) - k
+        curr = sum(cardPoints[:window])
+        output = s - curr
+        l = 0
+        r = window
+        while r < len(cardPoints):
+            curr -= cardPoints[l]
+            curr += cardPoints[r]
+            output = max(s-curr,output)
+            r+=1
+            l+=1
         return output
