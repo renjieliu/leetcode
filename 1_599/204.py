@@ -1,19 +1,38 @@
 class Solution:
-    def countPrimes(self, n: int) -> int: # sieve of Eratosthenes
-        if n <= 1 :
-            return 0
-        arr = [True for _ in range(n)]
+    def countPrimes(self, n: int) -> int:
+        if n <= 2: return 0
+        arr = [True] * n # from the question: LESS than a non-negative number, n.
         arr[0] = False
         arr[1] = False
-        i = 0
+        i = 2
         while i ** 2 < n:
-            if arr[i]:
-                curr = i**2
+            if arr[i] == True:
+                curr = i*2
                 while curr < n:
                     arr[curr] = False
                     curr += i
             i+=1
         return arr.count(True)
+
+
+
+# previous approach
+# class Solution:
+#     def countPrimes(self, n: int) -> int: # sieve of Eratosthenes
+#         if n <= 1 :
+#             return 0
+#         arr = [True for _ in range(n)]
+#         arr[0] = False
+#         arr[1] = False
+#         i = 0
+#         while i ** 2 < n:
+#             if arr[i]:
+#                 curr = i**2
+#                 while curr < n:
+#                     arr[curr] = False
+#                     curr += i
+#             i+=1
+#         return arr.count(True)
 
 # previous approach
 # def countPrimes(n):
