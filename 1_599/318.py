@@ -1,18 +1,11 @@
-def maxProduct(words: 'List[str]'):
-    output = 0
-
-    for i in range(len(words)):
-        for j in range(i+1, len(words)):
-            s1 = words[i]
-            s2 = words[j]
-            if len(set(s1) | set(s2)) == len(set(s1))+ len(set(s2)):
-                output = max(len(words[i])*len(words[j]), output)
-
-    return  output
-
-
-print(maxProduct(["abcw","baz","foo","bar","xtfn","abcdef"]))
-print(maxProduct(["a","ab","abc","d","cd","bcd","abcd"]))
-print(maxProduct(["a","aa","aaa","aaaa"]))
-print(maxProduct(["a"]))
-print(maxProduct(["eae","ea","aaf","bda","fcf","dc","ac","ce","cefde","dabae"]))
+class Solution:
+    def maxProduct(self, words: 'List[str]') -> int:
+        output = 0
+        arr = []
+        for w in words:
+            arr.append(set(w))
+        for i in range (len(arr)):
+            for j in range(i+1, len(arr)):
+                if arr[i] & arr[j] == set():
+                    output = max(output, len(words[i]) * len(words[j]))
+        return output
