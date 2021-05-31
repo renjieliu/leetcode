@@ -1,32 +1,34 @@
 class Solution:
-    def suggestedProducts(self, products: 'List[str]', searchWord: str):
-        candidates = sorted(products)
+    def suggestedProducts(self, products: 'List[str]', searchWord: str) -> 'List[List[str]]':
+        trie = {}
+        for p in products:
+            curr = trie
+            for c in p:
+                if c not in curr:
+                    curr[c] = [{}, []]  # [newTrie, word]
+                curr[c][1].append(p)
+                curr = curr[c][0]
+
+        def orderTrie(trie):  # sort the value of trie
+            for k, v in trie.items():
+                v[1].sort()
+                orderTrie(v[0])
+
+        orderTrie(trie)
         output = []
-        i = 0
-        while i < len(searchWord):  # prefix
-            prefix = searchWord[:i + 1]
-            output.append([])
-            j = 0  # the index within candidates
-            while j < len(candidates):
-                if candidates[j][:i + 1] == prefix:  # find a match of the prefix, put the next items to the temp arr
-                    if len(candidates[j:]) >= 3:
-                        tempArr = candidates[j:j + 3]
-                    else:
-                        tempArr = candidates[j:]
-                    k = 0  # go thru the array check if all matched the prefix
-                    invalid = 0
-                    while k < len(tempArr):
-                        if tempArr[k][:i + 1] != prefix:
-                            invalid = 1
-                            tempArr = tempArr[:k]
-                            break
-                        k += 1
-                    output[-1] = tempArr
-                    candidates = candidates[j:]
-                    if invalid == 1:
-                        candidates = candidates[:k]
-                    break
-                j += 1
-            i += 1
+        curr = trie
+        for i, c in enumerate(searchWord):
+            if c in curr:
+                if len(curr[c][1]) > 3:
+                    output.append(curr[c][1][:3])
+                else:
+                    output.append(curr[c][1])
+                curr = curr[c][0]
+            else:  # for the rest of the word, just add [] to output
+                for j in range(i, len(searchWord)):
+                    output.append([])
+                break
 
         return output
+
+
