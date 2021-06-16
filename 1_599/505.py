@@ -1,27 +1,56 @@
 class Solution:
     def shortestDistance(self, maze: 'List[List[int]]', start: 'List[int]', destination: 'List[int]') -> int:
-        pq = [] #Dijkstra's Algorithm: Each time, pop out the one with min distance travelled. If it reaches the end, it's the shortest path
-        heapq.heappush(pq, [0, start[0], start[1]]) #[distance, r, c]
-        hmp = {(start[0], start[1]):0}
+        pq = [[0, start[0], start[1]]] #Dijkstra's algorithm, to get the shortest dist each time
+        heapq.heapify(pq) #[dist, r, c]
+        direction = [[0,1], [1,0], [0,-1] , [-1, 0]]
+        seen = {(start[0], start[1]):0}
+        output = float('inf')
         while pq:
-            nxt = []
-            direction = [[0,1], [1,0], [0,-1], [-1,0]]
-            currDist, currR, currC = heapq.heappop(pq)
+            dist, sr, sc = heapq.heappop(pq)
+            if dist > output: #no need to check further, all the future dist in the pq will take more walks
+                return output
             for a, b in direction:
-                dist = currDist
-                r = currR
-                c = currC
-                while -1 < r+a < len(maze) and -1 < c + b < len(maze[0]) and maze[r+a][c+b] != 1:
+                r = sr
+                c = sc
+                walk = dist
+                while -1< r+a < len(maze) and -1<c+b<len(maze[0]) and maze[r+a][c+b] == 0:
                     r+=a
                     c+=b
-                    dist+=1
-                if r == destination[0] and c == destination[1]:
-                    return dist
-                elif (r,c) not in hmp or dist < hmp[(r,c)]:
-                    heapq.heappush(pq, [dist, r, c])
-                    hmp[(r,c)] = dist
-        return -1
+                    walk+=1
+                if r == destination[0] and c == destination[1]: # the ball stops at the destination
+                    output = min(output, walk)
+                elif (r,c) not in seen or walk < seen[(r,c)]:
+                    heapq.heappush(pq, [walk, r, c])
+                    seen[(r,c)] = walk
+        return -1 if output == float('inf') else output
 
+
+
+# previous approach
+# class Solution:
+#     def shortestDistance(self, maze: 'List[List[int]]', start: 'List[int]', destination: 'List[int]') -> int:
+#         pq = [] #Dijkstra's Algorithm: Each time, pop out the one with min distance travelled. If it reaches the end, it's the shortest path
+#         heapq.heappush(pq, [0, start[0], start[1]]) #[distance, r, c]
+#         hmp = {(start[0], start[1]):0}
+#         while pq:
+#             nxt = []
+#             direction = [[0,1], [1,0], [0,-1], [-1,0]]
+#             currDist, currR, currC = heapq.heappop(pq)
+#             for a, b in direction:
+#                 dist = currDist
+#                 r = currR
+#                 c = currC
+#                 while -1 < r+a < len(maze) and -1 < c + b < len(maze[0]) and maze[r+a][c+b] != 1:
+#                     r+=a
+#                     c+=b
+#                     dist+=1
+#                 if r == destination[0] and c == destination[1]:
+#                     return dist
+#                 elif (r,c) not in hmp or dist < hmp[(r,c)]:
+#                     heapq.heappush(pq, [dist, r, c])
+#                     hmp[(r,c)] = dist
+#         return -1
+#
 
 # previous approach
 
