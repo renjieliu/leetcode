@@ -59,7 +59,7 @@ insert into Accounts (account_id, income) values ('8', '87709')
 insert into Accounts (account_id, income) values ('6', '91796')
 
 
-
+--MySQL
 -- # Write your MySQL query statement below
 with cte as
 (
@@ -81,6 +81,48 @@ group by cte.category
 
 
 
+--MSSQL - TLE as of 2021-06-22
+
+/* Write your T-SQL query statement below */
+with cte as
+(
+select 'Low Salary'category
+union all 
+select 'Average Salary'
+union all 
+select 'High Salary'
+)
+select
+cte.category
+, coalesce(count(a.account_id),0) accounts_count
+from cte left outer join accounts a 
+on cte.category = case when a.income < 20000 then 'Low Salary'
+                       when a.income <= 50000 then 'Average Salary'
+                       when a.income > 50000 then 'High Salary'
+                  end 
+group by cte.category
+
+
+--Oracle
+
+/* Write your PL/SQL query statement below */
+with cte as
+(
+select 'Low Salary'category from dual
+union all 
+select 'Average Salary' from dual
+union all 
+select 'High Salary' from dual
+)
+select
+cte.category
+, coalesce(count(a.account_id),0) accounts_count
+from cte left outer join accounts a 
+on cte.category = case when a.income < 20000 then 'Low Salary'
+                       when a.income <= 50000 then 'Average Salary'
+                       when a.income > 50000 then 'High Salary'
+                  end 
+group by cte.category
 
 
 
