@@ -41,3 +41,61 @@ class Solution:
             update(num + offset, 1, tree, size)
         return reversed(result)
 
+#my approach, failed, need to better understand the relationship of original arr, segment tree, seg node, node start and node end
+
+# class Solution:
+#     def countSmaller(self, nums: 'List[int]') -> 'List[int]':
+#         for i in range(len(nums)):
+#             nums[i] += 10000
+#         n = max(nums)  # there could be 20001 possiblities of n
+#         total = 1
+#         layer = 0
+#         while 2 ** layer < n:
+#             layer += 1
+#             total += 2 ** layer
+#         seg = [0] * total
+#
+#         def query(seg, node, seg_start, seg_end, q_start, q_end):
+#             if seg_start == seg_end:
+#                 return seg[node]
+#             elif q_start <= seg_start <= seg_end <= q_end:
+#                 return seg[node]
+#             elif seg_end < q_start or seg_start > q_end:
+#                 return 0
+#             else:
+#                 mid = (seg_start + seg_end) // 2
+#                 left = query(seg, node * 2 + 1, seg_start, mid, q_start, q_end)
+#                 right = query(seg, node * 2 + 2, mid + 1, seg_end, q_start, q_end)
+#                 return left + right
+#
+#         def update(seg, node, idx, start, end):  # idx is the value in the original arr
+#             if start == end:
+#                 seg[node] += 1
+#             else:
+#                 mid = (start + end) // 2
+#                 if idx <= mid:
+#                     update(seg, node * 2 + 1, idx, start, mid)
+#                 else:
+#                     update(seg, node * 2 + 2, idx, mid + 1, end)
+#                 seg[node] = seg[node * 2 + 1] + seg[node * 2 + 2]
+#
+#         output = []
+#
+#         for i in range(len(nums) - 1, -1, -1):
+#             curr = nums[i]
+#             output.append(query(seg, 0, 0, n - 1, 0, curr - 1))  # sum smaller number in the segTree
+#             update(seg, 0, curr, 0, n - 1)
+#         return output[::-1]
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
