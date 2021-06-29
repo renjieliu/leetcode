@@ -1,8 +1,8 @@
 class Solution:
-    def isArmstrong(self, N: int) -> bool:
-        s = 0
-        for i in str(N):
-            s+=int(i) **len(str(N))
-        if s==N:
-            return True
-        return False
+    def isArmstrong(self, n: int) -> bool:
+        s = str(n)
+        calc = 0
+        for c in s:
+            calc += (int(c)**len(s))
+        return calc == n
+
