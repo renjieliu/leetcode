@@ -3,34 +3,88 @@ class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
-
 class Solution:
     def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
-        prev = None
-        root = head
-        pos = 0
-        while head: #keep going until the reverse part
-            pos += 1
-            if pos == left:
-                arr = [head.val]
-                while pos < right:
-                    head = head.next
-                    arr.append(head.val)
-                    pos += 1
-                rev_start = ListNode(arr.pop()) # reverse
-                rev_node = rev_start
-                while arr:
-                    rev_node.next = ListNode(arr.pop())
-                    rev_node = rev_node.next
-                rev_node.next = head.next #the following part is the rest of the linked list
-                if prev == None: #put the reverse part with the rest
-                    return rev_start
-                else:
-                    prev.next = rev_start
-                    return root
-            else:
-                prev = head
-                head = head.next
+        nxt_ptr = [None]
+        def reverseFirstN(node, nxt_ptr, n):
+            if n == 1: #this is the last one
+                nxt_ptr[0] = node.next #save the pointer
+                return node #return current node
+            output = reverseFirstN(node.next, nxt_ptr, n-1) # get the following node
+            node.next.next = node
+            node.next = nxt_ptr[0] # point self next to the saved following node
+            return output
+        if left == 1:
+            return reverseFirstN(head, nxt_ptr, right)
+        else: #keep going to the range where left becomes the first node.
+            head.next = self.reverseBetween(head.next, left-1, right-1)
+            return head
+
+
+# previous approach
+# # Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+#
+# class Solution:
+#     def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
+#         nxt = [None]
+#         def reverseN(node, nxt, n): #to reverse the first N
+#             if n == 1:
+#                 nxt[0] = node.next
+#                 return node
+#             output = reverseN(node.next, nxt, n-1)
+#             node.next.next = node
+#             node.next = nxt[0]
+#             return output
+#
+#         if left == 1:
+#             return reverseN(head, nxt, right)
+#         head.next = self.reverseBetween(head.next, left-1, right-1) #go into the reverseN, and it will become reverse first N case, with ongoing left-1.
+#         return head
+
+
+
+
+
+
+
+# previous approach
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+#
+# class Solution:
+#     def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
+#         prev = None
+#         root = head
+#         pos = 0
+#         while head: #keep going until the reverse part
+#             pos += 1
+#             if pos == left:
+#                 arr = [head.val]
+#                 while pos < right:
+#                     head = head.next
+#                     arr.append(head.val)
+#                     pos += 1
+#                 rev_start = ListNode(arr.pop()) # reverse
+#                 rev_node = rev_start
+#                 while arr:
+#                     rev_node.next = ListNode(arr.pop())
+#                     rev_node = rev_node.next
+#                 rev_node.next = head.next #the following part is the rest of the linked list
+#                 if prev == None: #put the reverse part with the rest
+#                     return rev_start
+#                 else:
+#                     prev.next = rev_start
+#                     return root
+#             else:
+#                 prev = head
+#                 head = head.next
 
 
 
