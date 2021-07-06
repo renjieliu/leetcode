@@ -1,24 +1,49 @@
 # Definition for singly-linked list.
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+
 class Solution:
     def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
-        nxt_ptr = [None]
-        def reverseFirstN(node, nxt_ptr, n):
-            if n == 1: #this is the last one
-                nxt_ptr[0] = node.next #save the pointer
-                return node #return current node
-            output = reverseFirstN(node.next, nxt_ptr, n-1) # get the following node
-            node.next.next = node
-            node.next = nxt_ptr[0] # point self next to the saved following node
-            return output
+        def reverseFirstN(node, follower, n):
+            if n == 1 :
+                follower[0] = node.next # save the end node's next, this will become the first node's next
+                return node
+            else:
+                output = reverseFirstN(node.next, follower, n-1) #reverse the following nodes
+                node.next.next = node
+                node.next = follower[0] #first node's next
+                return output
         if left == 1:
-            return reverseFirstN(head, nxt_ptr, right)
-        else: #keep going to the range where left becomes the first node.
+            return reverseFirstN(head, [None], right)
+        else:
             head.next = self.reverseBetween(head.next, left-1, right-1)
             return head
+
+# previous approach
+# # Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+# class Solution:
+#     def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
+#         nxt_ptr = [None]
+#         def reverseFirstN(node, nxt_ptr, n):
+#             if n == 1: #this is the last one
+#                 nxt_ptr[0] = node.next #save the pointer
+#                 return node #return current node
+#             output = reverseFirstN(node.next, nxt_ptr, n-1) # get the following node
+#             node.next.next = node
+#             node.next = nxt_ptr[0] # point self next to the saved following node
+#             return output
+#         if left == 1:
+#             return reverseFirstN(head, nxt_ptr, right)
+#         else: #keep going to the range where left becomes the first node.
+#             head.next = self.reverseBetween(head.next, left-1, right-1)
+#             return head
 
 
 # previous approach
