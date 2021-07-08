@@ -1,14 +1,39 @@
 class Solution:
     def findClosestElements(self, arr: 'List[int]', k: int, x: int) -> 'List[int]':
+        #just need to find the start of the k elements O(log(N))
         s = 0
         e = len(arr)-1-k
-        while s <= e : # to find the starting point of the slice of the arr
-            mid = s-(s-e)//2 #the mid is on the left of x
-            if x-arr[mid] > arr[mid+k]-x:
-                s = mid + 1
-            else:
-                e = mid -1
+        while s<=e :
+            mid = s-(s-e)//2
+            if x - arr[mid] <= arr[mid+k] - x: #the starting point is on the left
+                e = mid-1
+            else: #the starting point is on the right
+                s = mid+1
         return arr[s:s+k]
+
+
+        #(O(N))
+        # i = 0
+        # while i < len(arr)-k:
+        #     if arr[i]!=arr[i+k] and abs(arr[i]-x) <= abs(arr[i+k]-x):
+        #         break
+        #     i+=1
+        # return arr[i:i+k]
+
+
+
+# previous approach
+# class Solution:
+#     def findClosestElements(self, arr: 'List[int]', k: int, x: int) -> 'List[int]':
+#         s = 0
+#         e = len(arr)-1-k
+#         while s <= e : # to find the starting point of the slice of the arr
+#             mid = s-(s-e)//2 #the mid is on the left of x
+#             if x-arr[mid] > arr[mid+k]-x:
+#                 s = mid + 1
+#             else:
+#                 e = mid -1
+#         return arr[s:s+k]
 
 # previous approach
 # def findClosestElements(arr: 'List[int]', k: int, x: int):
