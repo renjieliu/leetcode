@@ -4,41 +4,19 @@ class MedianFinder:
         """
         initialize your data structure here.
         """
-        self.arr = []
-
+        self.small = []
+        self.large = []
     def addNum(self, num: int) -> None:
-        if self.arr == []:
-            self.arr.append(num)
-        else:  # binary search to find the insert point
-            if num > self.arr[-1]:
-                self.arr.append(num)
-            elif num < self.arr[0]:
-                self.arr = [num] + self.arr
-            else:
-                s = 0
-                e = len(self.arr) - 1
-                while s <= e:
-                    mid = s - (s - e) // 2
-                    if self.arr[mid] > num:
-                        e = mid - 1
-                    elif self.arr[mid] == num:
-                        s = mid
-                        break
-                    elif self.arr[mid] < num:
-                        s = mid + 1
-                if num <= self.arr[s]:
-                    self.arr = self.arr[:s] + [num] + self.arr[s:]
-                else:
-                    self.arr = self.arr[:s + 1] + [num] + self.arr[s + 1:]
+        heapq.heappush(self.small, -heapq.heappushpop(self.large, num))
+        if len(self.large) < len(self.small):
+            heapq.heappush(self.large, -heapq.heappop(self.small))
 
     def findMedian(self) -> float:
-        # print(self.arr)
-        if len(self.arr) == 1:
-            return self.arr[0]
-        elif len(self.arr) % 2 == 0:
-            return (self.arr[(len(self.arr) - 1) // 2] + self.arr[len(self.arr) // 2]) / 2
-        else:
-            return self.arr[len(self.arr) // 2]
+        if len(self.large) > len(self.small):
+            return float(self.large[0])
+        return (self.large[0] - self.small[0]) / 2.0
+
+
 
 # Your MedianFinder object will be instantiated and called as such:
 # obj = MedianFinder()
