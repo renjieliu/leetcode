@@ -2,7 +2,7 @@ class Solution:
     def findPeakElement(self, nums: 'List[int]') -> int:
         s = 0
         e = len(nums)-1
-        while s <= e: # use the larger number as the limit each time, until find the peak number
+        while s <= e: # binary search, use the larger number as the limit each time, until find the peak number
             mid = (s+e)//2
             left = nums[mid-1] if mid > 0 else -float('inf')
             right = nums[mid+1] if mid < len(nums)-1 else -float('inf')
@@ -14,7 +14,6 @@ class Solution:
                 else:
                     s = mid + 1
         return s
-
 
 
 #the O(N) approach
