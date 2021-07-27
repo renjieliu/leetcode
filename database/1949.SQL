@@ -75,6 +75,7 @@ insert into Friendship (user1_id, user2_id) values ('1', '6')
 insert into Friendship (user1_id, user2_id) values ('3', '6')
 insert into Friendship (user1_id, user2_id) values ('2', '6')
 
+go
 
 /* Write your T-SQL query statement below */
 with base as 
@@ -83,18 +84,39 @@ with base as
  select user2_id, user1_id from Friendship
 ) 
 select 
-user1_id = case when main.user1_id <= main.user2_id then main.user1_id else main.user2_id end
-,user2_id = case when main.user1_id > main.user2_id then main.user1_id else main.user2_id end
+user1_id = main.user1_id
+,user2_id = main.user2_id
 ,common_friend = count(distinct b.user2_id)
-from base main 
+from Friendship main 
 left outer join base a 
-on main.user1_id = a.user1_id -- find friends of a 
+on main.user1_id = a.user1_id and a.user2_id != main.user1_id -- find friends of a
 left outer join base b 
 on main.user2_id = b.user1_id and b.user2_id = a.user2_id -- find friends of b, and which happens to be the friends of a as well. 
-group by case when main.user1_id <= main.user2_id then main.user1_id else main.user2_id end
-, case when main.user1_id > main.user2_id then main.user1_id else main.user2_id end
+group by main.user1_id, main.user2_id
 having count(distinct b.user2_id)>=3
 order by 1, 2 
+
+
+--previous approach
+-- /* Write your T-SQL query statement below */
+-- with base as 
+-- (select user1_id, user2_id from Friendship
+--   union all 
+--  select user2_id, user1_id from Friendship
+-- ) 
+-- select 
+-- user1_id = case when main.user1_id <= main.user2_id then main.user1_id else main.user2_id end
+-- ,user2_id = case when main.user1_id > main.user2_id then main.user1_id else main.user2_id end
+-- ,common_friend = count(distinct b.user2_id)
+-- from base main 
+-- left outer join base a 
+-- on main.user1_id = a.user1_id -- find friends of a 
+-- left outer join base b 
+-- on main.user2_id = b.user1_id and b.user2_id = a.user2_id -- find friends of b, and which happens to be the friends of a as well. 
+-- group by case when main.user1_id <= main.user2_id then main.user1_id else main.user2_id end
+-- , case when main.user1_id > main.user2_id then main.user1_id else main.user2_id end
+-- having count(distinct b.user2_id)>=3
+-- order by 1, 2 
 
 
 
