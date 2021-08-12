@@ -1,12 +1,25 @@
 class Solution:
     def groupAnagrams(self, strs: 'List[str]') -> 'List[List[str]]':
+        sigature = lambda x: "".join(sorted(list(x))) #reorganize the letter, sorted alphabetically
         hmp = {}
         for s in strs:
-            k = ''.join(sorted(list(s)))
-            if k not in hmp:
-                hmp[k] = []
-            hmp[k].append(s)
+            sig = sigature(s)
+            if sig not in hmp:
+                hmp[sig] = []
+            hmp[sig].append(s)
         return hmp.values()
+
+
+# previous approach
+# class Solution:
+#     def groupAnagrams(self, strs: 'List[str]') -> 'List[List[str]]':
+#         hmp = {}
+#         for s in strs:
+#             k = ''.join(sorted(list(s)))
+#             if k not in hmp:
+#                 hmp[k] = []
+#             hmp[k].append(s)
+#         return hmp.values()
 
 #
 #RL 20200406: previous approach
