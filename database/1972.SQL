@@ -116,7 +116,7 @@ and not exists
 
 
 
---SQL Server approach - TLE
+--SQL Server approach - same idea, but got TLE
 
 /* Write your T-SQL query statement below */
 with cte as
