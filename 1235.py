@@ -1,7 +1,7 @@
 import bisect
 
 
-class Solution:
+class Solution: #RL 20210828: Copied solution
     def jobScheduling(self, S, E, profit):
         videos = sorted(list(zip(S, E, profit)))
         S = [i[0] for i in videos]
