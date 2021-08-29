@@ -9,7 +9,7 @@ class Solution:
     def checkEqualTree(self, root: 'Optional[TreeNode]') -> bool:
         def dfs(total, hmp, node, idx):  # to calculate the total sum of the entire tree, and sum of each subtree
             if node.left == node.right == None:
-                hmp[idx] = [0, 0]  # left sub, right sub
+                hmp[idx] = [0, 0]  # [sum of left sub, sum of right sub]
                 total[0] += node.val
                 return node.val
             else:
