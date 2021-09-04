@@ -1,16 +1,15 @@
 class Solution:
     def catchMaximumAmountofPeople(self, team: 'List[int]', dist: int) -> int:
-        zeroLoc = 0
+        p0 = p1 = 0 # pointer for 1 and 0
         cnt = 0
-        for i in range(len(team)):
-            if team[i] == 1:
-                while zeroLoc < max(0, i - dist): #make the zeroLoc in the range
-                    zeroLoc += 1
-                while zeroLoc <= min(i + dist, len(team)-1) and team[zeroLoc] == 1: #make the zeroLoc in the range
-                    zeroLoc += 1
-                if zeroLoc <= len(team)-1 and team[zeroLoc] == 0:
-                    #print(i, zeroLoc)
-                    zeroLoc += 1
-                    cnt += 1
+        while p1 < len(team): # move the pointer for 0
+            if team[p1] == 1:
+                while p0 < len(team) and p0 <= p1+dist: # move the pointer for 0
+                    if team[p0] == 0 and p1-dist <= p0 <= p1+dist:
+                        cnt += 1
+                        p0 += 1 #advance the 0 pointer after count
+                        break
+                    p0+=1
+            p1+=1
         return cnt
 
