@@ -5,13 +5,15 @@ class ListNode:
         self.next = None
 
 class Solution:
-    def getIntersectionNode(self, headA: 'ListNode', headB: 'ListNode') -> 'ListNode':
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
         nodeA = headA
         nodeB = headB
-        while nodeA!=nodeB:  # from the short list jump to the long, and the long jump to the short, and move together. If they reach the end without intersection, both will be None, hence returned None.
+        while nodeA!=nodeB:
             nodeA = headB if nodeA == None else nodeA.next
             nodeB = headA if nodeB == None else nodeB.next
         return nodeA
+
+
 
 
 # previous approach
