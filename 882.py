@@ -1,4 +1,4 @@
-class Solution:
+class Solution:  # RL 20210912: Copied solution
     def reachableNodes(self, edges: 'List[List[int]]', maxMoves: int, n: int) -> int:
         graph = defaultdict(dict)
         for u, v, w in edges:
