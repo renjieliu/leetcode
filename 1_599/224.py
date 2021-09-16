@@ -1,27 +1,57 @@
 class Solution:
     def calculate(self, s: str) -> int:
-        def helper(txt):  # calculate current txt
-            return sum(int(_) for _ in txt.replace('--', '+').replace('-', '+-').split('+') if _)
+        def calc(txt):
+            txt = txt.replace("--", "+").replace("-","+-")
+            return sum(int(_) for _ in txt.split("+") if _ ) #filter if _ is "" blank
 
-        full = ""
-        s = s.replace(' ', '')
+        s = s.replace(" ", "")
+        entire = ""
         stk = []
-        for i, c in enumerate(s):  # once meet a (, add a stk, once meet a ), calc the current, and add back
-            if c == "(":
+        for c in s:
+            if c == "(": #put into a stk
                 stk.append("")
             elif c == ")":
-                res = helper(stk.pop())
+                local = calc(stk.pop()) #calc the local string
                 if stk:
-                    stk[-1] += str(res)
+                    stk[-1] += str(local)
                 else:
-                    full += str(res)
+                    entire+=str(local)
             else:
                 if stk:
                     stk[-1] += c
-                else:  # if no stack, just add to the full string.
-                    full += c
-        # print(full)
-        return helper(full)
+                else:
+                    entire += c
+
+        return calc(entire) #calc the entire string
+
+
+
+
+# previous approach
+# class Solution:
+#     def calculate(self, s: str) -> int:
+#         def helper(txt):  # calculate current txt
+#             return sum(int(_) for _ in txt.replace('--', '+').replace('-', '+-').split('+') if _)
+#
+#         full = ""
+#         s = s.replace(' ', '')
+#         stk = []
+#         for i, c in enumerate(s):  # once meet a (, add a stk, once meet a ), calc the current, and add back
+#             if c == "(":
+#                 stk.append("")
+#             elif c == ")":
+#                 res = helper(stk.pop())
+#                 if stk:
+#                     stk[-1] += str(res)
+#                 else:
+#                     full += str(res)
+#             else:
+#                 if stk:
+#                     stk[-1] += c
+#                 else:  # if no stack, just add to the full string.
+#                     full += c
+#         # print(full)
+#         return helper(full)
 
 # previous approach
 # class Solution:
