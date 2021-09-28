@@ -1,18 +1,31 @@
 class Solution:
     def sortArrayByParityII(self, nums: 'List[int]') -> 'List[int]':
-        output = [None for _ in range(len(nums))]
-        even = 0
         odd = 1
-        for i in range(len(nums)):
-            curr = nums[i]
-            if curr % 2 == 1:
-                output[odd] = curr
-                odd += 2
-            else:
-                output[even] = curr
-                even += 2
-        return output
+        for even in range(0, len(nums), 2): #swap within the array itself.
+            if nums[even] %2 : # even location, odd number, need to swap
+                while nums[odd] % 2: #odd locatio, odd number, need to pass
+                    odd+=2
+                nums[even], nums[odd] = nums[odd], nums[even]
+        return nums
 
+
+
+# previous approach
+# class Solution:
+#     def sortArrayByParityII(self, nums: 'List[int]') -> 'List[int]':
+#         output = [None for _ in range(len(nums))]
+#         even = 0
+#         odd = 1
+#         for i in range(len(nums)):
+#             curr = nums[i]
+#             if curr % 2 == 1:
+#                 output[odd] = curr
+#                 odd += 2
+#             else:
+#                 output[even] = curr
+#                 even += 2
+#         return output
+#
 
 
 
