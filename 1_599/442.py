@@ -1,13 +1,27 @@
 class Solution:
     def findDuplicates(self, nums: 'List[int]') -> 'List[int]':
         output = []
-        for n in nums: #mark the one traversed as negative number. If meets it again, it's a duplicated number
-            loc = abs(n)-1
-            if nums[loc] > 0:
-                nums[loc] *= -1
+        for n in nums:
+            pos = abs(n)-1 
+            if nums[pos] > 0:
+                nums[pos] *=-1
             else:
-                output.append(abs(n)) # if the loc has been marked, the number was seen before
+                output.append(abs(n))
         return output
+    
+
+
+
+# class Solution:
+#     def findDuplicates(self, nums: 'List[int]') -> 'List[int]':
+#         output = []
+#         for n in nums: #mark the one traversed as negative number. If meets it again, it's a duplicated number
+#             loc = abs(n)-1
+#             if nums[loc] > 0:
+#                 nums[loc] *= -1
+#             else:
+#                 output.append(abs(n)) # if the loc has been marked, the number was seen before
+#         return output
 
 
 # previous approach
