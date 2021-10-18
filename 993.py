@@ -1,36 +1,61 @@
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def isCousins(self, root: TreeNode, x: int, y: int) -> bool:
-        def flat(curr, node, path):
-            if node.left == node.right == None:
-                path.append(curr + [node.val])
+    def isCousins(self, root: 'Optional[TreeNode]', x: int, y: int) -> bool:
+        def dfs(output, path, node, h, idx, v):
+            if node.val == v:
+                output += [h, (idx-1)//2] #value found, [depth, parent idx]
             else:
-                if node.left:
-                    flat(curr + [node.val], node.left, path)
-                if node.right:
-                    flat(curr + [node.val], node.right, path)
+                if node.left: 
+                    dfs(output, path+[idx], node.left, h+1, idx*2+1, v)
+                if output == [] and node.right:
+                    dfs(output, path+[idx], node.right, h+1, idx*2+2, v)
+        A = []
+        dfs(A, [], root, 0, 0, x)
+        B = []
+        dfs(B, [], root, 0, 0, y)
+        return A[0] == B[0] and A[1] != B[1]  #the depth is the same or the parent is not same 
 
-        path = []
-        flat([], root, path)
-        x_depth = -1
-        x_parent = -1
-        y_depth = -1
-        y_parent = -1
-        for p in path:
-            if x in p:
-                x_depth = p.index(x)
-                if x_depth > 0:
-                    x_parent = p[x_depth - 1]
-            if y in p:
-                y_depth = p.index(y)
-                if y_depth > 0:
-                    y_parent = p[y_depth - 1]
-        return True if x_depth != -1 and y_depth != -1 and x_depth == y_depth and x_parent != y_parent else False
+        
+
+# previous approach
+# # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+# class Solution:
+#     def isCousins(self, root: TreeNode, x: int, y: int) -> bool:
+#         def flat(curr, node, path):
+#             if node.left == node.right == None:
+#                 path.append(curr + [node.val])
+#             else:
+#                 if node.left:
+#                     flat(curr + [node.val], node.left, path)
+#                 if node.right:
+#                     flat(curr + [node.val], node.right, path)
+
+#         path = []
+#         flat([], root, path)
+#         x_depth = -1
+#         x_parent = -1
+#         y_depth = -1
+#         y_parent = -1
+#         for p in path:
+#             if x in p:
+#                 x_depth = p.index(x)
+#                 if x_depth > 0:
+#                     x_parent = p[x_depth - 1]
+#             if y in p:
+#                 y_depth = p.index(y)
+#                 if y_depth > 0:
+#                     y_parent = p[y_depth - 1]
+#         return True if x_depth != -1 and y_depth != -1 and x_depth == y_depth and x_parent != y_parent else False
 
 
 
