@@ -1,20 +1,44 @@
 class Solution:
     def nextGreaterElement(self, nums1: 'List[int]', nums2: 'List[int]') -> 'List[int]':
+        hmp = {}
+        stk = [] #monotone stack
+        for n in nums2:
+            if stk:
+                if n < stk[-1]: #if current number is < stk head, add to stk
+                    stk.append(n)
+                else: # current number is larger than any one in the stk
+                    while stk and n > stk[-1]:
+                        hmp[stk.pop()] = n
+            stk.append(n)
+        
+        while stk: #clear the remaining items in the stk
+            hmp[stk.pop(0)] = -1
+        
         output = []
         for n in nums1:
-            loc = float('inf')
-            for i in range(len(nums2)):
-                find = 0
-                if nums2[i] == n: 
-                    loc = i
-                if nums2[i] > n and i > loc:
-                    output.append(nums2[i])
-                    find =1 
-                    break 
-            if find == 0:
-                output.append(-1)
-        
+            output.append(hmp[n])
         return output
+            
+        
+
+# previous approach
+# class Solution:
+#     def nextGreaterElement(self, nums1: 'List[int]', nums2: 'List[int]') -> 'List[int]':
+#         output = []
+#         for n in nums1:
+#             loc = float('inf')
+#             for i in range(len(nums2)):
+#                 find = 0
+#                 if nums2[i] == n: 
+#                     loc = i
+#                 if nums2[i] > n and i > loc:
+#                     output.append(nums2[i])
+#                     find =1 
+#                     break 
+#             if find == 0:
+#                 output.append(-1)
+        
+#         return output
  
 
 # previous approach
