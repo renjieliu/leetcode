@@ -13,6 +13,8 @@ Table: Candidates
 +--------------+----------+
 candidate_id is the primary key column for this table.
 Each row of this table indicates the name of a candidate, their number of years of experience, and their interview ID.
+ 
+
 Table: Rounds
 
 +--------------+------+
@@ -24,7 +26,9 @@ Table: Rounds
 +--------------+------+
 (interview_id, round_id) is the primary key column for this table.
 Each row of this table indicates the score of one round of an interview.
-Write an SQL query to report the IDs of the candidates who have at least two years of experience and the sum of the score of their interview rounds is strictly greater than 16.
+ 
+
+Write an SQL query to report the IDs of the candidates who have at least two years of experience and the sum of the score of their interview rounds is strictly greater than 15.
 
 Return the result table in any order.
 
@@ -76,8 +80,8 @@ Explanation:
 */
 
 
-Create table If Not Exists Candidates (candidate_id int, name varchar(30), years_of_exp int, interview_id int)
-Create table If Not Exists Rounds (interview_id int, round_id int, score int)
+Create table Candidates (candidate_id int, name varchar(30), years_of_exp int, interview_id int)
+Create table Rounds (interview_id int, round_id int, score int)
 Truncate table Candidates
 insert into Candidates (candidate_id, name, years_of_exp, interview_id) values ('11', 'Atticus', '1', '101')
 insert into Candidates (candidate_id, name, years_of_exp, interview_id) values ('9', 'Ruben', '6', '104')
@@ -100,16 +104,14 @@ insert into Rounds (interview_id, round_id, score) values ('101', '1', '8')
 
 
 
-
-
 # Write your MySQL query statement below
-
 select c.candidate_id 
 from Candidates c inner join Rounds r
 on c.interview_id = r.interview_id
 where c.years_of_exp >= 2 
 group by c.candidate_id, r.interview_id
-having sum(r.score) >= 16 -- Test case is wrong, it should be `having sum(r.score) > 16`
+having sum(r.score) > 15
+
 
 
 
