@@ -1,22 +1,44 @@
-def nextGreaterElement(nums1, nums2):
-    """
-    :type nums1: List[int]
-    :type nums2: List[int]
-    :rtype: List[int]
-    """
-    x1 = nums1
-    x2 = nums2
-    output = list()
-    for i in range(0, len(x1)):
-        found = -1
-        index = x2.index(x1[i])
-        for j in range(index, len(x2)):
-            if x2[j] > x1[i]:
-                found = x2[j]
-                break
+class Solution:
+    def nextGreaterElement(self, nums1: 'List[int]', nums2: 'List[int]') -> 'List[int]':
+        output = []
+        for n in nums1:
+            loc = float('inf')
+            for i in range(len(nums2)):
+                find = 0
+                if nums2[i] == n: 
+                    loc = i
+                if nums2[i] > n and i > loc:
+                    output.append(nums2[i])
+                    find =1 
+                    break 
+            if find == 0:
+                output.append(-1)
+        
+        return output
+ 
 
-        output.append(found)
+# previous approach
+# def nextGreaterElement(nums1, nums2):
+#     """
+#     :type nums1: List[int]
+#     :type nums2: List[int]
+#     :rtype: List[int]
+#     """
+#     x1 = nums1
+#     x2 = nums2
+#     output = list()
+#     for i in range(0, len(x1)):
+#         found = -1
+#         index = x2.index(x1[i])
+#         for j in range(index, len(x2)):
+#             if x2[j] > x1[i]:
+#                 found = x2[j]
+#                 break
 
-    return output
+#         output.append(found)
 
-print(nextGreaterElement([2,4], [1,2,3,4]))
+#     return output
+
+# print(nextGreaterElement([2,4], [1,2,3,4]))
+
+
