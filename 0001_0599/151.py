@@ -1,11 +1,39 @@
 class Solution:
     def reverseWords(self, s: str) -> str:
-        arr = s.split(' ')
-        words = []
-        for a in arr:
-            if len(a) > 0:
-                words.append(a)
-        return ' '.join(words[::-1])
+        arr = [""]
+        for c in s:
+            if c == " ":
+                if arr and arr[-1] != "":
+                    arr.append("")
+            else:
+                arr[-1] += c
+        
+        output = ""
+        for a in arr[::-1]:
+            output += (a+" ") if a else ""
+        
+        return output[:-1] #take out the last space
+        
+        
+        
+#         arr = s.split(" ")[::-1]
+#         output = ""
+#         for a in arr:
+#             if a: 
+#                 output+=a + " "
+#         return output.rstrip(" ") #remove the last space from the output
+    
+
+
+# previous approach
+# class Solution:
+#     def reverseWords(self, s: str) -> str:
+#         arr = s.split(' ')
+#         words = []
+#         for a in arr:
+#             if len(a) > 0:
+#                 words.append(a)
+#         return ' '.join(words[::-1])
 
 # previous approach
 # def reverseWords(s: str):
