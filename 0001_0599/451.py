@@ -2,16 +2,39 @@ class Solution:
     def frequencySort(self, s: str) -> str:
         hmp = {}
         for c in s:
-            if c not in hmp:
-                hmp[c] = 0
-            hmp[c] += 1
-        for_sort = []
+            if c not in hmp: 
+                hmp[c] = 0 
+            hmp[c]+=1 
+        
+        counter = {} 
         for k, v in hmp.items():
-            for_sort.append([k, v])
+            if v not in counter:
+                counter[v] = []
+            counter[v].append(k)
+        
         output = ""
-        for s in sorted(for_sort, key=lambda x: x[1], reverse=True):
-            output += s[0] * s[1]
+        for k in sorted(counter.keys(), reverse = True):
+            for i in counter[k]:
+                output += k*i
         return output
+
+
+
+# previous approach
+# class Solution:
+#     def frequencySort(self, s: str) -> str:
+#         hmp = {}
+#         for c in s:
+#             if c not in hmp:
+#                 hmp[c] = 0
+#             hmp[c] += 1
+#         for_sort = []
+#         for k, v in hmp.items():
+#             for_sort.append([k, v])
+#         output = ""
+#         for s in sorted(for_sort, key=lambda x: x[1], reverse=True):
+#             output += s[0] * s[1]
+#         return output
 
 # OLD Solution
 # def frequencySort(s: str):
