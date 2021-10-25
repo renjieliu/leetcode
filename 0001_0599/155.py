@@ -7,13 +7,17 @@ class MinStack:
 
     def push(self, val: int) -> None:
         self.stk.append(val)
-        if self.min_stk == [] or val <= self.min_stk[-1]: #store the min number in ths stack.
-            self.min_stk.append(val)
+        if self.min_stk == [] or val < self.min_stk[-1][0]: # #store the min number in ths stack.
+            self.min_stk.append([val, 1]) #[minValue, cnt]
+        elif val == self.min_stk[-1][0]: 
+            self.min_stk[-1][1] += 1
         
 
     def pop(self) -> None: 
-        if self.stk[-1] == self.min_stk[-1]:
-            self.min_stk.pop()
+        if self.stk[-1] == self.min_stk[-1][0]:
+            self.min_stk[-1][1]-=1
+            if self.min_stk[-1][1] == 0:
+                self.min_stk.pop()
         self.stk.pop()
         
 
@@ -22,7 +26,43 @@ class MinStack:
         
 
     def getMin(self) -> int:
-        return self.min_stk[-1]
+        return self.min_stk[-1][0]
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(val)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
+
+
+# previous approach
+# class MinStack:
+
+#     def __init__(self):
+#         self.stk = []
+#         self.min_stk = []
+        
+
+#     def push(self, val: int) -> None:
+#         self.stk.append(val)
+#         if self.min_stk == [] or val <= self.min_stk[-1]: #store the min number in ths stack.
+#             self.min_stk.append(val)
+        
+
+#     def pop(self) -> None: 
+#         if self.stk[-1] == self.min_stk[-1]:
+#             self.min_stk.pop()
+#         self.stk.pop()
+        
+
+#     def top(self) -> int:
+#         return self.stk[-1]
+        
+
+#     def getMin(self) -> int:
+#         return self.min_stk[-1]
 
 
 # Your MinStack object will be instantiated and called as such:
