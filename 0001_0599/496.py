@@ -1,23 +1,48 @@
 class Solution:
     def nextGreaterElement(self, nums1: 'List[int]', nums2: 'List[int]') -> 'List[int]':
-        hmp = {}
-        stk = [] #monotone stack
+        hmp = {} #record the next larget element for each number in nums2
+        stk = [] #the monotone stk
         for n in nums2:
-            if stk:
-                if n < stk[-1]: #if current number is < stk head, add to stk
-                    stk.append(n)
-                else: # current number is larger than any one in the stk
-                    while stk and n > stk[-1]:
-                        hmp[stk.pop()] = n
-            stk.append(n)
+            if stk == []:
+                stk.append(n)
+            else:
+                while stk and n > stk[-1]: #current number is greater than the top of the stk
+                    hmp[stk.pop()] = n
+                stk.append(n)
+        while stk:
+            hmp[stk.pop()] = -1
         
-        while stk: #clear the remaining items in the stk
-            hmp[stk.pop(0)] = -1
         
         output = []
         for n in nums1:
-            output.append(hmp[n])
+            output.append(hmp[n]) 
+        
         return output
+    
+
+
+
+# previous approach
+# class Solution:
+#     def nextGreaterElement(self, nums1: 'List[int]', nums2: 'List[int]') -> 'List[int]':
+#         hmp = {}
+#         stk = [] #monotone stack
+#         for n in nums2:
+#             if stk:
+#                 if n < stk[-1]: #if current number is < stk head, add to stk
+#                     stk.append(n)
+#                 else: # current number is larger than any one in the stk
+#                     while stk and n > stk[-1]:
+#                         hmp[stk.pop()] = n
+#             stk.append(n)
+        
+#         while stk: #clear the remaining items in the stk
+#             hmp[stk.pop(0)] = -1
+        
+#         output = []
+#         for n in nums1:
+#             output.append(hmp[n])
+#         return output
             
         
 
