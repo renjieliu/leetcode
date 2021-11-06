@@ -1,18 +1,18 @@
+
 class Solution:
     def threeSum(self, nums: 'List[int]') -> 'List[List[int]]':
         nums.sort() 
         i = 0 
-        output = []
+        output = [] 
         while i < len(nums)-2:
             j = i+1 
-            k = len(nums)-1 
+            k = len(nums)-1
             while j < k:
-                curr = nums[j] + nums[k]
-                if curr > -nums[i]:
+                if nums[j] + nums[k] > -nums[i]:
                     k-=1
-                elif curr < -nums[i]:
-                    j+=1 
-                else:
+                elif nums[j] + nums[k] < -nums[i]:
+                    j+=1
+                elif nums[j] + nums[k] == -nums[i]:
                     output.append([nums[i], nums[j], nums[k]])
                     cj = nums[j]
                     ck = nums[k]
@@ -20,11 +20,41 @@ class Solution:
                         j+=1
                     while k > j and nums[k] == ck:
                         k-=1
+            
             ci = nums[i]
             while i < len(nums)-2 and nums[i] == ci:
                 i+=1
-            
         return output
+            
+
+# previous approach
+# class Solution:
+#     def threeSum(self, nums: 'List[int]') -> 'List[List[int]]':
+#         nums.sort() 
+#         i = 0 
+#         output = []
+#         while i < len(nums)-2:
+#             j = i+1 
+#             k = len(nums)-1 
+#             while j < k:
+#                 curr = nums[j] + nums[k]
+#                 if curr > -nums[i]:
+#                     k-=1
+#                 elif curr < -nums[i]:
+#                     j+=1 
+#                 else:
+#                     output.append([nums[i], nums[j], nums[k]])
+#                     cj = nums[j]
+#                     ck = nums[k]
+#                     while j < k and nums[j] == cj:
+#                         j+=1
+#                     while k > j and nums[k] == ck:
+#                         k-=1
+#             ci = nums[i]
+#             while i < len(nums)-2 and nums[i] == ci:
+#                 i+=1
+            
+#         return output
     
     
 
