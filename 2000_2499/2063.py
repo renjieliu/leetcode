@@ -4,7 +4,7 @@ class Solution:
         return sum( (i+1)*(n-i) for i, w in enumerate(word) if w in 'aeiou')
         
         
-        
+# DP approach    
 # class Solution:
 #     def countVowels(self, word: str) -> int: # dp
 #         prev = 1 if word[0] in 'aeiou' else 0
