@@ -1,13 +1,31 @@
 class Solution:
-    def largestDivisibleSubset(self, nums: 'List[int]') -> 'List[int]': #RL 20211115 Copied solution
-        if len(nums) == 0: return []
+    def largestDivisibleSubset(self, nums: 'List[int]') -> 'List[int]': 
         nums.sort()
-        res = [[num] for num in nums]
+        dp = [[n] for n in nums]
         for i in range(len(nums)):
             for j in range(i):
-                if nums[i] % nums[j] == 0 and len(res[i]) < len(res[j]) + 1:
-                    res[i] = res[j] + [nums[i]]
-        return max(res, key=len)
+                if nums[i] % nums[j] == 0:
+                    if len(dp[i]) < len(dp[j])+1 : #if nums[j] can be divided by curr i, all the dp[j] can be divided as well.
+                        dp[i] = dp[j] + [nums[i]] 
+        
+        return max(dp, key = lambda x: len(x) ) # key = lambda x:len(x))
+
+
+    
+
+
+
+# previous approach
+# class Solution:
+#     def largestDivisibleSubset(self, nums: 'List[int]') -> 'List[int]': #RL 20211115 Copied solution
+#         if len(nums) == 0: return []
+#         nums.sort()
+#         res = [[num] for num in nums]
+#         for i in range(len(nums)):
+#             for j in range(i):
+#                 if nums[i] % nums[j] == 0 and len(res[i]) < len(res[j]) + 1:
+#                     res[i] = res[j] + [nums[i]]
+#         return max(res, key=len)
     
 
 
