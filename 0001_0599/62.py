@@ -1,17 +1,38 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        dp = []
-        for r in range(n):
+        dp = [] 
+        for r in range(m):
             dp.append([])
-            for c in range(m):
+            for c in range(n):
                 if r == 0:
-                    dp[-1].append(1)
-                else:
-                    if c == 0:
+                    if c == 0: 
                         dp[-1].append(1)
                     else:
-                        dp[-1].append(dp[r][c - 1] + dp[r - 1][c])
+                        dp[-1].append(dp[-1][-1])
+                else:
+                    if c== 0:
+                        dp[-1].append(dp[r-1][c])
+                    else:
+                        dp[-1].append(dp[r-1][c] + dp[r][c-1])
         return dp[-1][-1]
+
+
+
+# previous approach
+# class Solution:
+#     def uniquePaths(self, m: int, n: int) -> int:
+#         dp = []
+#         for r in range(n):
+#             dp.append([])
+#             for c in range(m):
+#                 if r == 0:
+#                     dp[-1].append(1)
+#                 else:
+#                     if c == 0:
+#                         dp[-1].append(1)
+#                     else:
+#                         dp[-1].append(dp[r][c - 1] + dp[r - 1][c])
+#         return dp[-1][-1]
 
 
 
