@@ -1,6 +1,20 @@
 class Solution:
     def findDisappearedNumbers(self, nums: 'List[int]') -> 'List[int]': #O(n)
-        return list(set(list(range(1, len(nums)+1))) - set(nums))
+        for n in nums:
+            if nums[abs(n)-1] > 0: #mark the one appeared
+                nums[abs(n)-1] *= -1 
+        output = []
+        for i in range(1, len(nums) + 1): #current location has not been marked
+            if nums[i-1] > 0:
+                output.append(i)
+        
+        return output
+
+
+# previous approach 
+# class Solution:
+#     def findDisappearedNumbers(self, nums: 'List[int]') -> 'List[int]': #O(n)
+#         return list(set(list(range(1, len(nums)+1))) - set(nums))
 
 # class Solution:
 #     def findDisappearedNumbers(self, nums: List[int]) -> List[int]: #O(n)
