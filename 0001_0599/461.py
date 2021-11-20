@@ -1,5 +1,17 @@
-def hammingDistance(self, x: int, y: int) -> int:
-    return bin(x ^ y).count('1')
+class Solution:
+    def hammingDistance(self, x: int, y: int) -> int:
+        cnt = 0 
+        x^=y
+        while x > 0 :
+            cnt += x%2
+            x >>= 1
+        return cnt
+    
+
+
+# previous approach
+# def hammingDistance(self, x: int, y: int) -> int:
+#     return bin(x ^ y).count('1')
 
 
 
