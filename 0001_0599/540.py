@@ -1,14 +1,37 @@
 class Solution:
     def singleNonDuplicate(self, nums: 'List[int]') -> int:
         s = 0
-        e = len(nums)-1
-        while s<=e :
-            mid = (s+e)//2
-            if (mid < len(nums)-1 and mid%2 == 0 and nums[mid+1] == nums[mid]) or ( mid > 0 and mid%2 == 1 and nums[mid] == nums[mid-1]): # this is the good part, the problem is on the right
-                s = mid+1
+        e = len(nums)-1 
+        while s < e:
+            mid = (s+e) // 2
+            if nums[mid] == nums[mid-1]:
+                if (mid-s+1)%2 == 0: #left part is even length, the number is on the right side
+                    s = mid + 1 
+                else:
+                    e = mid - 2
+            elif nums[mid] == nums[mid+1]: #right side is even length, the number is on the left side
+                if (e - mid + 1) % 2 == 0 :
+                    e = mid - 1 
+                else:
+                    s = mid + 2                 
             else:
-                e = mid-1 # omit the possible candidate, if nothing on the left works,then final s or e+1 is the possible candidate.
-        return nums[s] # same as return num[e+1]
+                 return nums[mid]
+        
+        return nums[s]
+                
+
+# previous approach
+# class Solution:
+#     def singleNonDuplicate(self, nums: 'List[int]') -> int:
+#         s = 0
+#         e = len(nums)-1
+#         while s<=e :
+#             mid = (s+e)//2
+#             if (mid < len(nums)-1 and mid%2 == 0 and nums[mid+1] == nums[mid]) or ( mid > 0 and mid%2 == 1 and nums[mid] == nums[mid-1]): # this is the good part, the problem is on the right
+#                 s = mid+1
+#             else:
+#                 e = mid-1 # omit the possible candidate, if nothing on the left works,then final s or e+1 is the possible candidate.
+#         return nums[s] # same as return num[e+1]
 
 
 
