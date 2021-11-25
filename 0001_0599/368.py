@@ -1,14 +1,29 @@
 class Solution:
-    def largestDivisibleSubset(self, nums: 'List[int]') -> 'List[int]': 
+    def largestDivisibleSubset(self, nums: 'List[int]') -> 'List[int]':
         nums.sort()
-        dp = [[n] for n in nums]
-        for i in range(len(nums)):
+        dp = [[_] for _ in nums] #initialize all the elements to be the number itself
+        for i in range(1, len(nums)): #for each number, to check back if nums[i] is a multiple of nums[j]
             for j in range(i):
                 if nums[i] % nums[j] == 0:
-                    if len(dp[i]) < len(dp[j])+1 : #if nums[j] can be divided by curr i, all the dp[j] can be divided as well.
-                        dp[i] = dp[j] + [nums[i]] 
+                    if len(dp[j]) + 1 > len(dp[i]): #and check if it can contribute to the max length
+                        dp[i] = dp[j] + [nums[i]]
         
-        return max(dp, key = lambda x: len(x) ) # key = lambda x:len(x))
+        return max(dp, key = lambda x : len(x))
+
+
+
+# previous approach
+# class Solution:
+#     def largestDivisibleSubset(self, nums: 'List[int]') -> 'List[int]': 
+#         nums.sort()
+#         dp = [[n] for n in nums]
+#         for i in range(len(nums)):
+#             for j in range(i):
+#                 if nums[i] % nums[j] == 0:
+#                     if len(dp[i]) < len(dp[j])+1 : #if nums[j] can be divided by curr i, all the dp[j] can be divided as well.
+#                         dp[i] = dp[j] + [nums[i]] 
+        
+#         return max(dp, key = lambda x: len(x) ) # key = lambda x:len(x))
 
 
     
