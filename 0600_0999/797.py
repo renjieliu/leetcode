@@ -1,26 +1,43 @@
 class Solution:
     def allPathsSourceTarget(self, graph: 'List[List[int]]') -> 'List[List[int]]':
-        hmp = {}
-        for i, c in enumerate(graph):
-            if len(c) > 0:
-                if i not in hmp:
-                    hmp[i] = []
-                for to in c:
-                    hmp[i].append(to)
-
-        def dfs(output, hmp, node, path, target):
-            if node not in hmp:
-                return -1
+        output = [] 
+        def helper(output, i, path, graph):
+            if i == len(graph)-1: # if current node is the last node of the graph
+                output.append(path)
             else:
-                for c in hmp[node]:
-                    if c == target:
-                        output.append(path + [c])
-                    else:
-                        dfs(output, hmp, c, path + [c], target)
-
-        output = []
-        dfs(output, hmp, 0, [0], len(graph) - 1)
+                for n in graph[i]: #for each node in the graph, search for the next
+                    helper(output, n, path + [n], graph)
+        
+        helper(output, 0, [0], graph) # starting from node 0
         return output
+    
+
+
+
+# previous approach
+# class Solution:
+#     def allPathsSourceTarget(self, graph: 'List[List[int]]') -> 'List[List[int]]':
+#         hmp = {}
+#         for i, c in enumerate(graph):
+#             if len(c) > 0:
+#                 if i not in hmp:
+#                     hmp[i] = []
+#                 for to in c:
+#                     hmp[i].append(to)
+
+#         def dfs(output, hmp, node, path, target):
+#             if node not in hmp:
+#                 return -1
+#             else:
+#                 for c in hmp[node]:
+#                     if c == target:
+#                         output.append(path + [c])
+#                     else:
+#                         dfs(output, hmp, c, path + [c], target)
+
+#         output = []
+#         dfs(output, hmp, 0, [0], len(graph) - 1)
+#         return output
 
 # previous approach
 # class Solution:
