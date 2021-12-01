@@ -18,7 +18,36 @@ class Solution:
         helper(hmp, 0, nums)
         # print(hmp)
         return hmp[0]
-    
+
+
+# previous approach
+
+# class Solution:
+#     def rob(self, nums: List[int]) -> int:
+#         if nums == [] :return 0
+#         elif len(nums) <=2: return max(nums)
+        
+#         def dp(arr, i, mem):
+#             if i >=len(mem):
+#                 return 0
+#             elif mem[i] != -float('inf'): 
+#                 return mem[i]
+#             elif len(arr[i:]) ==0 :
+#                 return 0           
+#             elif len(arr[i:]) == 1 :
+#                 return arr[i]
+#             else:
+#                 A = arr[i] + dp(arr, i+2, mem)
+#                 B = arr[i+1] + dp(arr, i+3, mem)
+#             # print(i, A, B)
+#             mem[i] = max(A, B)
+#             return mem[i]
+        
+#         mem = [-float('inf')] * len(nums)
+#         dp(nums, 0, mem)
+#         return mem[0]
+
+
 
 # previous approach
 # def rob(nums: 'List[int]'):
