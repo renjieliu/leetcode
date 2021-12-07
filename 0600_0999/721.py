@@ -1,25 +1,53 @@
 class Solution:
     def accountsMerge(self, accounts: 'List[List[str]]') -> 'List[List[str]]':
-        loc= {} # to record the location of email
-        groups = [[] for _ in accounts] 
-        for i, acc in enumerate(accounts):
-            for email in acc[1:]:
-                if email not in loc:
-                    loc[email] = i
-                    groups[i].append(email)
-                elif loc[email] != i: #this email was seen before 
-                    prev_loc = loc[email]
-                    for e in groups[loc[email]]: #for all the email in the same group, move to the current group
-                        loc[e] = i
-                        groups[i].append(e)
-                    groups[prev_loc] = [] #clear the previous group
-        
+        loc = {}
+        groups = [[] for _ in accounts]
+        for i in range(len(accounts)):
+            mails = accounts[i][1:]
+            for m in mails:
+                if m in loc:
+                    if loc[m] != i : # this mail was seen before
+                        t = loc[m] # save the prev location
+                        for g in groups[loc[m]]: #everyone in the same group need to be added to current
+                            groups[i].append(g)
+                            loc[g] = i
+                        groups[t] = []
+                else:
+                    loc[m] = i
+                    groups[i].append(m)
+                
         output = []
-        for i, emails in enumerate(groups):
-            if emails:
-                name = accounts[loc[emails[0]]][0]
-                output.append([name] + sorted(emails))
+        for i, g in enumerate(groups):
+            if g: 
+                output.append([accounts[i][0]]+sorted(g))
         return output
+                    
+           
+        
+
+# previous approach 
+# class Solution:
+#     def accountsMerge(self, accounts: 'List[List[str]]') -> 'List[List[str]]':
+#         loc= {} # to record the location of email
+#         groups = [[] for _ in accounts] 
+#         for i, acc in enumerate(accounts):
+#             for email in acc[1:]:
+#                 if email not in loc:
+#                     loc[email] = i
+#                     groups[i].append(email)
+#                 elif loc[email] != i: #this email was seen before 
+#                     prev_loc = loc[email]
+#                     for e in groups[loc[email]]: #for all the email in the same group, move to the current group
+#                         loc[e] = i
+#                         groups[i].append(e)
+#                     groups[prev_loc] = [] #clear the previous group
+        
+#         output = []
+#         for i, emails in enumerate(groups):
+#             if emails:
+#                 name = accounts[loc[emails[0]]][0]
+#                 output.append([name] + sorted(emails))
+#         return output
     
 
 
