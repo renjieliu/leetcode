@@ -1,13 +1,27 @@
 class Solution:
     def maxProduct(self, nums: 'List[int]') -> int:
-        minn = [nums[0]] 
+        minn = [nums[0]]
         maxx = [nums[0]]
         for n in nums[1:]:
-            mi = min(n*minn[-1], n*maxx[-1], n) #when make * curr, it either becomes mi, or mx or self is the mi
-            mx = max(n*minn[-1], n*maxx[-1], n) #when make * curr, it either becomes mi, or mx or self is the mx
+            mi = min(minn[-1] * n, maxx[-1] * n, n)
+            mx = max(minn[-1] * n, maxx[-1] * n, n)
             minn.append(mi)
             maxx.append(mx)
         return max(maxx)
+    
+
+
+# previous approach 
+# class Solution:
+#     def maxProduct(self, nums: 'List[int]') -> int:
+#         minn = [nums[0]] 
+#         maxx = [nums[0]]
+#         for n in nums[1:]:
+#             mi = min(n*minn[-1], n*maxx[-1], n) #when make * curr, it either becomes mi, or mx or self is the mi
+#             mx = max(n*minn[-1], n*maxx[-1], n) #when make * curr, it either becomes mi, or mx or self is the mx
+#             minn.append(mi)
+#             maxx.append(mx)
+#         return max(maxx)
 
 
 # previous approach
