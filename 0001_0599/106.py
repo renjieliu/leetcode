@@ -6,14 +6,34 @@
 #         self.right = right
 class Solution:
     def buildTree(self, inorder: 'List[int]', postorder: 'List[int]') -> 'Optional[TreeNode]':
-        hmp = {c: i for i, c in enumerate(inorder)} # to record the position of each value in the inorder, which is split the tree to left, right
-        def helper(hmp, postorder, s, e):
-            if s <= e and postorder:
-                root = TreeNode(postorder.pop()) #using current node as root and split the tree into 2 parts
-                root.right = helper(hmp, postorder, hmp[root.val]+1, e) #build the right subtree first, as post order is reading right value first
-                root.left = helper(hmp, postorder, s, hmp[root.val]-1)
-                return root
-        return helper(hmp, postorder, 0, len(postorder)-1)
+        loc = {n:i for i, n in enumerate(inorder)}
+        def build(start, end, loc, postorder):
+            if postorder and start <= end:
+                node = TreeNode(postorder.pop())
+                node.right = build(loc[node.val]+1, end, loc, postorder) #build the right tree first, as it's postorder
+                node.left = build(start, loc[node.val]-1, loc, postorder)
+                return node
+        return build(0, len(inorder)-1, loc, postorder)
+
+
+
+# previous approach
+# # Definition for a binary tree node.
+# # class TreeNode:
+# #     def __init__(self, val=0, left=None, right=None):
+# #         self.val = val
+# #         self.left = left
+# #         self.right = right
+# class Solution:
+#     def buildTree(self, inorder: 'List[int]', postorder: 'List[int]') -> 'Optional[TreeNode]':
+#         hmp = {c: i for i, c in enumerate(inorder)} # to record the position of each value in the inorder, which is split the tree to left, right
+#         def helper(hmp, postorder, s, e):
+#             if s <= e and postorder:
+#                 root = TreeNode(postorder.pop()) #using current node as root and split the tree into 2 parts
+#                 root.right = helper(hmp, postorder, hmp[root.val]+1, e) #build the right subtree first, as post order is reading right value first
+#                 root.left = helper(hmp, postorder, s, hmp[root.val]-1)
+#                 return root
+#         return helper(hmp, postorder, 0, len(postorder)-1)
     
     
 
