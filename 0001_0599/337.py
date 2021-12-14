@@ -8,15 +8,38 @@ class Solution:
     def rob(self, root: 'Optional[TreeNode]') -> int:
         def helper(node):
             if node == None:
-                return [0, 0] #rob, not_rob
+                return [0, 0] #[rob, not_rob]
             else:
                 A = helper(node.left)
                 B = helper(node.right)
-                rob_current = node.val + A[1] + B[1] # cannot rob child node if current is robbed
-                not_rob_current = max(A) + max(B) 
-                return [rob_current, not_rob_current]
-        
+                rob = node.val + A[1] + B[1] 
+                not_rob = max(A) + max(B)
+                return [rob, not_rob]
         return max(helper(root))
+
+    
+
+
+# previous approach
+# # Definition for a binary tree node.
+# # class TreeNode:
+# #     def __init__(self, val=0, left=None, right=None):
+# #         self.val = val
+# #         self.left = left
+# #         self.right = right
+# class Solution:
+#     def rob(self, root: 'Optional[TreeNode]') -> int:
+#         def helper(node):
+#             if node == None:
+#                 return [0, 0] #rob, not_rob
+#             else:
+#                 A = helper(node.left)
+#                 B = helper(node.right)
+#                 rob_current = node.val + A[1] + B[1] # cannot rob child node if current is robbed
+#                 not_rob_current = max(A) + max(B) 
+#                 return [rob_current, not_rob_current]
+        
+#         return max(helper(root))
     
 
 
