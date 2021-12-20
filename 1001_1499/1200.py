@@ -1,16 +1,32 @@
-def minimumAbsDifference(arr: 'List[int]'):
-    t = sorted(arr)
-    m = float('inf')
-    output = []
-    for i in range(len(t)-1):
-        if abs(t[i + 1] - t[i]) < m:
-            m = abs(t[i + 1] - t[i])
-            output = []
-            output.append([t[i],t[i+1]])
-        elif abs(t[i + 1] - t[i]) == m:
-            output.append([t[i], t[i + 1]])
+class Solution:
+    def minimumAbsDifference(self, arr: 'List[int]') -> 'List[List[int]]':
+        output = []
+        arr.sort()
+        curr = arr[1] - arr[0]
+        for i in range(1, len(arr)):
+            if arr[i]-arr[i-1] < curr:
+                output = [[arr[i-1], arr[i]]] # reset the output and curr
+                curr = arr[i] - arr[i-1]
+            elif arr[i] - arr[i-1] == curr:
+                output.append([arr[i-1], arr[i]])
+        return output
+    
 
-    return output
+
+# previous approach
+# def minimumAbsDifference(arr: 'List[int]'):
+#     t = sorted(arr)
+#     m = float('inf')
+#     output = []
+#     for i in range(len(t)-1):
+#         if abs(t[i + 1] - t[i]) < m:
+#             m = abs(t[i + 1] - t[i])
+#             output = []
+#             output.append([t[i],t[i+1]])
+#         elif abs(t[i + 1] - t[i]) == m:
+#             output.append([t[i], t[i + 1]])
+
+#     return output
 
 
 
