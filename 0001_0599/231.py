@@ -1,6 +1,20 @@
 class Solution:
     def isPowerOfTwo(self, n: int) -> bool:
-        return True if n > 0 and n & n - 1 == 0 else False
+        return n > 0 and n & n-1 == 0
+        # while n > 1:
+        #     if n % 2:
+        #         return False
+        #     else:
+        #         n = n >> 1
+        # return True
+
+        
+
+
+# previous approach
+# class Solution:
+#     def isPowerOfTwo(self, n: int) -> bool:
+#         return True if n > 0 and n & n - 1 == 0 else False
 
 #approach 3
 
