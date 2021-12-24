@@ -1,21 +1,38 @@
 class Solution:
     def merge(self, intervals: 'List[List[int]]') -> 'List[List[int]]':
-        intervals.sort(key = lambda x: x[0])
-        output = []
-        currStart = intervals[0][0]
-        currEnd = intervals[0][1]
-        for start, end in intervals[1:]:
-            if end <= currEnd:
-                pass
+        intervals.sort()
+        output = [intervals.pop(0)]
+        while intervals: #check if current can be merged.
+            if intervals[0][0] <= output[-1][1]: # if can be merged, just update the previous end as current
+                output[-1][1] = max(output[-1][1], intervals[0][1])
             else:
-                if currStart <= start <= currEnd:
-                    currEnd = end
-                elif start > currStart:
-                    output.append([currStart, currEnd])
-                    currStart = start
-                    currEnd = end
-        output.append([currStart, currEnd])
+                output.append(intervals[0]) # if not, start a new interval
+            intervals.pop(0)
         return output
+
+ 
+
+
+
+# previous approach
+# class Solution:
+#     def merge(self, intervals: 'List[List[int]]') -> 'List[List[int]]':
+#         intervals.sort(key = lambda x: x[0])
+#         output = []
+#         currStart = intervals[0][0]
+#         currEnd = intervals[0][1]
+#         for start, end in intervals[1:]:
+#             if end <= currEnd:
+#                 pass
+#             else:
+#                 if currStart <= start <= currEnd:
+#                     currEnd = end
+#                 elif start > currStart:
+#                     output.append([currStart, currEnd])
+#                     currStart = start
+#                     currEnd = end
+#         output.append([currStart, currEnd])
+#         return output
 
 # previous approach
 # class Solution:
