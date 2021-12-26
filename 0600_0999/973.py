@@ -1,20 +1,31 @@
 class Solution:
-    def kClosest(self, points: 'List[List[int]]', K: int) -> 'List[List[int]]':
-        dist = lambda x, y: ((x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2) ** 0.5
-        hmp = {}
-        origin = [0, 0]
-        for p in points:
-            d = dist(origin, p)
-            if d not in hmp:
-                hmp[d] = []
-            hmp[d].append(p)
-        sortedKey = sorted(hmp.keys())
-        output = {}
-        for k in sortedKey:
-            if len(output) < K:
-                while hmp[k]:
-                    output[tuple(hmp[k].pop())] = None
-        return list(output.keys())
+    def kClosest(self, points: 'List[List[int]]', k: int) -> 'List[List[int]]': #no need to consider multiple points with same distance, as stated from the question description, the result is unique.
+        return sorted(points, key=lambda x: (x[0]**2 + x[1]**2)**0.5)[:k]
+    
+   
+
+
+# previous approach
+# class Solution:
+#     def kClosest(self, points: 'List[List[int]]', K: int) -> 'List[List[int]]':
+#         dist = lambda x, y: ((x[0] - y[0]) ** 2 + (x[1] - y[1]) ** 2) ** 0.5
+#         hmp = {}
+#         origin = [0, 0]
+#         for p in points:
+#             d = dist(origin, p)
+#             if d not in hmp:
+#                 hmp[d] = []
+#             hmp[d].append(p)
+#         sortedKey = sorted(hmp.keys())
+#         output = {}
+#         for k in sortedKey:
+#             if len(output) < K:
+#                 while hmp[k]:
+#                     output[tuple(hmp[k].pop())] = None
+#         return list(output.keys())
+
+
+
 
 #OLD solution - it seems not considering the cases where the same distance has multiple points - although it passes all the test cases
 # def kClosest(points: 'List[List[int]]', K: 'int'):
