@@ -1,7 +1,21 @@
 class Solution:
     def findComplement(self, num: int) -> int:
-        t = bin(num).replace("0b", "")
-        return int ("".join(map(lambda x: "0" if x == "1" else "1", t)),base=2)
+        output = 0
+        bit = 0
+        while num > 0:
+            output += 0 if num % 2 else 2**bit # flip each bit and add
+            bit +=1 
+            num >>= 1 
+        return output
+
+
+
+
+# previous approach
+# class Solution:
+#     def findComplement(self, num: int) -> int:
+#         t = bin(num).replace("0b", "")
+#         return int ("".join(map(lambda x: "0" if x == "1" else "1", t)),base=2)
 
 
 ##OLD SOLUTION:
