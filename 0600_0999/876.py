@@ -22,7 +22,6 @@ class Solution:
                 
 
 
-
 # previous approach
 # # Definition for singly-linked list.
 # class ListNode:
@@ -41,3 +40,5 @@ class Solution:
 #         stk = []
 #         flat(stk, head)
 #         return stk[len(stk)//2]
+
+
