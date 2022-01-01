@@ -1,30 +1,71 @@
 class Solution:
     def findMinHeightTrees(self, n: int, edges: 'List[List[int]]') -> 'List[int]':
-        if n <= 2: #this is already the centroids we are looking for
-            return [_ for _ in range(n)] 
-        
-        else: #topological sort, from leaf to the centroids, until there's <= 2 nodes left
-            adj = [set() for _ in range(n)]
+        if n <= 2:
+            return [_ for _ in range(n)]
+        else:
+            hmp = {} 
             for a, b in edges:
-                adj[a].add(b)
-                adj[b].add(a)
-            rem = n
+                if a not in hmp:
+                    hmp[a] = set()
+                hmp[a].add(b)
+                if b not in hmp:
+                    hmp[b] = set()
+                hmp[b].add(a) 
             stk = []
-            for i, a in enumerate(adj): 
-                if len(a) == 1: #it only has one neighbour
-                    stk.append(i)
-            while rem > 2:
+            rem = n #trim the tree, until remaining is <= 2.
+            for k, v in hmp.items():
+                if len(v) == 1:
+                    stk.append(k)
+
+       
+            while rem > 2: #topological sort, from the ones with only one connection, to the ones in the center
                 nxt = []
                 rem -= len(stk)
                 while stk:
-                    currLeaf = stk.pop()
-                    for neighbour in adj[currLeaf]:
-                        adj[neighbour].remove(currLeaf)
-                        if len(adj[neighbour]) == 1:
-                            nxt.append(neighbour)
+                    # print(stk)
+                    node = stk.pop()
+                    for k in hmp[node]: 
+                        hmp[k].remove(node)
+                        if len(hmp[k]) == 1:
+                            nxt.append(k)
                 stk = nxt
+   
+            return stk
+                
+                
+               
+                
+               
+                
+
+# previous approach
+# class Solution:
+#     def findMinHeightTrees(self, n: int, edges: 'List[List[int]]') -> 'List[int]':
+#         if n <= 2: #this is already the centroids we are looking for
+#             return [_ for _ in range(n)] 
+        
+#         else: #topological sort, from leaf to the centroids, until there's <= 2 nodes left
+#             adj = [set() for _ in range(n)]
+#             for a, b in edges:
+#                 adj[a].add(b)
+#                 adj[b].add(a)
+#             rem = n
+#             stk = []
+#             for i, a in enumerate(adj): 
+#                 if len(a) == 1: #it only has one neighbour
+#                     stk.append(i)
+#             while rem > 2:
+#                 nxt = []
+#                 rem -= len(stk)
+#                 while stk:
+#                     currLeaf = stk.pop()
+#                     for neighbour in adj[currLeaf]:
+#                         adj[neighbour].remove(currLeaf)
+#                         if len(adj[neighbour]) == 1:
+#                             nxt.append(neighbour)
+#                 stk = nxt
             
-            return stk #the remaining stk is the centroids we are looking for
+#             return stk #the remaining stk is the centroids we are looking for
         
 
 
