@@ -1,5 +1,5 @@
 class Solution:
-    def maxVacationDays(self, flights: 'List[List[int]]', days: 'List[List[int]]') -> int: #RL 20211231: Copied solution 
+    def maxVacationDays(self, flights: 'List[List[int]]', days: 'List[List[int]]') -> int: 
         N, K = len(days), len(days[0])
         best = [-float('inf')] * N
         best[0] = 0
