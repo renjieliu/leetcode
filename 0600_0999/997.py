@@ -1,20 +1,36 @@
 class Solution:
-    def findJudge(self, N: int, trust: 'List[List[int]]') -> int:
-        if trust == []:
-            return 1 if N == 1 else -1
-        hmp = {}
-        hmp_trust = {}
-        for t in trust:
-            if t[1] not in hmp:
-                hmp[t[1]] = []
-            hmp[t[1]].append(t[0])
-            if t[0] not in hmp_trust:
-                hmp_trust[t[0]] = []
-            hmp_trust[t[0]].append(t[1])
-        for k, v in hmp.items():
-            if len(v) == N - 1 and k not in hmp_trust:
-                return k
+    def findJudge(self, n: int, trust: 'List[List[int]]') -> int:
+        trusted = defaultdict(lambda: 0) # person being trusted
+        trusting = {i for i in range(1, n+1)} # person trusting others
+        for a, b in trust:
+            trusted[b]+= 1
+            if a in trusting:
+                trusting.remove(a)
+        
+        for candidate in trusting: 
+            if trusted[candidate] == n-1:
+                return candidate
         return -1
+
+
+# previous approach
+# class Solution:
+#     def findJudge(self, N: int, trust: 'List[List[int]]') -> int:
+#         if trust == []:
+#             return 1 if N == 1 else -1
+#         hmp = {}
+#         hmp_trust = {}
+#         for t in trust:
+#             if t[1] not in hmp:
+#                 hmp[t[1]] = []
+#             hmp[t[1]].append(t[0])
+#             if t[0] not in hmp_trust:
+#                 hmp_trust[t[0]] = []
+#             hmp_trust[t[0]].append(t[1])
+#         for k, v in hmp.items():
+#             if len(v) == N - 1 and k not in hmp_trust:
+#                 return k
+#         return -1
 
 
 
