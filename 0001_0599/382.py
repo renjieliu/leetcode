@@ -21,7 +21,7 @@ class Solution:
 # obj = Solution(head)
 # param_1 = obj.getRandom()
 
-
+ 
 
 # previous approach 
 
