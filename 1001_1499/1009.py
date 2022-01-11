@@ -1,6 +1,13 @@
 class Solution:
     def bitwiseComplement(self, n: int) -> int:
-        return 1 if n == 0 else n ^ 2**n.bit_length() - 1
+        return 1 if n == 0 else n ^ (2 **n.bit_length()-1)
+
+
+# previous approach
+
+# class Solution:
+#     def bitwiseComplement(self, n: int) -> int:
+#         return 1 if n == 0 else n ^ 2**n.bit_length() - 1
     
  
 
