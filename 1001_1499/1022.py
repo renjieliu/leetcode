@@ -1,26 +1,62 @@
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def sumRootToLeaf(self, root: TreeNode) -> int:
-        def flat(node, path, output):
+    def sumRootToLeaf(self, root: 'Optional[TreeNode]') -> int:
+        def calc(arr):
+            output = 0
+            for i in range(len(arr)-1, -1, -1): #calc the binary to 10-based, from right to left 
+                power = len(arr)-1-i
+                output += arr[i]*(2**power)
+            # print(arr, output)
+            return output 
+        
+        def helper(output, arr, node):
             if node.left == node.right == None:
-                output.append(path + [str(node.val)])
-            else:
-                if node.left:
-                    flat(node.left, path + [str(node.val)], output)
-                if node.right:
-                    flat(node.right, path + [str(node.val)], output)
+                output[0] += calc(arr + [node.val])
+            if node.left:
+                helper(output, arr + [node.val], node.left)
+            if node.right:
+                helper(output, arr + [node.val], node.right)
+        
+        output = [0]
+        helper(output, [], root)
+        
+        return output[0]
+    
+    
 
-        if root == None:
-            return 0
-        else:
-            output = []
-            flat(root, [], output)
-            return sum([int(''.join(x), 2) for x in output])
+
+
+
+# previous approach
+
+# # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+# class Solution:
+#     def sumRootToLeaf(self, root: TreeNode) -> int:
+#         def flat(node, path, output):
+#             if node.left == node.right == None:
+#                 output.append(path + [str(node.val)])
+#             else:
+#                 if node.left:
+#                     flat(node.left, path + [str(node.val)], output)
+#                 if node.right:
+#                     flat(node.right, path + [str(node.val)], output)
+
+#         if root == None:
+#             return 0
+#         else:
+#             output = []
+#             flat(root, [], output)
+#             return sum([int(''.join(x), 2) for x in output])
 
 
 # previous approach
