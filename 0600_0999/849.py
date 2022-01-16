@@ -17,7 +17,6 @@ class Solution:
             output = max(output, curr) #compare with global output
         return output
 
-    
 
 
 # previous approach
