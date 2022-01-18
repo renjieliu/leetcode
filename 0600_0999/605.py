@@ -1,25 +1,54 @@
 class Solution:
     def canPlaceFlowers(self, flowerbed: 'List[int]', n: int) -> bool:
-        if n == 0: return True
-        elif len(flowerbed) == 1:
-            return True if flowerbed[0] == 0 else False
-        f = flowerbed
-        for i in range(len(flowerbed)):
-            if i >= 1:
-                if f[i-1] + f[i]==0:
-                    if i == len(f)-1: #reach the end
-                        f[i] = 1
-                        n -= 1
-                    elif i-1 == 0: #start
-                        f[i-1] = 1
-                        n-=1
-                    else:
-                        if f[i+1] == 0:
-                            f[i] = 1
-                            n-=1
-            if n == 0:
-                return True
-        return False
+        if len(flowerbed) == 1:
+            return (flowerbed[0] == 0 and n <= 1) or (n == 0)
+        
+        slot = 0
+        for i in range(len(flowerbed)): #look around to see if can be placed here. if can, mark it as 1
+            f = flowerbed[i]
+            if f == 0:
+                if i == 0:
+                    if flowerbed[i+1] == 0 :
+                        flowerbed[i] = 1 
+                        slot += 1 
+                elif i == len(flowerbed)-1:
+                    if flowerbed[i-1] == 0 :
+                        flowerbed[i] = 1 
+                        slot += 1
+                elif flowerbed[i-1] == flowerbed[i+1] == 0 :
+                    flowerbed[i] = 1 
+                    slot += 1
+                    
+        return slot >= n         
+        
+
+
+
+
+# previous approach
+
+# class Solution:
+#     def canPlaceFlowers(self, flowerbed: 'List[int]', n: int) -> bool:
+#         if n == 0: return True
+#         elif len(flowerbed) == 1:
+#             return True if flowerbed[0] == 0 else False
+#         f = flowerbed
+#         for i in range(len(flowerbed)):
+#             if i >= 1:
+#                 if f[i-1] + f[i]==0:
+#                     if i == len(f)-1: #reach the end
+#                         f[i] = 1
+#                         n -= 1
+#                     elif i-1 == 0: #start
+#                         f[i-1] = 1
+#                         n-=1
+#                     else:
+#                         if f[i+1] == 0:
+#                             f[i] = 1
+#                             n-=1
+#             if n == 0:
+#                 return True
+#         return False
 
 
 # previous approach
