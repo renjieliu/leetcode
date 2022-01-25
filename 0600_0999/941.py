@@ -1,26 +1,56 @@
 class Solution:
     def validMountainArray(self, arr: 'List[int]') -> bool:
-        if len(arr) < 3: return False
-        up = down = 0
-        prev = arr[0]
-        for i in range(1, len(arr)):
-            curr = arr[i]
-            if curr == prev:
-                return False
-            else:
-                if curr > prev:  # up the hill
-                    if down != 0:
-                        return False
-                    else:
-                        up = 1
-                elif curr < prev:  # down the hill
-                    if up != 1:
-                        return False
-                    else:
-                        down = 1
-            prev = curr
+        if len(arr) < 3:
+            return False
 
-        return True if down * up != 0 else False
+        direction = -1 # start as -1. Increasing: 0, decreasing: 1
+
+        for i in range(1, len(arr)):
+            if arr[i] == arr[i-1] :
+                return False
+            elif arr[i] > arr[i-1]:
+                if direction == 1:
+                    return False
+                else:
+                    direction = 0
+
+            elif arr[i] < arr[i-1]:
+                if direction == -1: #no increasing period found
+                    return False
+                else:
+                    direction = 1
+
+        return direction == 1 #the last part needs to be decreasing
+
+
+
+
+
+# previous approach
+
+# class Solution:
+#     def validMountainArray(self, arr: 'List[int]') -> bool:
+#         if len(arr) < 3: return False
+#         up = down = 0
+#         prev = arr[0]
+#         for i in range(1, len(arr)):
+#             curr = arr[i]
+#             if curr == prev:
+#                 return False
+#             else:
+#                 if curr > prev:  # up the hill
+#                     if down != 0:
+#                         return False
+#                     else:
+#                         up = 1
+#                 elif curr < prev:  # down the hill
+#                     if up != 1:
+#                         return False
+#                     else:
+#                         down = 1
+#             prev = curr
+
+#         return True if down * up != 0 else False
 
 
 
