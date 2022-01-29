@@ -96,7 +96,6 @@ insert into Passengers (passenger_id, arrival_time) values ('15', '7')
 
 
 /* Write your T-SQL query statement below */
-/* Write your T-SQL query statement below */
 with c1 as -- Find the previous bus arrival time 
 (
     select
@@ -145,4 +144,6 @@ bus_id
 , passengers_cnt = case when accumulated_remaining > 0 then capacity else curr_passenger_cnt end  
 from r_cte
 order by bus_id
+
+
 
