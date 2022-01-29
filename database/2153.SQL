@@ -96,6 +96,7 @@ insert into Passengers (passenger_id, arrival_time) values ('15', '7')
 
 
 /* Write your T-SQL query statement below */
+/* Write your T-SQL query statement below */
 with c1 as -- Find the previous bus arrival time 
 (
     select
@@ -116,9 +117,10 @@ with c1 as -- Find the previous bus arrival time
 	from c1 left outer join Passengers p on p.arrival_time <= c1.arrival_time and p.arrival_time > c1.prev_time
 	group by c1.rn, c1.bus_id, c1.capacity
 )
-, cte as  -- find how many people previous bus left, and how many current bus can take.
-          -- current bus pick = prev_remaining + current_Passenger
-		  -- current bus remaining = max(0, prev_remaining + current_Passenger - capacity)
+, r_cte as  
+			-- find how many people previous bus left, and how many current bus can take.
+			-- current bus pick = prev_remaining + current_Passenger
+			-- current bus remaining = max(0, prev_remaining + current_Passenger - capacity)
 (
 	select 
 		rn
@@ -136,13 +138,11 @@ with c1 as -- Find the previous bus arrival time
 		,c2.capacity
 		,curr_passenger_cnt = c2.curr_passenger_cnt + c.accumulated_remaining
 		,accumulated_remaining = case when c2.curr_passenger_cnt + c.accumulated_remaining - c2.capacity <= 0 then 0 else c2.curr_passenger_cnt + c.accumulated_remaining - c2.capacity end
-	from cte c inner join c2 on c2.rn = c.rn + 1
+	from r_cte c inner join c2 on c2.rn = c.rn + 1
 )
 select 
 bus_id
 , passengers_cnt = case when accumulated_remaining > 0 then capacity else curr_passenger_cnt end  
-from cte
+from r_cte
 order by bus_id
-
-
 
