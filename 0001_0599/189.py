@@ -3,8 +3,20 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        pivot = k % len(nums)
-        nums[:] = nums[-pivot:] + nums[:-pivot]
+        move = k%len(nums)
+        nums[:] = nums[-move:] + nums[:-move]
+            
+
+            
+# previous approach
+
+# class Solution:
+#     def rotate(self, nums: 'List[int]', k: int) -> None:
+#         """
+#         Do not return anything, modify nums in-place instead.
+#         """
+#         pivot = k % len(nums)
+#         nums[:] = nums[-pivot:] + nums[:-pivot]
 
 # previous approach
 # def rotate(nums, k):
