@@ -52,7 +52,7 @@ insert into Data (first_col, second_col) values ('4', '2')
 insert into Data (first_col, second_col) values ('2', '3')
 insert into Data (first_col, second_col) values ('3', '1')
 insert into Data (first_col, second_col) values ('1', '4')
-
+;
 /* Write your T-SQL query statement below */
 with cte as 
 (
@@ -68,4 +68,5 @@ c1.first_col
 , c2.second_col
 from cte c1 inner join cte c2 on c1.rn_1 = c2.rn_2
 order by 1, 2 desc
+
 
