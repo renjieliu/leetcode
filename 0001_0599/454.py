@@ -1,29 +1,50 @@
 class Solution:
-    def fourSumCount(self, A: 'List[int]', B: 'List[int]', C: 'List[int]', D: 'List[int]') -> int:
-        hmp_AB = {}
-        hmp_CD = {}
-
-        for i in range(len(A)):
-            for j in range(len(B)):
-                curr = A[i] + B[j]
-                if curr not in hmp_AB:
-                    hmp_AB[curr] = 0
-                hmp_AB[curr] += 1
-
-                curr = C[i] + D[j]
-                if curr not in hmp_CD:
-                    hmp_CD[curr] = 0
-                hmp_CD[curr] += 1
-
+    def fourSumCount(self, nums1: 'List[int]', nums2: 'List[int]', nums3: 'List[int]', nums4: 'List[int]') -> int:
+        def build(arr1, arr2):
+            hmp = defaultdict(int)
+            for i in range(len(arr1)):
+                for j in range(len(arr2)):
+                    hmp[arr1[i] + arr2[j]]+=1
+            return hmp
+        A = build(nums1, nums2)
+        B = build(nums3, nums4)
+        # print(hmp_1)
+        # print(hmp_2)
         output = 0
+        for k, v in A.items(): #for each k, check how many -k are in the B
+            output += v*B[-k]
+        return output 
+                
 
-        # print('AB', hmp_AB)
-        # print('CD', hmp_CD)
+        
+# previous approach 
 
-        for k, v in hmp_AB.items():
-            if -k in hmp_CD:
-                output += v * hmp_CD[-k]
-        return output
+# class Solution:
+#     def fourSumCount(self, A: 'List[int]', B: 'List[int]', C: 'List[int]', D: 'List[int]') -> int:
+#         hmp_AB = {}
+#         hmp_CD = {}
+
+#         for i in range(len(A)):
+#             for j in range(len(B)):
+#                 curr = A[i] + B[j]
+#                 if curr not in hmp_AB:
+#                     hmp_AB[curr] = 0
+#                 hmp_AB[curr] += 1
+
+#                 curr = C[i] + D[j]
+#                 if curr not in hmp_CD:
+#                     hmp_CD[curr] = 0
+#                 hmp_CD[curr] += 1
+
+#         output = 0
+
+#         # print('AB', hmp_AB)
+#         # print('CD', hmp_CD)
+
+#         for k, v in hmp_AB.items():
+#             if -k in hmp_CD:
+#                 output += v * hmp_CD[-k]
+#         return output
 
 
 

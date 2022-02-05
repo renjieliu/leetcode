@@ -1,14 +1,31 @@
 class Solution:
     def canCompleteCircuit(self, gas: 'List[int]', cost: 'List[int]') -> int:
-        total, local = 0, 0 #total gas left, if to finish one cycle. local is the calculation for current segment
-        startStation = 0
-        for i in range(len(gas)):
-            total += gas[i]-cost[i]
-            local += gas[i]-cost[i] 
-            if local < 0: #curr segment 
-                startStation=i+1 #start from next station
-                local = 0
-        return startStation if total >= 0 else -1
+        total = 0
+        local = 0
+        start = 0 #assuming starting from index 0 
+        for i in range(len(gas)): #total to record the global status, local to record to current segment
+            total += gas[i] - cost[i]
+            local += gas[i] - cost[i]            
+            if local < 0:
+                local = 0 #reset the local
+                start = i+1 # start from the next index
+        return -1 if total < 0 else start
+    
+
+
+# previous approach
+
+# class Solution:
+#     def canCompleteCircuit(self, gas: 'List[int]', cost: 'List[int]') -> int:
+#         total, local = 0, 0 #total gas left, if to finish one cycle. local is the calculation for current segment
+#         startStation = 0
+#         for i in range(len(gas)):
+#             total += gas[i]-cost[i]
+#             local += gas[i]-cost[i] 
+#             if local < 0: #curr segment 
+#                 startStation=i+1 #start from next station
+#                 local = 0
+#         return startStation if total >= 0 else -1
     
 
 
