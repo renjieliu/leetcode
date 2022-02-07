@@ -16,9 +16,9 @@ class Solution:
 #             if arr[i] != 0: #if they are same, all the number in arr should be 0.
 #                 return chr(i+ord('a'))
             
-            
 
 
+      
 # previous approach
 
 # class Solution:
