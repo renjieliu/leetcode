@@ -1,4 +1,4 @@
-class Bitset: # failed the test cases
+class Bitset:
 
     def __init__(self, size: int):
         self.size = size
