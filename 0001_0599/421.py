@@ -1,13 +1,28 @@
 class Solution:
-    def findMaximumXOR(self, nums: 'List[int]') -> int:  #RL 20220126 Read the solution, understand, and come up with own code
+    def findMaximumXOR(self, nums: 'List[int]') -> int:
         m = max(nums).bit_length()
         output = 0
-        for i in range(m, -1, -1): # from the highest bit, assuming I can find a^b matched to current assuming
-            prefix = {n >> i for n in nums} #check for the current bit
-            output <<= 1 #expand the output for 1 bit
-            assuming = output|1 # assuming the current checking bit is 1
-            output |= any(assuming^p in prefix for p in prefix) #for p in prefix, if curr^p is also in prefix
-        return output 
+        for i in range(m, -1, -1):
+            prefix = { n >> i for n in nums} #currrent bit for all the numbers 
+            output <<= 1 #shift output by 1 bit
+            assume = output|1 #assume can find a number to be Xor'd to 1 
+            output |= any(assume ^ p in prefix for p in prefix) 
+        return output
+    
+    
+
+# previous approach
+
+# class Solution:
+#     def findMaximumXOR(self, nums: 'List[int]') -> int:  #RL 20220126 Read the solution, understand, and come up with own code
+#         m = max(nums).bit_length()
+#         output = 0
+#         for i in range(m, -1, -1): # from the highest bit, assuming I can find a^b matched to current assuming
+#             prefix = {n >> i for n in nums} #check for the current bit
+#             output <<= 1 #expand the output for 1 bit
+#             assuming = output|1 # assuming the current checking bit is 1
+#             output |= any(assuming^p in prefix for p in prefix) #for p in prefix, if curr^p is also in prefix
+#         return output 
 
     
 # class Solution:
