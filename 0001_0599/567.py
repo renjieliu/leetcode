@@ -1,5 +1,5 @@
 class Solution:
-    def checkInclusion(self, s1: str, s2: str) -> bool: #O(26*n)
+    def checkInclusion(self, s1: str, s2: str) -> bool: #O(len(L1) + 26*(L2-L1)) ==> O(26N) ==> O(N)
         a1 = [0]*26 #record the occurrence of each character
         a2 = [0]*26
         for c in s1: 
@@ -17,6 +17,7 @@ class Solution:
         return False
     
     
+
 
 
 # previous approach
