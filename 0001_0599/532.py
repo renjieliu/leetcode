@@ -1,19 +1,39 @@
 class Solution:
     def findPairs(self, nums: 'List[int]', k: int) -> int:
-        output = 0
-        hmp = {}
+        counter = {}
         for n in nums:
-            if n not in hmp:
-                hmp[n] = 0
-            hmp[n] += 1
-        for v in hmp.keys():
+            if n not in counter: #count each number occurrence
+                counter[n] = 0
+            counter[n] += 1 
+        
+        output = 0 
+        for n, v in counter.items():
             if k == 0:
-                if hmp[v] > 1:
-                    output += 1
+                output += 1 if v > 1 else 0  #if k == 0 and current number occurs more than once.
             else:
-                if v + k in hmp:  # only check v+k, to elimindate double counting
-                    output += 1
+                output += 1 if n+k in counter else 0 # if n+k also appears in the nums
         return output
+
+
+
+# previous approach
+
+# class Solution:
+#     def findPairs(self, nums: 'List[int]', k: int) -> int:
+#         output = 0
+#         hmp = {}
+#         for n in nums:
+#             if n not in hmp:
+#                 hmp[n] = 0
+#             hmp[n] += 1
+#         for v in hmp.keys():
+#             if k == 0:
+#                 if hmp[v] > 1:
+#                     output += 1
+#             else:
+#                 if v + k in hmp:  # only check v+k, to elimindate double counting
+#                     output += 1
+#         return output
 
 
 
