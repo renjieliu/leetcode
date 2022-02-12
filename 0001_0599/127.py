@@ -19,7 +19,7 @@ class Solution:
                 if curr == endWord:
                     return step
                 else:
-                    for i in range(L): # what's the word can current word turn into?
+                    for i in range(L): # to answer the question - what's the word can current word turn into?
                         mask = curr[:i] + "*" + curr[i+1:]
                         if mask in hmp:
                             nxt += hmp[mask]
@@ -28,7 +28,6 @@ class Solution:
         
         return 0
        
-
                 
 
 
