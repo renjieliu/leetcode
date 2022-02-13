@@ -10,7 +10,7 @@ class Solution:
         for v in range(len(nums)+1):
             combo(output, [], v, nums)
         return output
-    
+
     
 
 # previous approach
@@ -61,3 +61,4 @@ class Solution:
 #                 output.append(x)
 #         output.append([])
 #         return output
+
