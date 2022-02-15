@@ -70,7 +70,7 @@ Follow up: If we are interested in calculating the longest streak without losing
 */
 
 
-Create table Matches (player_id int, match_day date, result ENUM('Win', 'Draw', 'Lose'))
+Create table Matches (player_id int, match_day date, result varchar(20)) --  ENUM('Win', 'Draw', 'Lose'))
 Truncate table Matches
 insert into Matches (player_id, match_day, result) values ('1', '2022-01-17', 'Win')
 insert into Matches (player_id, match_day, result) values ('1', '2022-01-18', 'Win')
