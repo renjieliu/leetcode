@@ -1,33 +1,64 @@
 class Solution:
     def removeDuplicates(self, nums: 'List[int]') -> int:
-        left = float('inf')
-        prev = nums[0] 
-        cnt = 1
+        left = None #the available slot
         right = 1
+        prev = nums[0]
+        cnt = 1 
         while right < len(nums):
             if nums[right] == prev:
-                cnt += 1
-                if cnt > 2:
-                    left = right if left == float('inf') else left # if there's a slot available on the left. 
-                    curr = nums[right]
-                    while right < len(nums) and nums[right]==curr: #keep moving the right pointer 
-                        right += 1
-                else:
-                    if left != float('inf'):
-                        nums[left] = nums[right] #move curr number to the left position, and advance the left pointer
-                        left += 1
-                    right += 1
-            
+                cnt += 1 
+                if cnt > 2: # set the available slot here, if no slot available
+                    left = right if left == None else left
+                elif left: # move current number to the first available slot
+                    nums[left] = nums[right]
+                    left +=1 
+                right += 1 
             else:
+                if left != None: # move current number to the first available slot
+                    nums[left] = nums[right]
+                    left += 1 
                 prev = nums[right]
                 cnt = 1
-                if left != float('inf'):
-                    nums[left] = nums[right] #move curr number to the left position, and advance the left pointer
-                    left += 1
                 right += 1
-            # print(nums, left)
         
-        return min(left, len(nums)) #left is the length to keep. If left is float('inf'), the array is in good shape already
+        return left if left != None else len(nums) # if no slot available. The entire original array is good.
+    
+    
+
+
+
+# previous approach
+
+# class Solution:
+#     def removeDuplicates(self, nums: 'List[int]') -> int:
+#         left = float('inf')
+#         prev = nums[0] 
+#         cnt = 1
+#         right = 1
+#         while right < len(nums):
+#             if nums[right] == prev:
+#                 cnt += 1
+#                 if cnt > 2:
+#                     left = right if left == float('inf') else left # if there's a slot available on the left. 
+#                     curr = nums[right]
+#                     while right < len(nums) and nums[right]==curr: #keep moving the right pointer 
+#                         right += 1
+#                 else:
+#                     if left != float('inf'):
+#                         nums[left] = nums[right] #move curr number to the left position, and advance the left pointer
+#                         left += 1
+#                     right += 1
+            
+#             else:
+#                 prev = nums[right]
+#                 cnt = 1
+#                 if left != float('inf'):
+#                     nums[left] = nums[right] #move curr number to the left position, and advance the left pointer
+#                     left += 1
+#                 right += 1
+#             # print(nums, left)
+        
+#         return min(left, len(nums)) #left is the length to keep. If left is float('inf'), the array is in good shape already
             
             
 
