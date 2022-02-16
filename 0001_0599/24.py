@@ -52,6 +52,35 @@ class Solution:
 
 
 
+
+# previous approach
+
+# # Definition for singly-linked list.
+# # class ListNode:
+# #     def __init__(self, val=0, next=None):
+# #         self.val = val
+# #         self.next = next
+# class Solution: #the flat and generate approach, Time: O(N) + Space: O(N)
+#     def swapPairs(self, head: 'Optional[ListNode]') -> 'Optional[ListNode]':
+#         if head == None:
+#             return None
+#         arr = []
+#         while head: #flat the head, and swap the last 2 values, if current length is even
+#             arr.append(head.val)
+#             if len(arr) % 2 == 0:
+#                 arr[-1], arr[-2] = arr[-2], arr[-1]
+#             head = head.next
+        
+#         root = ListNode(arr[0])  #constuct the new root
+#         node = root
+#         for i in range(1, len(arr)):
+#             node.next = ListNode(arr[i])
+#             node = node.next
+#         return root 
+
+
+
+
 # previous approach
 
 # # Definition for singly-linked list.
