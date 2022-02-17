@@ -1,20 +1,31 @@
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
-        xor = 0 
-        for c in s+t: #all the character should be duplicated, except for the additional one.
-            xor ^= ord(c)
-        return chr(xor)
+        output = 0 
+        for c in s+t: # all the character should be duplicated, except for one.
+            output ^= ord(c)
+        return chr(output)
+    
 
-#         arr = [0 for _ in range(26)] # record the frequency of each character
-#         for i, c in enumerate(s):
-#             arr[ord(c) - ord('a')] += 1
-#             arr[ord(t[i]) - ord('a')] -=1 
+
+# previous approach
+
+# class Solution:
+#     def findTheDifference(self, s: str, t: str) -> str:
+#         xor = 0 
+#         for c in s+t: #all the character should be duplicated, except for the additional one.
+#             xor ^= ord(c)
+#         return chr(xor)
+
+# #         arr = [0 for _ in range(26)] # record the frequency of each character
+# #         for i, c in enumerate(s):
+# #             arr[ord(c) - ord('a')] += 1
+# #             arr[ord(t[i]) - ord('a')] -=1 
         
-#         arr[ord(t[-1]) - ord('a')] -=1 #since t has one more character than s, need to record the last character of t
+# #         arr[ord(t[-1]) - ord('a')] -=1 #since t has one more character than s, need to record the last character of t
         
-#         for i in range(len(arr)):
-#             if arr[i] != 0: #if they are same, all the number in arr should be 0.
-#                 return chr(i+ord('a'))
+# #         for i in range(len(arr)):
+# #             if arr[i] != 0: #if they are same, all the number in arr should be 0.
+# #                 return chr(i+ord('a'))
             
 
 
