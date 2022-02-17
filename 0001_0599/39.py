@@ -1,19 +1,37 @@
 class Solution:
     def combinationSum(self, candidates: 'List[int]', target: int) -> 'List[List[int]]':
-        candidates.sort()
-
-        def helper(output, curr, target, arr):
-            if target == 0:
+        def helper(output, target, arr, curr, currTotal): #find the combination sumed up to target, same approach as to find all combinations
+            if currTotal == target:
                 output.append(curr)
-            for i in range(len(arr)):
-                if arr[i] <= target:
-                    helper(output, curr + [arr[i]], target - arr[i], arr[i:])
-                else:
-                    break
-
+            elif currTotal < target:
+                for i in range(len(arr)): #pass the arr from i, to avoid duplicates combination with the previous
+                    helper(output, target, arr[i:], curr + [arr[i]], currTotal + arr[i])
+        
+        # candidates.sort() # no need to sort. as the combination is independent on the order.
         output = []
-        helper(output, [], target, candidates)
+        helper(output, target, candidates, [], 0)
         return output
+    
+    
+
+# previous approach
+
+# class Solution:
+#     def combinationSum(self, candidates: 'List[int]', target: int) -> 'List[List[int]]':
+#         candidates.sort()
+
+#         def helper(output, curr, target, arr):
+#             if target == 0:
+#                 output.append(curr)
+#             for i in range(len(arr)):
+#                 if arr[i] <= target:
+#                     helper(output, curr + [arr[i]], target - arr[i], arr[i:])
+#                 else:
+#                     break
+
+#         output = []
+#         helper(output, [], target, candidates)
+#         return output
 
 #previous solution
 # def combinationSum(candidates: 'List[int]', target: int):
