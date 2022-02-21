@@ -1,14 +1,27 @@
 class Solution:
     def majorityElement(self, nums: 'List[int]') -> int:
-        hmp = {}
+        hmp = defaultdict(lambda: 0)
         for n in nums:
-            if n not in hmp:
-                hmp[n] = 0
             hmp[n] += 1
-        compare = len(nums) // 2
-        for k, v in hmp.items():
-            if v > compare:
-                return k
+            if hmp[n] > len(nums)//2: # return the n as long as it appears more than half of the nums
+                return n
+
+            
+
+
+# previous approach
+
+# class Solution:
+#     def majorityElement(self, nums: 'List[int]') -> int:
+#         hmp = {}
+#         for n in nums:
+#             if n not in hmp:
+#                 hmp[n] = 0
+#             hmp[n] += 1
+#         compare = len(nums) // 2
+#         for k, v in hmp.items():
+#             if v > compare:
+#                 return k
 
 # OLD SOLUTION
 # def majorityElement(nums):
