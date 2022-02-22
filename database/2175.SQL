@@ -117,7 +117,7 @@ insert into PointsChange (team_id, points_change) values ('1', '-22')
 
 
 /* Write your T-SQL query statement below */
-select
+select -- no need to put distinct, as the team_id is primary key for both tables
 tp.team_id
 , tp.name
 , rank_diff = row_number() over(order by tp.points desc, tp.name) -- previous global ranking
@@ -127,5 +127,4 @@ from
 TeamPoints tp 
 left outer join Pointschange pc 
 on tp.team_id = pc.team_id
-
 
