@@ -1,12 +1,24 @@
 class Solution:
-    def titleToNumber(self, s: str) -> int:
-        num = lambda x: ord(x) - 64
-        output = 0
-        i = 0
-        for c in s[::-1]:
-            output += num(c) * (26**i)
-            i+=1
+    def titleToNumber(self, columnTitle: str) -> int:
+        output = 0  #treat it as a 26-base number
+        for i in range(len(columnTitle)):
+            c = columnTitle[-i-1]
+            output += (ord(c)-ord('A')+1)*(26**i)
         return output
+    
+
+
+# previous approach
+
+# class Solution:
+#     def titleToNumber(self, s: str) -> int:
+#         num = lambda x: ord(x) - 64
+#         output = 0
+#         i = 0
+#         for c in s[::-1]:
+#             output += num(c) * (26**i)
+#             i+=1
+#         return output
 
 
 # Previous approach
