@@ -1,33 +1,54 @@
 class Solution:
     def removeKdigits(self, num: str, k: int) -> str:
-        def toNumber(s): #take out the leading zeroes. If it's empty, just return 0 
-            for i in range(len(s)):
-                if s[i]!= "0":
-                    return s[i:]
-            return "0"
-        
-        arr = []
-        i = 0 
+        def toNumber(s):
+            return max("0", s.lstrip("0"))
         remove = 0
-        while i < len(num)-1: #find the number going down
-            arr.append(num[i])
-            while arr and arr[-1] > num[i+1]:
+        arr = []
+        for i, n in enumerate(num):
+            while arr and arr[-1] > n: # keep popping as long as the it's smaller than the previous number
                 arr.pop()
                 remove += 1 
                 if remove == k:
-                    arr.append(num[i+1:]) #add the rest to the arr
-                    i = len(num) #move the pointer to the end of the num and stop the iteration
-                    break
-            i+=1
-    
-        arr.append(num[-1])
-        output = ""
-        for i in range(len(arr)): #take out the ones in stk, and form a string 
-            if len(output) == len(num) - k: #enough number is collected
-                return toNumber(output)
-            output += arr[i]
+                    return toNumber("".join(arr) + num[i:])
+            arr.append(n)
+        total = len(num) - k # the length to keep 
+        return "0" if len(arr) <= total else toNumber("".join(arr[:total]))
+ 
         
-        return toNumber(output)
+
+
+# previous approach
+
+# class Solution:
+#     def removeKdigits(self, num: str, k: int) -> str:
+#         def toNumber(s): #take out the leading zeroes. If it's empty, just return 0 
+#             for i in range(len(s)):
+#                 if s[i]!= "0":
+#                     return s[i:]
+#             return "0"
+        
+#         arr = []
+#         i = 0 
+#         remove = 0
+#         while i < len(num)-1: #find the number going down
+#             arr.append(num[i])
+#             while arr and arr[-1] > num[i+1]:
+#                 arr.pop()
+#                 remove += 1 
+#                 if remove == k:
+#                     arr.append(num[i+1:]) #add the rest to the arr
+#                     i = len(num) #move the pointer to the end of the num and stop the iteration
+#                     break
+#             i+=1
+    
+#         arr.append(num[-1])
+#         output = ""
+#         for i in range(len(arr)): #take out the ones in stk, and form a string 
+#             if len(output) == len(num) - k: #enough number is collected
+#                 return toNumber(output)
+#             output += arr[i]
+        
+#         return toNumber(output)
     
    
     
