@@ -1,32 +1,63 @@
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: 'List[str]') -> int:
-        hmp = {}
-        L = len(beginWord)
-        for w in wordList: #put mask at each location of each word,to answer the question = what can become current word
-            for i in range(L):
-                mask = w[:i] + "*" + w[i+1:]
-                if w[:i] + "*" + w[i+1:] not in hmp:
-                    hmp[mask] = []
-                hmp[mask].append(w)
-        
-        step = 0
+        hmp = {} 
+        for w in wordList:
+            for i in range(len(w)): #build pattern for each position of each word
+                pattern = w[:i] + "*" + w[i+1:]
+                if pattern not in hmp:
+                    hmp[pattern] = []
+                hmp[pattern].append(w)
+
         stk = [beginWord]
-        while stk:
+        step = 0 
+        while stk: #construct the pattern for each word at each position, and find the next possible word
             nxt = []
             step += 1
             while stk:
-                curr = stk.pop()
-                if curr == endWord:
+                w = stk.pop()
+                if w == endWord:
                     return step
-                else:
-                    for i in range(L): # to answer the question - what's the word can current word turn into?
-                        mask = curr[:i] + "*" + curr[i+1:]
-                        if mask in hmp:
-                            nxt += hmp[mask]
-                            del hmp[mask]
+                for i in range(len(w)):
+                    pattern = w[:i] + "*" + w[i+1:]
+                    if pattern in hmp:
+                        nxt += hmp[pattern]
+                        del hmp[pattern]
+                        
             stk = nxt
-        
         return 0
+    
+
+# pvevious approach
+
+# class Solution:
+#     def ladderLength(self, beginWord: str, endWord: str, wordList: 'List[str]') -> int:
+#         hmp = {}
+#         L = len(beginWord)
+#         for w in wordList: #put mask at each location of each word,to answer the question = what can become current word
+#             for i in range(L):
+#                 mask = w[:i] + "*" + w[i+1:]
+#                 if w[:i] + "*" + w[i+1:] not in hmp:
+#                     hmp[mask] = []
+#                 hmp[mask].append(w)
+        
+#         step = 0
+#         stk = [beginWord]
+#         while stk:
+#             nxt = []
+#             step += 1
+#             while stk:
+#                 curr = stk.pop()
+#                 if curr == endWord:
+#                     return step
+#                 else:
+#                     for i in range(L): # to answer the question - what's the word can current word turn into?
+#                         mask = curr[:i] + "*" + curr[i+1:]
+#                         if mask in hmp:
+#                             nxt += hmp[mask]
+#                             del hmp[mask]
+#             stk = nxt
+        
+#         return 0
        
                 
 

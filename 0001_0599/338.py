@@ -1,9 +1,27 @@
 class Solution:
-    def countBits(self, num: int) -> 'List[int]':
-        output = []
-        for i in range(num + 1):
-            output.append(bin(i).count('1'))
-        return output
+    def countBits(self, n: int) -> 'List[int]':
+        def count(v): #count 1 bit of v
+            cnt = 0
+            while v>0:
+                cnt += v % 2 #if current is odd or even
+                v >>= 1
+            return cnt
+        
+        arr = []
+        for i in range(n+1):
+            arr.append(count(i))
+        return arr
+    
+
+
+# previous approach
+
+# class Solution:
+#     def countBits(self, num: int) -> 'List[int]':
+#         output = []
+#         for i in range(num + 1):
+#             output.append(bin(i).count('1'))
+#         return output
 
 #OLD Solution
 # def countBits(num):
