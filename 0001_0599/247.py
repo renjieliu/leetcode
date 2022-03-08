@@ -1,5 +1,5 @@
 class Solution:
-    def findStrobogrammatic(self, n: int) -> 'List[str]':
+    def findStrobogrammatic(self, n: int) -> 'List[str]': # time + Space O( N*(5 ^ (N/2)) | N*(5 ^ (N/2)) )
         def perm(pool, curr, arr, n):
             if len(curr) == n: 
                 pool.append(curr)
@@ -29,6 +29,7 @@ class Solution:
             return output
                 
                 
+
 
 
 # previous approach
