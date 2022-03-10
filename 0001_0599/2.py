@@ -1,46 +1,80 @@
 # Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
-    def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        curr = l1.val+l2.val
-        l1 = l1.next
-        l2 = l2.next
-        carry = 0 if curr < 10 else 1
-        curr = curr % 10
-        root = ListNode(curr)
-        node = root
-        while l1 and l2:
-            curr = l1.val+l2.val + carry
-            carry = 0 if curr < 10 else 1
-            curr = curr % 10
-            node.next = ListNode(curr)
-            node = node.next
+    def addTwoNumbers(self, l1: 'Optional[ListNode]', l2: 'Optional[ListNode]') -> 'Optional[ListNode]':
+        start = ListNode() #dummy start, will return start.next 
+        node = start 
+        carry = 0 
+        while l1 and l2: # just go through both list, add each node
+            curr = carry + l1.val+l2.val  
+            carry = 1 if curr >= 10 else  0
+            node.next = ListNode(curr%10)
+            node=node.next 
             l1 = l1.next
             l2 = l2.next
-        while l1:
-            curr = l1.val+carry
-            carry = 0 if curr < 10 else 1
-            curr = curr % 10
-            node.next = ListNode(curr)
-            node = node.next
-            l1 = l1.next
-        while l2:
-            curr = l2.val+carry
-            carry = 0 if curr < 10 else 1
-            curr = curr % 10
-            node.next = ListNode(curr)
-            node = node.next
-            l2 = l2.next
+        
+        rem = l1 or l2  #add the remaining
+        while rem:
+            curr = carry + rem.val 
+            carry = 1 if curr >= 10 else 0 
+            node.next = ListNode(curr%10)
+            node = node.next 
+            rem = rem.next
+        
+        if carry:
+            node.next = ListNode(carry)        
+        return start.next
 
-        if carry == 1: # the final digit. for case as 9+2, the 1 need to be appended after iteration
-            node.next = ListNode(1)
-            node = node.next
+    
 
-        return root
+# previous approach
+
+# # Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+# class Solution:
+#     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
+#         curr = l1.val+l2.val
+#         l1 = l1.next
+#         l2 = l2.next
+#         carry = 0 if curr < 10 else 1
+#         curr = curr % 10
+#         root = ListNode(curr)
+#         node = root
+#         while l1 and l2:
+#             curr = l1.val+l2.val + carry
+#             carry = 0 if curr < 10 else 1
+#             curr = curr % 10
+#             node.next = ListNode(curr)
+#             node = node.next
+#             l1 = l1.next
+#             l2 = l2.next
+#         while l1:
+#             curr = l1.val+carry
+#             carry = 0 if curr < 10 else 1
+#             curr = curr % 10
+#             node.next = ListNode(curr)
+#             node = node.next
+#             l1 = l1.next
+#         while l2:
+#             curr = l2.val+carry
+#             carry = 0 if curr < 10 else 1
+#             curr = curr % 10
+#             node.next = ListNode(curr)
+#             node = node.next
+#             l2 = l2.next
+
+#         if carry == 1: # the final digit. for case as 9+2, the 1 need to be appended after iteration
+#             node.next = ListNode(1)
+#             node = node.next
+
+#         return root
 
 
 
