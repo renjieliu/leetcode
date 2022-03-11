@@ -32,6 +32,9 @@ class Solution:
         return output[0] or head #if output[0] is none ==> total % k == 0, then just return the head.
 
     
+    
+
+    
 
 
 # previous approach
