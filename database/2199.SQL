@@ -132,19 +132,25 @@ order by 1
 
 --approach 2 with Like
 
+/* Write your T-SQL query statement below */
 with base as (
-select
-distinct 
-p.post_id
-,topic_id = isnull(cast(k.topic_id as varchar(20)) , 'Ambiguous!')
-from posts p left outer join keywords k
-on  p.content like '% ' + k.word + ' %'  -- whole word
-    or p.content like k.word + ' %' --start with the word
-    or p.content like '% ' + k.word -- end with the word
+    select
+    distinct 
+    p.post_id
+    ,topic_id = k.topic_id
+    from posts p left outer join keywords k
+    on  ' ' + p.content+ ' '  like '% ' + k.word + ' %'  -- whole word
 )
 select 
 post_id
-, topic = string_agg(topic_id, ',') within group (order by topic_id)
+, topic = isnull(string_agg(topic_id, ',') within group (order by topic_id), 'Ambiguous!')
 from base
 group by post_id
 order by 1 
+
+
+
+
+
+
+
