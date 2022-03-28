@@ -1,6 +1,37 @@
 class Solution:
-    def search(self, nums: 'List[int]', target: int) -> bool: #O(N)
-        return target in nums 
+    def search(self, nums: 'List[int]', target: int) -> bool: # O(logN | logN - for the recursive call)
+        def binFind(arr, v):
+            s = 0 
+            e = len(arr)-1
+            while s <= e:
+                mid = s - (s-e)//2
+                if arr[mid] == v:
+                    return True
+                elif arr[mid] > v:
+                    e = mid -1
+                elif arr[mid] < v:
+                    s = mid + 1 
+            return False 
+        
+        if len(nums) == 0 :
+            return False
+        elif len(nums) == 1:
+            return nums[0] == target
+        elif nums[0] >= nums[-1]: # pivot point in current array
+            s = 0
+            e = len(nums)-1
+            mid = s - (s-e) // 2
+            return self.search(nums[:mid], target) or self.search(nums[mid:], target) # search on the 1st half and 2nd.
+        elif nums[0] < nums[-1]: # sorted, just do a binary search
+            return binFind(nums, target)
+        
+    
+                
+# previous approach
+
+# class Solution:
+#     def search(self, nums: 'List[int]', target: int) -> bool: #O(N)
+#         return target in nums 
 
 
 # previous approach
