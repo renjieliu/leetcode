@@ -1,34 +1,57 @@
 class Solution:
-    def searchMatrix(self, matrix: 'List[List[int]]', target: int) -> bool: #O(logN | 1)
-        def binFind(arr, v): #O(n | 1)
-            s = 0
-            e = len(arr)-1
-            while s <= e:
-                mid = s - (s-e)//2
-                if arr[mid] == v:
-                    return True
-                elif arr[mid] > v:
-                    e = mid - 1
-                else:
-                    s = mid + 1
-            return False
+    def searchMatrix(self, matrix: 'List[List[int]]', target: int) -> bool: #O(logM*N)
+        m, n = len(matrix), len(matrix[0])
+        s = 0
+        e = m*n-1
+        while s <= e:
+            mid = s - (s-e)//2
+            row = mid // n #the matrix is flattened, by m*n, so the row is mid // n
+            col = mid % n # the matrix is flattened, by m*n, so the col is mid % n
+            if matrix[row][col] == target:
+                return True
+            elif matrix[row][col] > target:
+                e = mid - 1
+            elif matrix[row][col] < target:
+                s = mid + 1
+        return False
         
-        def binFindRow(matrix, v): #binary find for the row, with max first element <= target
-            s = 0
-            e = len(matrix)-1
-            output = -1
-            while s <= e:
-                mid = s - (s-e)//2
-                if matrix[mid][0] <= v:
-                    output = mid
-                    s = mid + 1
-                else:
-                    e = mid - 1
-            return output
+   
+        
+
+
+# previous approach
+
+# class Solution:
+#     def searchMatrix(self, matrix: 'List[List[int]]', target: int) -> bool: #O(logN | 1)
+#         def binFind(arr, v): #O(n | 1)
+#             s = 0
+#             e = len(arr)-1
+#             while s <= e:
+#                 mid = s - (s-e)//2
+#                 if arr[mid] == v:
+#                     return True
+#                 elif arr[mid] > v:
+#                     e = mid - 1
+#                 else:
+#                     s = mid + 1
+#             return False
+        
+#         def binFindRow(matrix, v): #binary find for the row, with max first element <= target
+#             s = 0
+#             e = len(matrix)-1
+#             output = -1
+#             while s <= e:
+#                 mid = s - (s-e)//2
+#                 if matrix[mid][0] <= v:
+#                     output = mid
+#                     s = mid + 1
+#                 else:
+#                     e = mid - 1
+#             return output
         
      
-        r = binFindRow(matrix, target)
-        return False if r == -1 else binFind(matrix[r], target)
+#         r = binFindRow(matrix, target)
+#         return False if r == -1 else binFind(matrix[r], target)
             
 
 # previous approach
