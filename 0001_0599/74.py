@@ -1,25 +1,82 @@
 class Solution:
-    def searchMatrix(self, matrix: 'List[List[int]]', target: int) -> bool:
-        def bin(arr, val):
+    def searchMatrix(self, matrix: 'List[List[int]]', target: int) -> bool: #O(logN | 1)
+        def binFind(arr, v): #O(n | 1)
             s = 0
-            e = len(arr) - 1
+            e = len(arr)-1
             while s <= e:
-                mid = s - (s - e) // 2
-                if arr[mid] == val:
-                    return mid
-                elif arr[mid] > val:
-                    e = mid - 1
-                elif arr[mid] < val:
-                    s = mid + 1
-            return -1
-
-        for arr in matrix:
-            if arr and arr[0] <= target <= arr[-1]:
-                if bin(arr, target) != -1:
+                mid = s - (s-e)//2
+                if arr[mid] == v:
                     return True
-            else:
-                continue
-        return False
+                elif arr[mid] > v:
+                    e = mid - 1
+                else:
+                    s = mid + 1
+            return False
+        
+        def binFindRow(matrix, v): #binary find for the row, with max first element <= target
+            s = 0
+            e = len(matrix)-1
+            output = -1
+            while s <= e:
+                mid = s - (s-e)//2
+                if matrix[mid][0] <= v:
+                    output = mid
+                    s = mid + 1
+                else:
+                    e = mid - 1
+            return output
+        
+     
+        r = binFindRow(matrix, target)
+        return False if r == -1 else binFind(matrix[r], target)
+            
+
+# previous approach
+
+# class Solution:
+#     def searchMatrix(self, matrix: 'List[List[int]]', target: int) -> bool: #O(n | 1)
+#         def binFind(arr, v): #O(n | 1)
+#             s = 0
+#             e = len(arr)-1
+#             while s <= e:
+#                 mid = s - (s-e)//2
+#                 if arr[mid] == v:
+#                     return 1
+#                 elif arr[mid] > v:
+#                     e = mid - 1
+#                 else:
+#                     s = mid + 1
+#             return 0
+#         for r in matrix: # go through each line - if it can be a candidate, then use binary search to find it.
+#             if r[0] <= target <= r[-1]: #if current value is within range, no need to continue, as the matrix is sorted
+#                 return binFind(r, target)
+#         return False
+    
+
+# previous approach
+
+# class Solution:
+#     def searchMatrix(self, matrix: 'List[List[int]]', target: int) -> bool:
+#         def bin(arr, val):
+#             s = 0
+#             e = len(arr) - 1
+#             while s <= e:
+#                 mid = s - (s - e) // 2
+#                 if arr[mid] == val:
+#                     return mid
+#                 elif arr[mid] > val:
+#                     e = mid - 1
+#                 elif arr[mid] < val:
+#                     s = mid + 1
+#             return -1
+
+#         for arr in matrix:
+#             if arr and arr[0] <= target <= arr[-1]:
+#                 if bin(arr, target) != -1:
+#                     return True
+#             else:
+#                 continue
+#         return False
 
 
 # previous approach
