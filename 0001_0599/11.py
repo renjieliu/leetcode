@@ -1,16 +1,33 @@
 class Solution:
-    def maxArea(self, height: 'List[int]') -> int:
-        l = 0
+    def maxArea(self, height: 'List[int]') -> int: #O(N)
+        l = 0 
         r = len(height)-1
         output = 0
-        while l <= r:
-            output = max(output, min(height[l], height[r]) * (r-l) )
-            #print(height[l], height[r], min(height[l], height[r]), l, r, output)
-            if height[l] <= height[r]:
-                l+=1
+        while l <= r: #trying each possible candidate, as the largest area is determined by the short * width.
+            output = max((r-l) * min(height[r], height[l]), output)
+            if height[r] < height[l]:
+                r -= 1
             else:
-                r-=1
+                l += 1
         return output
+    
+    
+
+# previous solution
+
+# class Solution:
+#     def maxArea(self, height: 'List[int]') -> int:
+#         l = 0
+#         r = len(height)-1
+#         output = 0
+#         while l <= r:
+#             output = max(output, min(height[l], height[r]) * (r-l) )
+#             #print(height[l], height[r], min(height[l], height[r]), l, r, output)
+#             if height[l] <= height[r]:
+#                 l+=1
+#             else:
+#                 r-=1
+#         return output
 
 
 # previous approach
