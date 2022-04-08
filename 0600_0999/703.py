@@ -1,23 +1,59 @@
-class KthLargest:
+class KthLargest: # O(n | n)
 
     def __init__(self, k: int, nums: 'List[int]'):
+        self.arr = sorted(nums)
         self.k = k
-        self.pq = []
-        heapq.heapify(self.pq)
-        for n in nums:
-            if len(self.pq) < k:
-                heapq.heappush(self.pq, n)
-            else:
-                heapq.heappushpop(self.pq, n) #push it and pop
-
 
     def add(self, val: int) -> int:
-        if len(self.pq) < self.k:
-            heapq.heappush(self.pq, val)
-        else:
-            heapq.heappushpop(self.pq, val)
+        def binFind(arr, val): # to find the last element < val
+            s = 0
+            e = len(self.arr)-1 
+            output = -1
+            while s <= e:
+                mid = s - (s-e)//2 
+                if arr[mid] > val:
+                    e = mid - 1 
+                else:
+                    output = max(output, mid)
+                    s = mid + 1
+            return output +1 
+        
+        loc = binFind(self.arr, val)
+        # print(self.arr, val, loc)
+        self.arr.insert(loc, val)
+        # print(self.arr)
+        return self.arr[-self.k]
+         
 
-        return self.pq[0]  # kth largest is the smallest item in the length K pq.
+
+# Your KthLargest object will be instantiated and called as such:
+# obj = KthLargest(k, nums)
+# param_1 = obj.add(val)
+
+
+
+# previous solution
+
+# class KthLargest:
+
+#     def __init__(self, k: int, nums: 'List[int]'):
+#         self.k = k
+#         self.pq = []
+#         heapq.heapify(self.pq)
+#         for n in nums:
+#             if len(self.pq) < k:
+#                 heapq.heappush(self.pq, n)
+#             else:
+#                 heapq.heappushpop(self.pq, n) #push it and pop
+
+
+#     def add(self, val: int) -> int:
+#         if len(self.pq) < self.k:
+#             heapq.heappush(self.pq, val)
+#         else:
+#             heapq.heappushpop(self.pq, val)
+
+#         return self.pq[0]  # kth largest is the smallest item in the length K pq.
 
 
 
