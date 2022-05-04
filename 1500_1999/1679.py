@@ -1,31 +1,56 @@
 class Solution:
-    def maxOperations(self, nums: 'List[int]', k: int) -> int:
-        def bin(arr, n, s, e): #this is to find the right most loc of n
-            s = s+1
-            output = -1
-            while s<=e :
-                mid = (s+e)//2
-                if arr[mid] == n:
-                    output = mid
-                    s = mid +1
-                elif arr[mid] < n:
-                    s = mid +1
-                elif arr[mid] > n:
-                    e = mid - 1
-            return output
-
+    def maxOperations(self, nums: 'List[int]', k: int) -> int: #O(N | N)
+        hmp = {}
+        for n in nums:
+            if n not in hmp:
+                hmp[n] = 0
+            hmp[n] += 1 
+        
+        used = set()
         cnt = 0
-        nums.sort()
-        l = 0
-        r = len(nums)-1
-        while l <= r:
-            loc = bin(nums, k-nums[l], l, r) #to find the k-x in the remaining array
-            if loc != -1:
-                r = loc-1 # move the right pointer to the right position
-                cnt += 1
-            l+=1
-
+        for key, val in hmp.items():
+            if key not in used:
+                if k == 2*key:
+                    cnt += val // 2 #how many 2 items can be picked
+                    used.add(key)
+                elif k - key in hmp and k - key not in used:
+                    cnt += min(hmp[key], hmp[k-key]) # can only pick the less of the 2
+                    used.add(key)
+                    used.add(k-key)
         return cnt
+                
+                
+
+# previous solution
+
+# class Solution:
+#     def maxOperations(self, nums: 'List[int]', k: int) -> int:
+#         def bin(arr, n, s, e): #this is to find the right most loc of n
+#             s = s+1
+#             output = -1
+#             while s<=e :
+#                 mid = (s+e)//2
+#                 if arr[mid] == n:
+#                     output = mid
+#                     s = mid +1
+#                 elif arr[mid] < n:
+#                     s = mid +1
+#                 elif arr[mid] > n:
+#                     e = mid - 1
+#             return output
+
+#         cnt = 0
+#         nums.sort()
+#         l = 0
+#         r = len(nums)-1
+#         while l <= r:
+#             loc = bin(nums, k-nums[l], l, r) #to find the k-x in the remaining array
+#             if loc != -1:
+#                 r = loc-1 # move the right pointer to the right position
+#                 cnt += 1
+#             l+=1
+
+#         return cnt
 
 
 
