@@ -31,7 +31,7 @@
 #        """
 
 class Solution(object):       
-    def cleanRoom(self, robot): # RL 20220507 Copied Solution
+    def cleanRoom(self, robot): # RL 20220508 Copied Solution
         """
         :type robot: Robot
         :rtype: None
@@ -64,6 +64,8 @@ class Solution(object):
         backtrack()
 
         
+
+   
 
 
 # previous solution
