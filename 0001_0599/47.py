@@ -1,21 +1,38 @@
 class Solution:
-    def permuteUnique(self, nums: 'List[int]') -> 'List[List[int]]':
-        def dfs(output, targetLength, curr, arr):
-            if len(curr) == targetLength:
+    def permuteUnique(self, nums: 'List[int]') -> 'List[List[int]]':#O( K*K! | K!)
+        def perm(output, seen, curr, arr):  # dfs to generate all the possible permutations
+            if arr == [] and tuple(curr) not in seen: # check if current permutation is seen
+                seen.add(tuple(curr))
                 output.append(curr)
-            else:
+            else: 
                 for i in range(len(arr)):
-                    dfs(output, targetLength, curr + [arr[i]], arr[:i] + arr[i + 1:])
-
+                    perm(output, seen, curr + [arr[i]], arr[:i] + arr[i+1:])
         output = []
-        dfs(output, len(nums), [], nums)
-        res = []
-        tp = {}
-        for o in output:
-            if tuple(o) not in tp:
-                tp[tuple(o)] = None
-                res.append(o)
-        return res
+        perm(output, set(), [], nums)
+        return output
+    
+
+
+# previous solution
+
+# class Solution:
+#     def permuteUnique(self, nums: 'List[int]') -> 'List[List[int]]':
+#         def dfs(output, targetLength, curr, arr):
+#             if len(curr) == targetLength:
+#                 output.append(curr)
+#             else:
+#                 for i in range(len(arr)):
+#                     dfs(output, targetLength, curr + [arr[i]], arr[:i] + arr[i + 1:])
+
+#         output = []
+#         dfs(output, len(nums), [], nums)
+#         res = []
+#         tp = {}
+#         for o in output:
+#             if tuple(o) not in tp:
+#                 tp[tuple(o)] = None
+#                 res.append(o)
+#         return res
 
 # Previous approach
 # class Solution:

@@ -1,20 +1,41 @@
 class Solution:
-    def findUnsortedSubarray(self, nums: 'List[int]') -> int:  #O(N | N)
-        stk = [] #record the current smallest location
+    def findUnsortedSubarray(self, nums: 'List[int]') -> int: #O(N | N)
+        stk = [] # to record the smallest location 
         left = float('inf')
         for i in range(len(nums)):
             while stk and nums[stk[-1]] > nums[i]:
-                 left = min(left, stk.pop())
-            stk.append(i)        
-        
-        stk = [] # record the current  largest location
+                left = min(left, stk.pop())
+            stk.append(i)
+        stk = [] # to recrord the largest location
         right = -float('inf')
         for i in range(len(nums)-1, -1, -1):
             while stk and nums[stk[-1]] < nums[i]:
                 right = max(right, stk.pop())
             stk.append(i)
         
-        return right - left + 1 if left != float('inf') else 0
+        return 0 if left == float('inf') else right - left + 1 
+    
+
+
+# previous solution
+
+# class Solution:
+#     def findUnsortedSubarray(self, nums: 'List[int]') -> int:  #O(N | N)
+#         stk = [] #record the current smallest location
+#         left = float('inf')
+#         for i in range(len(nums)):
+#             while stk and nums[stk[-1]] > nums[i]:
+#                  left = min(left, stk.pop())
+#             stk.append(i)        
+        
+#         stk = [] # record the current  largest location
+#         right = -float('inf')
+#         for i in range(len(nums)-1, -1, -1):
+#             while stk and nums[stk[-1]] < nums[i]:
+#                 right = max(right, stk.pop())
+#             stk.append(i)
+        
+#         return right - left + 1 if left != float('inf') else 0
     
     
     
