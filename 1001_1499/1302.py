@@ -1,23 +1,58 @@
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def deepestLeavesSum(self, root: TreeNode) -> int:
-        hmp = defaultdict(int)
+    def deepestLeavesSum(self, root: 'Optional[TreeNode]') -> int: #O(N | H), H is the height of the tree (recursive stack)
+        def helper(output, node, level): #dfs to find the deepest level, and calc the sum
+            if node:
+                if node.left == node.right == None:
+                    if level > output[0]:
+                        output[0] = level 
+                        output[1] = node.val 
+                    elif level == output[0]:
+                        output[1] += node.val
+                else:
+                    helper(output, node.left, level+1)
+                    helper(output, node.right, level+1)
+        
+        output = [0, 0] #[deepestLevel, total]
+        helper(output, root, 0)
+        return output[1]
+                    
+        
+        
 
-        def dfs(hmp, layer, node):
-            hmp[layer] += node.val
-            if node.left:
-                dfs(hmp, layer + 1, node.left)
-            if node.right:
-                dfs(hmp, layer + 1, node.right)
 
-        dfs(hmp, 0, root)
-        return hmp[max(hmp.keys())]
+
+
+# previous solution
+
+# # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+# class Solution:
+#     def deepestLeavesSum(self, root: TreeNode) -> int:
+#         hmp = defaultdict(int)
+
+#         def dfs(hmp, layer, node):
+#             hmp[layer] += node.val
+#             if node.left:
+#                 dfs(hmp, layer + 1, node.left)
+#             if node.right:
+#                 dfs(hmp, layer + 1, node.right)
+
+#         dfs(hmp, 0, root)
+#         return hmp[max(hmp.keys())]
+
+
+
 
 # previous approach
 # # Definition for a binary tree node.
