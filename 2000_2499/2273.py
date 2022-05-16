@@ -15,3 +15,4 @@ class Solution:
                 prev = curr
         return output
     
+
