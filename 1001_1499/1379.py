@@ -6,7 +6,7 @@
 #         self.right = None
 
 class Solution:
-    def getTargetCopy(self, original: TreeNode, cloned: TreeNode, target: TreeNode) -> TreeNode: #O(N | N) H is the height of the tree
+    def getTargetCopy(self, original: 'TreeNode', cloned: 'TreeNode', target: 'TreeNode') -> 'TreeNode': #O(N | N) H is the height of the tree
         def dfs(output, target, node, clone): # dfs,  if current node val is same as the target, get the node from clone
             if node:
                 if node.val == target.val:
