@@ -1,12 +1,29 @@
 class Solution:
-    def coinChange(self, coins: 'List[int]', amount: int) -> int:
-        dp = [float('inf') for _ in range(amount+1)]
-        dp[0] = 0
-        for a in range(amount+1):
+    def coinChange(self, coins: 'List[int]', amount: int) -> int: #O(N | N)
+        dp = [0] # need 0 coin to reach amount 0
+        for i in range(1, amount+1): #for each amount, check how many coins are needed to reach amount-coin.
+            curr = float('inf')
             for c in coins:
-                if a-c >= 0:
-                    dp[a] = min(1+ dp[a-c], dp[a])
+                if i-c >=0:
+                    curr = min(dp[i-c]+1, curr)
+            dp.append(curr)
+        
         return -1 if dp[-1] == float('inf') else dp[-1]
+    
+
+
+
+# previous solution
+
+# class Solution:
+#     def coinChange(self, coins: 'List[int]', amount: int) -> int:
+#         dp = [float('inf') for _ in range(amount+1)]
+#         dp[0] = 0
+#         for a in range(amount+1):
+#             for c in coins:
+#                 if a-c >= 0:
+#                     dp[a] = min(1+ dp[a-c], dp[a])
+#         return -1 if dp[-1] == float('inf') else dp[-1]
 
 
 # previous approach
