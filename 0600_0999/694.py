@@ -1,25 +1,55 @@
 class Solution:
     def numDistinctIslands(self, grid: 'List[List[int]]') -> int: #O(MN | MN)
-        def dfs(curr, grid, r, c):  #to record the path to find all the 1's connected.
-            direction = [ [1,0,'D'], [0,1, 'R'], [-1,0, 'U'], [0,-1, 'L']] 
-            for a, b, d in direction:
-                if -1 < r+a < len(grid) and -1 < c+b < len(grid[0]) and grid[r+a][c+b] == 1:
-                    grid[r+a][c+b] = 2 # change the current grid to 2, to avoid infinite visiting
-                    curr[-1] += d
-                    dfs(curr, grid, r+a, c+b) 
-            curr[-1] += '#' # to indicate when current dfs ends, to avoid double count same path, but different shape
-             
-        output = set()
-        for r in range(len(grid)): 
+        def helper(grid, r, c, path): #to find the signature of the path. 
+            direction = [[1,0, 'D'], [-1, 0, 'U'], [0,-1, 'L'], [0,1 , 'R']] 
+            for a, b, dd  in direction:
+                nxt_r = r+a
+                nxt_c = c+b
+                if -1 < nxt_r < len(grid) and -1 < nxt_c < len(grid[0]) and grid[nxt_r][nxt_c] == 1:
+                    grid[nxt_r][nxt_c] = 0
+                    path[-1] += dd
+                    helper(grid, nxt_r, nxt_c, path)
+            path[-1] += '#' #add the end sign to current dfs
+        
+        pool = set()
+        for r in range(len(grid)):
             for c in range(len(grid[0])):
                 if grid[r][c] == 1:
-                    curr = [""]
-                    grid[r][c] = 2 
-                    dfs(curr, grid, r, c)
-                    output.add(curr[0])
+                    grid[r][c] = 0
+                    path = ['']
+                    helper(grid, r, c, path) #if the signature of the path is the same, they are having the same shape
+                    pool.add(path[-1])
         
-        # print(output)
-        return len(output)
+        return len(pool)
+    
+
+    
+
+
+# previous solution
+
+# class Solution:
+#     def numDistinctIslands(self, grid: 'List[List[int]]') -> int: #O(MN | MN)
+#         def dfs(curr, grid, r, c):  #to record the path to find all the 1's connected.
+#             direction = [ [1,0,'D'], [0,1, 'R'], [-1,0, 'U'], [0,-1, 'L']] 
+#             for a, b, d in direction:
+#                 if -1 < r+a < len(grid) and -1 < c+b < len(grid[0]) and grid[r+a][c+b] == 1:
+#                     grid[r+a][c+b] = 2 # change the current grid to 2, to avoid infinite visiting
+#                     curr[-1] += d
+#                     dfs(curr, grid, r+a, c+b) 
+#             curr[-1] += '#' # to indicate when current dfs ends, to avoid double count same path, but different shape
+             
+#         output = set()
+#         for r in range(len(grid)): 
+#             for c in range(len(grid[0])):
+#                 if grid[r][c] == 1:
+#                     curr = [""]
+#                     grid[r][c] = 2 
+#                     dfs(curr, grid, r, c)
+#                     output.add(curr[0])
+        
+#         # print(output)
+#         return len(output)
 
 
 
