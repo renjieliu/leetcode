@@ -1,31 +1,58 @@
 class Solution:
-    def maxEnvelopes(self, envelopes: 'List[List[int]]') -> int:
-        envelopes.sort(key = lambda x : (x[0], -x[1])) #sort the second in reverse.. it need to be bigger than the previous found to contain the previous envelop
-        def bifind(arr, v):
-            if v > arr[-1]:
-                return len(arr)
-            else:
-                s = 0
-                e = len(arr)-1
-                while s <= e:
-                    mid = (s+e)//2
-                    if arr[mid] >= v:
-                        e = mid -1
-                    else:
-                        s = mid + 1
-                return s
-
-        arr = []
-        for a, b in envelopes: #using Longest increasing subseq algo
-            if arr == []:
+    def maxEnvelopes(self, envelopes: 'List[List[int]]') -> int: #O(nlogn | n)
+        envelopes.sort(key = lambda x: [x[0], -x[1]]) # reverse sort x[1], to put the largest one at first
+        def binFind(arr, v): # to find the first larger emelent from arr 
+            s = 0 
+            e = len(arr)-1
+            while s <= e :
+                mid = s - (s-e)//2
+                if arr[mid] >= v :
+                    e = mid - 1 
+                else:
+                    s = mid + 1
+            return s
+        
+        arr = [] 
+        for a, b in envelopes: # same as the Longest Increasing Sequence algo
+            if arr == [] or b > arr[-1]:
                 arr.append(b)
             else:
-                loc = bifind(arr, b)
-                if loc == len(arr):
-                    arr.append(b)
-                else:
-                    arr[loc] = b
+                loc = binFind(arr,b)
+                arr[loc] = b
         return len(arr)
+        
+
+
+# previous solution
+
+# class Solution:
+#     def maxEnvelopes(self, envelopes: 'List[List[int]]') -> int:
+#         envelopes.sort(key = lambda x : (x[0], -x[1])) #sort the second in reverse.. it need to be bigger than the previous found to contain the previous envelop
+#         def bifind(arr, v):
+#             if v > arr[-1]:
+#                 return len(arr)
+#             else:
+#                 s = 0
+#                 e = len(arr)-1
+#                 while s <= e:
+#                     mid = (s+e)//2
+#                     if arr[mid] >= v:
+#                         e = mid -1
+#                     else:
+#                         s = mid + 1
+#                 return s
+
+#         arr = []
+#         for a, b in envelopes: #using Longest increasing subseq algo
+#             if arr == []:
+#                 arr.append(b)
+#             else:
+#                 loc = bifind(arr, b)
+#                 if loc == len(arr):
+#                     arr.append(b)
+#                 else:
+#                     arr[loc] = b
+#         return len(arr)
 
 
 
