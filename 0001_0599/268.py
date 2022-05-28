@@ -1,9 +1,23 @@
 class Solution:
-    def missingNumber(self, nums: 'List[int]') -> int:
+    def missingNumber(self, nums: 'List[int]') -> int: # O(N | 1)
         output = len(nums)
-        for i, n in enumerate(nums): #i^n should be 0, if both loc and number exist in the array, the array doesn't have to be sorted
+        for i, n in enumerate(nums): #nums is supposed from 0 to len(nums). all the numbers should be covered by i^n, except for the missing one
             output ^= i^n
         return output
+        #return (0 + len(nums)) * (len(nums)+1)//2 - sum(nums) #gauss_sum - curr_total
+    
+
+
+
+
+# previous solution
+
+# class Solution:
+#     def missingNumber(self, nums: 'List[int]') -> int:
+#         output = len(nums)
+#         for i, n in enumerate(nums): #i^n should be 0, if both loc and number exist in the array, the array doesn't have to be sorted
+#             output ^= i^n
+#         return output
 
 # previous approach
 # class Solution:
