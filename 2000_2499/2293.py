@@ -1,5 +1,5 @@
 class Solution:
-    def minMaxGame(self, nums: 'List[int]') -> int: #(logN | N)
+    def minMaxGame(self, nums: 'List[int]') -> int: #(2**logN | N)
         def helper(arr): #simulate the requirement
             output=[]
             for i in range(len(arr)//2):
