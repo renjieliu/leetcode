@@ -1,16 +1,32 @@
 class Solution:
-    def minSwaps(self, data: 'List[int]') -> int:
-        s = sum(data)
-        if s<=1 or s == len(data):
-            return 0
-        else:#how many 0's if to move everything here
-            arr = [sum(data[:s])]
-            for i in range(s, len(data)):
-                arr.append(arr[-1] - data[i-s] + data[i])
-            res = float('inf')
-            for a in arr :
-                res = min(s-a, res)
-            return res
+    def minSwaps(self, data: 'List[int]') -> int: #O(N | N)
+        total = sum(data)
+        pre = [0] # prefix sum of data
+        for d in data:
+            pre.append(pre[-1] + d)
+        output = float('inf')
+        for i in range(1, len(pre)+1-total): #assuming all the 1's are grouped here, how many swaps to be done
+            output = min(output, total - (pre[i-1+total] - pre[i-1])) #to check how many zeros are in between
+        return output
+    
+    
+
+
+# previous solution
+
+# class Solution:
+#     def minSwaps(self, data: 'List[int]') -> int:
+#         s = sum(data)
+#         if s<=1 or s == len(data):
+#             return 0
+#         else:#how many 0's if to move everything here
+#             arr = [sum(data[:s])]
+#             for i in range(s, len(data)):
+#                 arr.append(arr[-1] - data[i-s] + data[i])
+#             res = float('inf')
+#             for a in arr :
+#                 res = min(s-a, res)
+#             return res
 
 
 # previous approach
