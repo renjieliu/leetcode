@@ -1,19 +1,37 @@
 class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        l = r = 0
-        lkp = set()
+    def lengthOfLongestSubstring(self, s: str) -> int: #O( N | N)
+        seen = set() # record all the characters seen
+        l = 0 
         output = 0
-        while r < len(s):
-            if s[r] not in lkp:
-                lkp.add(s[r])
-            else:
-                while l<=r and s[l] != s[r]:
-                    lkp.remove(s[l])
-                    l+=1
-                l+=1  #just move left, no need to remove the s[l], as it's same as s[r], need to add anyway
-            output = max(output, r-l+1)
-            r+=1
+        for r in range(len(s)):
+            while l < r and s[r] in seen: # keep advancing the left pointer, until current character is taken out
+                seen.remove(s[l])
+                l+=1
+            seen.add(s[r]) # add current character to the seen
+            output = max(output, r-l+1) 
         return output
+
+                
+                
+
+# previous solution
+
+# class Solution:
+#     def lengthOfLongestSubstring(self, s: str) -> int:
+#         l = r = 0
+#         lkp = set()
+#         output = 0
+#         while r < len(s):
+#             if s[r] not in lkp:
+#                 lkp.add(s[r])
+#             else:
+#                 while l<=r and s[l] != s[r]:
+#                     lkp.remove(s[l])
+#                     l+=1
+#                 l+=1  #just move left, no need to remove the s[l], as it's same as s[r], need to add anyway
+#             output = max(output, r-l+1)
+#             r+=1
+#         return output
 
 
 # previous approach
