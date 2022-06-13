@@ -5,13 +5,32 @@
 #         self.next = None
 
 class Solution:
-    def getIntersectionNode(self, headA: 'ListNode', headB: 'ListNode') -> 'Optional[ListNode]': # O(M+N | 1)
+    def getIntersectionNode(self, headA: 'ListNode', headB: 'ListNode') -> 'Optional[ListNode]': # O( M+N | 1)
         nodeA = headA
-        nodeB = headB        
-        while nodeA != nodeB: #to make both nodes to start at the same length, and compare each node.
-            nodeA = headB if nodeA == None else nodeA.next  
-            nodeB = headA if nodeB == None else nodeB.next
+        nodeB = headB 
+        while nodeA != nodeB: #align list A and list B. when A finishes, start to B. When B finishes, they will start as aligned.
+            nodeA = nodeA.next if nodeA else headB 
+            nodeB = nodeB.next if nodeB else headA
         return nodeA
+    
+
+
+# previous solution
+
+# # Definition for singly-linked list.
+# # class ListNode:
+# #     def __init__(self, x):
+# #         self.val = x
+# #         self.next = None
+
+# class Solution:
+#     def getIntersectionNode(self, headA: 'ListNode', headB: 'ListNode') -> 'Optional[ListNode]': # O(M+N | 1)
+#         nodeA = headA
+#         nodeB = headB        
+#         while nodeA != nodeB: #to make both nodes to start at the same length, and compare each node.
+#             nodeA = headB if nodeA == None else nodeA.next  
+#             nodeB = headA if nodeB == None else nodeB.next
+#         return nodeA
 
 
 
