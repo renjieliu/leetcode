@@ -1,41 +1,82 @@
 class Solution:
-    def longestStrChain(self, words: 'List[str]') -> int:
-        words = [list(w) for w in words]
-        def chain(a, b): #len(b)> len(a), and check if a and b only differs 1 character
-            output = 0
-            while a and b:
-                if a[0] != b[0]:
-                    output += 1
-                    b.pop(0)
+    def longestStrChain(self, words: 'List[str]') -> int: #O( (L**2)*N | N) , L being the length of the longest word
+        def helper(memo, hmp, w): #dfs, to find the longest chain from current word
+            if w in memo: 
+                return memo[w]
+            memo[w] = 1 
+            for nxt in hmp[len(w)+1]:
+                if valid(w, nxt):
+                    memo[w] = max(memo[w], 1 + helper(memo, hmp, nxt))
+            return memo[w]
+        
+        def valid(a, b): #len(a) < len(b), to see if b can be a follower of a
+            diff = 0
+            i = 0 
+            j = 0 
+            while i < len(a):
+                if a[i] != b[j]:
+                    j += 1
+                    diff += 1 
+                    if diff > 1:
+                        return False
                 else:
-                    a.pop(0)
-                    b.pop(0)
-            return output <= 1
-
-        hmp = {}
+                    i += 1 
+                    j += 1
+            return True #if diff == 0, it's inserted as the last character in b
+        
+        hmp = defaultdict(lambda: [])
         for w in words:
-            if len(w) not in hmp:
-                hmp[len(w)] = []
             hmp[len(w)].append(w)
-        #print(hmp)
-        def dfs(hmp, word, dp):
-            if tuple(word) in dp:
-                return dp[tuple(word)]
-            else:
-                pathLength = 1
-                if len(word)+1 in hmp:# from current word, what's the max it can form
-                    for w in hmp[len(word)+1]:
-                        if chain(word.copy(), w.copy()):
-                            pathLength = max(pathLength, 1 + dfs(hmp, w, dp))
-                dp[tuple(word)] = pathLength
-                return dp[tuple(word)]
-
-        output = 1
-        dp={}
+        
+        memo = {}
         for w in words:
-            dfs(hmp, w, dp)
-        #print(dp)
-        return max(dp.values())
+            helper(memo, hmp, w)
+        return max(memo.values())
+            
+        
+    
+           
+
+# previous solution
+
+# class Solution:
+#     def longestStrChain(self, words: 'List[str]') -> int:
+#         words = [list(w) for w in words]
+#         def chain(a, b): #len(b)> len(a), and check if a and b only differs 1 character
+#             output = 0
+#             while a and b:
+#                 if a[0] != b[0]:
+#                     output += 1
+#                     b.pop(0)
+#                 else:
+#                     a.pop(0)
+#                     b.pop(0)
+#             return output <= 1
+
+#         hmp = {}
+#         for w in words:
+#             if len(w) not in hmp:
+#                 hmp[len(w)] = []
+#             hmp[len(w)].append(w)
+#         #print(hmp)
+#         def dfs(hmp, word, dp):
+#             if tuple(word) in dp:
+#                 return dp[tuple(word)]
+#             else:
+#                 pathLength = 1
+#                 if len(word)+1 in hmp:# from current word, what's the max it can form
+#                     for w in hmp[len(word)+1]:
+#                         if chain(word.copy(), w.copy()):
+#                             pathLength = max(pathLength, 1 + dfs(hmp, w, dp))
+#                 dp[tuple(word)] = pathLength
+#                 return dp[tuple(word)]
+
+#         output = 1
+#         dp={}
+#         for w in words:
+#             dfs(hmp, w, dp)
+#         #print(dp)
+#         return max(dp.values())
 
 
 
