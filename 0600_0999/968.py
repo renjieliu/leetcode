@@ -7,7 +7,7 @@
 class Solution:
     def minCameraCover(self, root: 'TreeNode') -> int: # O( N | N )
         output = [0]
-        covered = {None} #initiate the covered as None. 
+        covered = {None} #initiate the covered as None, to make sure the camera will not be placed at leaf level
         def helper(output, node, parent, covered): #bottom up, to place the camera at the parent level
             if node:
                 helper(output, node.left, node, covered)
@@ -23,8 +23,37 @@ class Solution:
         helper(output, root, None, covered)
         return output[0]
     
-
     
+    
+
+# previous solution
+
+# # Definition for a binary tree node.
+# # class TreeNode:
+# #     def __init__(self, val=0, left=None, right=None):
+# #         self.val = val
+# #         self.left = left
+# #         self.right = right
+# class Solution:
+#     def minCameraCover(self, root: 'TreeNode') -> int: # O( N | N )
+#         output = [0]
+#         covered = {None} #initiate the covered as None. 
+#         def helper(output, node, parent, covered): #bottom up, to place the camera at the parent level
+#             if node:
+#                 helper(output, node.left, node, covered)
+#                 helper(output, node.right, node, covered)
+#                 if ( (parent == None and node not in covered) or node.left not in covered or node.right not in covered):
+#                     output[0] += 1
+#                     covered.add(node)
+#                     covered.add(parent)
+#                     covered.add(node.left)
+#                     covered.add(node.right)
+#                     # covered.update({node, parent, node.left, node.right})
+
+#         helper(output, root, None, covered)
+#         return output[0]
+    
+
     
 
 # previous solution
