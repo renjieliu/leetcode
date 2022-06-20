@@ -1,26 +1,65 @@
-Trie = lambda: collections.defaultdict(Trie)
-WEIGHT = False
+class WordFilter:
 
-class WordFilter(object):
-    def __init__(self, words):
-        self.trie = Trie()
+    def __init__(self, words: 'List[str]'): # O( N*(K**2) | N*(K**2) ) N is the length of the list, K is the length of the longest word
+        self.trie = {}
+        for i, w in enumerate(words): #for each word, insert all the possible pre + post into the trie
+            w += '#'
+            for j in range(len(w)):
+                curr = self.trie
+                curr['idx'] = i #this is to track the current trie word location.
+                for x in range(j, len(w)*2-1): # for apple, first insert apple#apple, then pple#apple... etc
+                    char = w[x%len(w)]
+                    if char not in curr:
+                        curr[char] = {}
+                    curr[char]['idx'] = i
+                    curr = curr[char]
 
-        for weight, word in enumerate(words):
-            word += '#'
-            for i in range(len(word)):
-                cur = self.trie
-                cur[WEIGHT] = weight
-                for j in range(i, 2 * len(word) - 1):
-                    cur = cur[word[j % len(word)]]
-                    cur[WEIGHT] = weight
 
-    def f(self, prefix, suffix):
-        cur = self.trie
-        for letter in suffix + '#' + prefix:
-            if letter not in cur:
+    def f(self, prefix: str, suffix: str) -> int:  # O(K | 1) , K is the length of the pre + suffix
+        find = suffix +'#' + prefix #just to find suffix + '#' + prefix in the trie
+        curr = self.trie
+        output = -1
+        for c in find:
+            if c not in curr:
                 return -1
-            cur = cur[letter]
-        return cur[WEIGHT]
+            curr = curr[c]
+        return curr['idx']
+        
+        
+
+
+
+# Your WordFilter object will be instantiated and called as such:
+# obj = WordFilter(words)
+# param_1 = obj.f(prefix,suffix)
+
+
+
+# previous solution 
+
+# Trie = lambda: collections.defaultdict(Trie)
+# WEIGHT = False
+
+# class WordFilter(object):
+#     def __init__(self, words):
+#         self.trie = Trie()
+
+#         for weight, word in enumerate(words):
+#             word += '#'
+#             for i in range(len(word)):
+#                 cur = self.trie
+#                 cur[WEIGHT] = weight
+#                 for j in range(i, 2 * len(word) - 1):
+#                     cur = cur[word[j % len(word)]]
+#                     cur[WEIGHT] = weight
+
+#     def f(self, prefix, suffix):
+#         cur = self.trie
+#         for letter in suffix + '#' + prefix:
+#             if letter not in cur:
+#                 return -1
+#             cur = cur[letter]
+#         return cur[WEIGHT]
 
 # class WordFilter:
 
