@@ -1,7 +1,20 @@
 class Solution:
-    def findKthLargest(self, nums: 'List[int]', k: int) -> int: #O( NlogN | 1 )
-        nums.sort()
-        return nums[-k]
+    def findKthLargest(self, nums: 'List[int]', k: int) -> int: #O( NlogK | K )
+        pq = []
+        while nums: #NlogK, as the length of heap is K
+            heapq.heappush(pq, nums.pop()) 
+            if len(pq) > k:
+                heapq.heappop(pq)
+        return heapq.heappop(pq)
+        
+        
+    
+# previous solution
+
+# class Solution:
+#     def findKthLargest(self, nums: 'List[int]', k: int) -> int: #O( NlogN | 1 )
+#         nums.sort()
+#         return nums[-k]
     
 
 # previous solution
