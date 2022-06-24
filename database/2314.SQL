@@ -69,6 +69,9 @@ insert into Weather (city_id, day, degree) values ('3', '2022-12-07', '-6')
 
 
 /* Write your T-SQL query statement below */
+
+-- solution 1
+
 -- with cte as 
 -- (
 -- select 
@@ -87,14 +90,27 @@ insert into Weather (city_id, day, degree) values ('3', '2022-12-07', '-6')
 -- order by 1 
 
 
+
+-- solution 2
+
+-- select 
+-- distinct 
+-- city_id
+-- , day = FIRST_VALUE(day) over(partition by city_id order by degree desc,day)
+-- , degree = FIRST_VALUE(degree) over(partition by city_id order by degree desc,day)
+-- from weather w1
+-- order by city_id
+
+
+-- solution 3
+
 select 
-distinct 
 city_id
-, day = FIRST_VALUE(day) over(partition by city_id order by degree desc,day)
-, degree = FIRST_VALUE(degree) over(partition by city_id order by degree desc,day)
+, day = min(day)
+, degree 
 from weather w1
+where not exists 
+(select * from weather w2 where w2.city_id = w1.city_id and w2.degree > w1.degree)
+group by city_id, degree
 order by city_id
-
-
-
 
