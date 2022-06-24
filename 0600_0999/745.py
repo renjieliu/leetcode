@@ -1,29 +1,64 @@
 class WordFilter:
 
-    def __init__(self, words: 'List[str]'): # O( N*(K**2) | N*(K**2) ) N is the length of the list, K is the length of the longest word
+    def __init__(self, words: 'List[str]'): #O(K**2*N | K**2*N) # K is the lengthe of the longest word. N = len(words)
         self.trie = {}
-        for i, w in enumerate(words): #for each word, insert all the possible pre + post into the trie
-            w += '#'
+        for i, w in enumerate(words): # for word like "apple", add all the suffix + '#' + prefix to the trie
+            w += '#' 
             for j in range(len(w)):
                 curr = self.trie
-                curr['idx'] = i #this is to track the current trie word location.
-                for x in range(j, len(w)*2-1): # for apple, first insert apple#apple, then pple#apple... etc
-                    char = w[x%len(w)]
-                    if char not in curr:
-                        curr[char] = {}
-                    curr[char]['idx'] = i
-                    curr = curr[char]
+                for k in range(j, 2*len(w)-1): #apple#apple, pple#apple, ple#apple.... #apple
+                    char = w[k%len(w)]
+                    curr[char] = curr.get(char, {'loc': i})
+                    curr[char]["loc"] = i 
+                    curr=curr[char]
+        
+        
 
-
-    def f(self, prefix: str, suffix: str) -> int:  # O(K | 1) , K is the length of the pre + suffix
-        find = suffix +'#' + prefix #just to find suffix + '#' + prefix in the trie
+    def f(self, pref: str, suff: str) -> int:
         curr = self.trie
-        output = -1
-        for c in find:
+        #print(curr)
+        word = suff+'#'+ pref
+        for c in word:
             if c not in curr:
                 return -1
             curr = curr[c]
-        return curr['idx']
+        return curr["loc"]
+
+
+# Your WordFilter object will be instantiated and called as such:
+# obj = WordFilter(words)
+# param_1 = obj.f(pref,suff)
+
+
+
+#previous solution
+
+# class WordFilter:
+
+#     def __init__(self, words: 'List[str]'): # O( N*(K**2) | N*(K**2) ) N is the length of the list, K is the length of the longest word
+#         self.trie = {}
+#         for i, w in enumerate(words): #for each word, insert all the possible pre + post into the trie
+#             w += '#'
+#             for j in range(len(w)):
+#                 curr = self.trie
+#                 curr['idx'] = i #this is to track the current trie word location.
+#                 for x in range(j, len(w)*2-1): # for apple, first insert apple#apple, then pple#apple... etc
+#                     char = w[x%len(w)]
+#                     if char not in curr:
+#                         curr[char] = {}
+#                     curr[char]['idx'] = i
+#                     curr = curr[char]
+
+
+#     def f(self, prefix: str, suffix: str) -> int:  # O(K | 1) , K is the length of the pre + suffix
+#         find = suffix +'#' + prefix #just to find suffix + '#' + prefix in the trie
+#         curr = self.trie
+#         output = -1
+#         for c in find:
+#             if c not in curr:
+#                 return -1
+#             curr = curr[c]
+#         return curr['idx']
         
         
 
