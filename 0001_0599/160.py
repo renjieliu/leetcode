@@ -19,6 +19,7 @@ class Solution:
             nodeB = nodeB.next if nodeB else headA # move to the head of headA
         return nodeA
     
+
     
 
 
