@@ -1,18 +1,34 @@
 class Solution:
-    def maximumUnits(self, boxTypes: 'List[List[int]]', truckSize: int) -> int:
-        boxTypes.sort(key = lambda x :x[1], reverse = True)
-        total = 0
-        rem = truckSize
-        while boxTypes and rem > 0:
-            quantity, units  = boxTypes.pop(0)
-            if quantity <= rem: #all the current units can be placed
-                total += quantity * units
-                rem -= quantity
+    def maximumUnits(self, boxTypes: 'List[List[int]]', truckSize: int) -> int: # O( NlogN | 1 )
+        boxTypes.sort(key = lambda x: -x[1]) # sort the boxes with unitsPerBox in reverse order
+        output = 0 
+        for cnt , units in boxTypes: # keep taking the boxes, until the truck is full.
+            if cnt > truckSize:
+                return output + truckSize*units
             else:
-                total += units * rem
-                rem -= rem
-                return total
-        return total
+                output += cnt*units
+                truckSize -= cnt
+        return output
+    
+
+
+# previous solution
+
+# class Solution:
+#     def maximumUnits(self, boxTypes: 'List[List[int]]', truckSize: int) -> int:
+#         boxTypes.sort(key = lambda x :x[1], reverse = True)
+#         total = 0
+#         rem = truckSize
+#         while boxTypes and rem > 0:
+#             quantity, units  = boxTypes.pop(0)
+#             if quantity <= rem: #all the current units can be placed
+#                 total += quantity * units
+#                 rem -= quantity
+#             else:
+#                 total += units * rem
+#                 rem -= rem
+#                 return total
+#         return total
 
 
 # previous approach

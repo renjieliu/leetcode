@@ -5,13 +5,40 @@
 #         self.next = None
 
 class Solution:
-    def getIntersectionNode(self, headA: 'ListNode', headB: 'ListNode') -> 'Optional[ListNode]': # O( M+N | 1)
-        nodeA = headA
-        nodeB = headB 
-        while nodeA != nodeB: #align list A and list B. when A finishes, start to B. When B finishes, they will start as aligned.
-            nodeA = nodeA.next if nodeA else headB 
-            nodeB = nodeB.next if nodeB else headA
+    def getIntersectionNode(self, headA: 'ListNode', headB: 'ListNode') -> 'Optional[ListNode]': # O(M+N | 1)
+        nodeA = headA 
+        nodeB = headB
+        # need to align the start of the 2 linked list. 
+        # Assuming A finishes first, before they start at the same loc 
+        # delta = abs(len(A) - len(B))
+        # travelledA = len(A) + delta --> now A is at somewhere in nodeB
+        # travelledB = len(B) --> now B is at start of nodeA
+        # A and B are at aligned position
+        while nodeA != nodeB: 
+            nodeA = nodeA.next if nodeA else headB # move to the head of headB.
+            nodeB = nodeB.next if nodeB else headA # move to the head of headA
         return nodeA
+    
+
+    
+
+
+# previous solution
+
+# # Definition for singly-linked list.
+# # class ListNode:
+# #     def __init__(self, x):
+# #         self.val = x
+# #         self.next = None
+
+# class Solution:
+#     def getIntersectionNode(self, headA: 'ListNode', headB: 'ListNode') -> 'Optional[ListNode]': # O( M+N | 1)
+#         nodeA = headA
+#         nodeB = headB 
+#         while nodeA != nodeB: #align list A and list B. when A finishes, start to B. When B finishes, they will start as aligned.
+#             nodeA = nodeA.next if nodeA else headB 
+#             nodeB = nodeB.next if nodeB else headA
+#         return nodeA
     
 
 

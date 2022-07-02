@@ -1,22 +1,34 @@
 class Solution:
-    def minCost(self, costs: 'List[List[int]]') -> int:
-        dp = [[float('inf'), float('inf'), float('inf')] for c in costs]
-        def dfs(dp, costs, pos, color):
-            if dp[pos][color] != float('inf'):
-                return dp[pos][color]
-            elif pos == len(costs)-1:
-                dp[pos][color] = costs[pos][color]
-                return dp[pos][color]
-            else:
-                arr = [[1,2],[0,2], [0,1]] # the color can be picked in the next row
-                A = dfs(dp, costs, pos+1, arr[color][0])
-                B = dfs(dp, costs, pos+1, arr[color][1])
-                dp[pos][color] = costs[pos][color] + min(A, B)
-                return dp[pos][color]
+    def minCost(self, costs: 'List[List[int]]') -> int: #O(N | 1)
+        a, b, c = costs[-1] # work backwards, to check the min from here to end.
+        for x, y, z in costs[:-1][::-1]:
+            a, b, c = x + min(b, c), y + min(a, c), z + min(a, b)
+        return min(a, b, c)
+    
 
-        for color in range(3):
-            dfs(dp, costs, 0, color)
-        return min(dp[0])
+
+
+# previous solution
+
+# class Solution:
+#     def minCost(self, costs: 'List[List[int]]') -> int:
+#         dp = [[float('inf'), float('inf'), float('inf')] for c in costs]
+#         def dfs(dp, costs, pos, color):
+#             if dp[pos][color] != float('inf'):
+#                 return dp[pos][color]
+#             elif pos == len(costs)-1:
+#                 dp[pos][color] = costs[pos][color]
+#                 return dp[pos][color]
+#             else:
+#                 arr = [[1,2],[0,2], [0,1]] # the color can be picked in the next row
+#                 A = dfs(dp, costs, pos+1, arr[color][0])
+#                 B = dfs(dp, costs, pos+1, arr[color][1])
+#                 dp[pos][color] = costs[pos][color] + min(A, B)
+#                 return dp[pos][color]
+
+#         for color in range(3):
+#             dfs(dp, costs, 0, color)
+#         return min(dp[0])
 
 # previous approach
 
