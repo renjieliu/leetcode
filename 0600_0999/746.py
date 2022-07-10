@@ -1,15 +1,33 @@
 class Solution:
-    def minCostClimbingStairs(self, cost: 'List[int]') -> int:
-        if len(cost) <= 2 :
-            return min(cost[0], cost[-1])
+    def minCostClimbingStairs(self, cost: 'List[int]') -> int: # O( N | 1 )
+        if len(cost) == 2:
+            return min(cost[0], cost[1]) 
         else:
-            a = cost[0] #from 0
-            b = cost[1] #from 1
-            for i in range(2, len(cost)):
-                curr = cost[i] + min(a, b) # current is from a or b + currCost
-                a = b
-                b = curr
-            return min(a, b) # min(curr-1, curr-2) + curr
+            prev_a = cost[-1]
+            prev_b = cost[-2]
+            for n in cost[:-2][::-1]: 
+                curr  = n + min(prev_a, prev_b)   #the min to reach end from here.
+                prev_a = prev_b # prev b to a 
+                prev_b = curr # c to prev b
+            return min(prev_a, prev_b)
+        
+
+
+
+# previous solution
+
+# class Solution:
+#     def minCostClimbingStairs(self, cost: 'List[int]') -> int:
+#         if len(cost) <= 2 :
+#             return min(cost[0], cost[-1])
+#         else:
+#             a = cost[0] #from 0
+#             b = cost[1] #from 1
+#             for i in range(2, len(cost)):
+#                 curr = cost[i] + min(a, b) # current is from a or b + currCost
+#                 a = b
+#                 b = curr
+#             return min(a, b) # min(curr-1, curr-2) + curr
 
 
 # previous approach
