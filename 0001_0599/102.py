@@ -1,27 +1,58 @@
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def levelOrder(self, root: TreeNode) -> 'List[List[int]]':
-        def helper(hmp, level, node):
-            if level not in hmp:
-                hmp[level] = []
-            hmp[level].append(node.val)
-            if node.left:
-                helper(hmp, level+1, node.left)
-            if node.right:
-                helper(hmp, level+1, node.right)
-        if root == None:
-            return []
-        hmp = {}
-        helper(hmp, 0, root)
-        output = []
-        for k in sorted(list(hmp.keys())):
-            output.append(hmp[k])
-        return output
+    def levelOrder(self, root: 'Optional[TreeNode]') -> 'List[List[int]]': # O( N | N )
+        if root == None: return []
+        output = [[root.val]]
+        stk = [root]
+        while stk:
+            nxt = []
+            output.append([])
+            while stk:
+                node = stk.pop(0) # pop from left, as it should be pre order traversal
+                if node.left:
+                    nxt.append(node.left)
+                    output[-1].append(node.left.val)
+                if node.right:
+                    nxt.append(node.right)
+                    output[-1].append(node.right.val)
+            stk = nxt
+        
+        return output[:-1] #the last will always be empty, as leaf nodes will not have children nodes.
+
+
+            
+        
+# previous solution
+
+# # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+# class Solution:
+#     def levelOrder(self, root: TreeNode) -> 'List[List[int]]':
+#         def helper(hmp, level, node):
+#             if level not in hmp:
+#                 hmp[level] = []
+#             hmp[level].append(node.val)
+#             if node.left:
+#                 helper(hmp, level+1, node.left)
+#             if node.right:
+#                 helper(hmp, level+1, node.right)
+#         if root == None:
+#             return []
+#         hmp = {}
+#         helper(hmp, 0, root)
+#         output = []
+#         for k in sorted(list(hmp.keys())):
+#             output.append(hmp[k])
+#         return output
 
 # previous approach
 # # Definition for a binary tree node.

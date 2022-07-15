@@ -1,20 +1,43 @@
 class Solution:
-    def isInterleave(self, s1: str, s2: str, s3: str) -> bool: #O( MN | MN )
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool: # O( MN | MN ) M = len(s1), N = len(s2)
         if len(s1) + len(s2) != len(s3):
-            return False 
+            return False
         else:
             dp = []
             for r in range(len(s1)+1):
+                dp.append([])
                 for c in range(len(s2)+1):
                     if r==c==0:
-                        dp.append([True])
-                    elif r == 0: #the character can only come from s2
-                        dp[r].append(dp[r][c-1] and s3[c-1] == s2[c-1])
-                    elif c == 0: # the character can only come from s1
-                        dp.append([dp[r-1][c] and s3[r-1] == s1[r-1]])
-                    else: #check either from s1 or from s2
-                        dp[r].append( (dp[r-1][c] and s3[r+c-1] == s1[r-1]) or (dp[r][c-1] and s3[r+c-1] == s2[c-1]) )
+                        dp[-1].append(True)
+                    elif r == 0 :
+                        dp[-1].append(dp[r][c-1] and s2[c-1] == s3[c-1]) # current loc of s3 comes from s2
+                    elif c == 0:
+                        dp[-1].append(dp[r-1][0] and s1[r-1] == s3[r-1]) # current loc of s3 comes from s1
+                    else: #current loc of s3 comes from either s1 or s2
+                        dp[-1].append( (dp[r-1][c] and s1[r-1] == s3[c+r-1]) or (dp[r][c-1] and s2[c-1] == s3[r+c-1]))
+            
             return dp[-1][-1]
+        
+
+# previous solution
+
+# class Solution:
+#     def isInterleave(self, s1: str, s2: str, s3: str) -> bool: #O( MN | MN )
+#         if len(s1) + len(s2) != len(s3):
+#             return False 
+#         else:
+#             dp = []
+#             for r in range(len(s1)+1):
+#                 for c in range(len(s2)+1):
+#                     if r==c==0:
+#                         dp.append([True])
+#                     elif r == 0: #the character can only come from s2
+#                         dp[r].append(dp[r][c-1] and s3[c-1] == s2[c-1])
+#                     elif c == 0: # the character can only come from s1
+#                         dp.append([dp[r-1][c] and s3[r-1] == s1[r-1]])
+#                     else: #check either from s1 or from s2
+#                         dp[r].append( (dp[r-1][c] and s3[r+c-1] == s1[r-1]) or (dp[r][c-1] and s3[r+c-1] == s2[c-1]) )
+#             return dp[-1][-1]
         
 
 
