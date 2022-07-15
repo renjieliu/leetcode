@@ -1,37 +1,74 @@
 class Solution:
-    def shortestDistanceColor(self, colors: 'List[int]', queries: 'List[List[int]]') -> 'List[int]':
+    def shortestDistanceColor(self, colors: 'List[int]', queries: 'List[List[int]]') -> 'List[int]': # O( NlogN | N )
         hmp = defaultdict(lambda: [])
-        for i , c in enumerate(colors):
+        for i, c in enumerate(colors):
             hmp[c].append(i)
-        def binFind(arr, v): #to find the last number smaller than v
-            s = 0
-            e = len(arr)-1
-            output = 0
-            while s<=e:
-                mid = s-(s-e)//2
-                if arr[mid] > v:
-                    e = mid -1
-                elif arr[mid] <= v:
-                    output = mid
-                    s = mid + 1
-            return output
-
-        output = []
-        for pos, color in queries:
-            if color not in hmp:
-                output.append(-1)
-
-            elif colors[pos] == color:
-                output.append(0)
-
+            
+        def binFind(arr, v): # to find the where should v belong, if to insert it to the array
+            if v > arr[-1]:
+                return v - arr[-1]
+            elif v < arr[0]:
+                return arr[0] - v
             else:
-                loc = binFind(hmp[color], pos)
-                if loc == len(hmp[color])-1:
-                    dist = abs(hmp[color][-1]-pos)
-                else:
-                    dist = min(abs(hmp[color][loc]-pos), abs(hmp[color][loc+1]-pos))
-                output.append(dist)
-        return output
+                s = 0 
+                e = len(arr)-1
+                while s <= e:
+                    mid = s - (s-e)//2
+                    if arr[mid] == v:
+                        return 0 
+                    elif arr[mid] > v:
+                        e = mid - 1 
+                    else:
+                        s = mid + 1
+                
+                return min(abs(arr[s-1]-v), abs(arr[s]-v)) #it's either the previous one, or current one.
+        
+        output = []
+        for i, c in queries:
+            if c not in hmp:
+                output.append(-1)
+            else:
+                output.append(binFind(hmp[c], i))
+        return output    
+    
+    
+    
+# previous solution
+
+# class Solution:
+#     def shortestDistanceColor(self, colors: 'List[int]', queries: 'List[List[int]]') -> 'List[int]':
+#         hmp = defaultdict(lambda: [])
+#         for i , c in enumerate(colors):
+#             hmp[c].append(i)
+#         def binFind(arr, v): #to find the last number smaller than v
+#             s = 0
+#             e = len(arr)-1
+#             output = 0
+#             while s<=e:
+#                 mid = s-(s-e)//2
+#                 if arr[mid] > v:
+#                     e = mid -1
+#                 elif arr[mid] <= v:
+#                     output = mid
+#                     s = mid + 1
+#             return output
+
+#         output = []
+#         for pos, color in queries:
+#             if color not in hmp:
+#                 output.append(-1)
+
+#             elif colors[pos] == color:
+#                 output.append(0)
+
+#             else:
+#                 loc = binFind(hmp[color], pos)
+#                 if loc == len(hmp[color])-1:
+#                     dist = abs(hmp[color][-1]-pos)
+#                 else:
+#                     dist = min(abs(hmp[color][loc]-pos), abs(hmp[color][loc+1]-pos))
+#                 output.append(dist)
+#         return output
 
 
 
