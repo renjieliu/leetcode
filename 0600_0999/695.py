@@ -1,24 +1,49 @@
 class Solution:
-    def maxAreaOfIsland(self, grid: 'List[List[int]]') -> int:
-        def dfs(output,arr, sr, sc):
-            output[-1]+=1
-            arr[sr][sc] = 0
-            directions = [[0,1], [-1,0], [0,-1], [1,0]]
-            for a , b in directions:
-                r = sr+a
-                c = sc+b
-                if -1<r<len(arr) and -1<c<len(arr[0]) and arr[r][c]==1:
-                    dfs(output, arr, r, c)
-
-        output = []
+    def maxAreaOfIsland(self, grid: 'List[List[int]]') -> int: # O( MN | 1)
+        def helper(curr, r, c, grid): #dfs to count all the 1's from r and c.
+            direction = [[1,0], [0,-1], [-1,0], [0,1]]
+            for a, b in direction:
+                if -1 < r+a < len(grid) and -1 < c+b < len(grid[0]) and grid[r+a][c+b] == 1:
+                    grid[r+a][c+b] = 0 
+                    curr[0] += 1
+                    helper(curr, r+a, c+b, grid)
+        
+        output = 0
         for r in range(len(grid)):
             for c in range(len(grid[0])):
                 if grid[r][c] == 1:
-                    print(r,c )
-                    output.append(0)
-                    dfs(output, grid, r, c)
-        # print(output)
-        return max(output) if output else 0
+                    grid[r][c] = 0 
+                    curr = [1] #to record the area of current 1's 
+                    helper(curr, r, c, grid)
+                    output = max(output, curr[0])
+        
+        return output
+
+
+
+# previous solution
+
+# class Solution:
+#     def maxAreaOfIsland(self, grid: 'List[List[int]]') -> int:
+#         def dfs(output,arr, sr, sc):
+#             output[-1]+=1
+#             arr[sr][sc] = 0
+#             directions = [[0,1], [-1,0], [0,-1], [1,0]]
+#             for a , b in directions:
+#                 r = sr+a
+#                 c = sc+b
+#                 if -1<r<len(arr) and -1<c<len(arr[0]) and arr[r][c]==1:
+#                     dfs(output, arr, r, c)
+
+#         output = []
+#         for r in range(len(grid)):
+#             for c in range(len(grid[0])):
+#                 if grid[r][c] == 1:
+#                     print(r,c )
+#                     output.append(0)
+#                     dfs(output, grid, r, c)
+#         # print(output)
+#         return max(output) if output else 0
 
 
 # previous approach
