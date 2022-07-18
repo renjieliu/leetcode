@@ -21,6 +21,28 @@ class Solution:
 # previous solution
 
 # class Solution:
+#     def numSubmatrixSumTarget(self, matrix: 'List[List[int]]', target: int) -> int: # O(R**2*C | RC )
+#         dp = [[0 for _ in range(len(matrix[0])+1)] for _ in range(len(matrix)+1)] # prefix sum up to current cell
+#         for r in range(1, len(matrix)+1):
+#             for c in range(1, len(matrix[0])+1):
+#                 dp[r][c] = dp[r][c-1] + dp[r-1][c] - dp[r-1][c-1] + matrix[r-1][c-1] 
+#         count = 0
+#         for r in range(1, len(matrix)+1):
+#             for r1 in range(r, len(matrix)+1):
+#                 hmp = defaultdict(lambda: 0) 
+#                 hmp[0] = 1
+#                 for c in range(1, len(matrix[0])+1):
+#                     curr = dp[r1][c] - dp[r-1][c] #sum of current matrix 
+#                     count += hmp[curr-target] #curr is the prefix total, curr-target = k, if k was seen before, the matrix in between is the one we are looking for .
+#                     hmp[curr] += 1
+#         return count
+    
+    
+
+
+# previous solution
+
+# class Solution:
 #     def numSubmatrixSumTarget(self, matrix: 'List[List[int]]', target: int) -> int:
 #         r, c = len(matrix), len(matrix[0])
 
