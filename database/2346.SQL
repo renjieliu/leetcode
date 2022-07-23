@@ -68,6 +68,21 @@ insert into Students (student_id, department_id, mark) values ('3', '1', '530')
 
 
 
+
+-- solution using cross apply
+
+/* Write your T-SQL query statement below */
+select 
+student_id
+, department_id
+, percentage = cast(case when t2.cnt = 0 then 0 else 100.0*t.cnt/t2.cnt end as decimal(5,2)) --0.00 to 100.00, total should be 5 digits
+from Students s1
+cross apply (select cnt = count(*) from Students s2 where s2.department_id = s1.department_id and s2.mark > s1.mark) t -- how many people with marks > current student
+cross apply (select cnt = count(*)-1 from Students s3 where s3.department_id = s1.department_id) t2 -- how mnay students in the same department - 1
+
+
+
+-- solution using internal function 
 /* Write your T-SQL query statement below */
 select 
 student_id
