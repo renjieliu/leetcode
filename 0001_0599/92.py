@@ -1,26 +1,59 @@
 # Definition for singly-linked list.
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
-    def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
-        def reverseFirstN(node, follower, n):
-            if n == 1 :
-                follower[0] = node.next # save the end node's next, this will become the first node's next
+    successor = None 
+    
+    def reverseBetween(self, head: 'Optional[ListNode]', left: int, right: int) -> 'Optional[ListNode]': # O( N | 1 )
+        def reverseN(node, n): # this is to reverse the first N nodes
+            if n == 1: #only reverse the first 1, so no reverse, save the next node
+                self.successor = node.next
                 return node
             else:
-                output = reverseFirstN(node.next, follower, n-1) #reverse the following nodes
-                node.next.next = node
-                node.next = follower[0] #first node's next
-                return output
+                lastNode = reverseN(node.next, n-1) # reverse the next. and the lastNode will be the new head
+                node.next.next = node #swap current node with next 
+                node.next = self.successor #each time, current node needs to be put to the end 
+                return lastNode
+        
         if left == 1:
-            return reverseFirstN(head, [None], right)
+            return reverseN(head, right) #return the first right nodes
         else:
             head.next = self.reverseBetween(head.next, left-1, right-1)
             return head
+        
+                
+
+
+# previous solution
+
+# # Definition for singly-linked list.
+
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+# class Solution:
+#     def reverseBetween(self, head: ListNode, left: int, right: int) -> ListNode:
+#         def reverseFirstN(node, follower, n):
+#             if n == 1 :
+#                 follower[0] = node.next # save the end node's next, this will become the first node's next
+#                 return node
+#             else:
+#                 output = reverseFirstN(node.next, follower, n-1) #reverse the following nodes
+#                 node.next.next = node
+#                 node.next = follower[0] #first node's next
+#                 return output
+#         if left == 1:
+#             return reverseFirstN(head, [None], right)
+#         else:
+#             head.next = self.reverseBetween(head.next, left-1, right-1)
+#             return head
+
+
+
 
 # previous approach
 # # Definition for singly-linked list.

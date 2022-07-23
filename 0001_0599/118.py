@@ -1,12 +1,29 @@
 class Solution:
-    def generate(self, numRows: int) -> 'List[List[int]]':
+    def generate(self, numRows: int) -> 'List[List[int]]': #O( numRows**2 | numRows**2 )
         dp = [[1]]
-        for row in range(2, numRows+1):
-            dp.append([1])
-            for i in range(1, row-1):
-                dp[-1].append(dp[-2][i-1] + dp[-2][i])
-            dp[-1].append(1)
+        for r in range(1, numRows): #go through each row. 
+            curr = [1] #initiate current row
+            for c in range(1, r): #add r-2 number elements to current row
+                curr.append(dp[r-1][c-1] + dp[r-1][c] )  # prev row col-1 + prev row col
+            curr.append(1) # add the last element
+            dp.append(curr)
         return dp
+
+
+
+
+
+# previous solution
+
+# class Solution:
+#     def generate(self, numRows: int) -> 'List[List[int]]':
+#         dp = [[1]]
+#         for row in range(2, numRows+1):
+#             dp.append([1])
+#             for i in range(1, row-1):
+#                 dp[-1].append(dp[-2][i-1] + dp[-2][i])
+#             dp[-1].append(1)
+#         return dp
 
 
 
