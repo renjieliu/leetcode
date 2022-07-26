@@ -1,54 +1,94 @@
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
 class Solution:
-    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        def helper(arr, node, idx, find):
-            if node.val == find:
-                arr.append(idx)
-                arr.append(-1)
-            else:
-                arr.append(idx)
-                if node.left:
-                    helper(arr, node.left, idx*2+1, find)
-                if arr[-1] != -1 and node.right: # if found , no need to proceed
-                    helper(arr, node.right, idx*2+2, find)
-        arr_p = []
-        arr_q = []
-        helper(arr_p, root, 0, p.val)
-        helper(arr_q, root, 0, q.val)
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode': #O( N | N )
+        def helper(output, node,  target): # find the path lead to the target node
+            if node:
+                if node.val == target.val:
+                    output[0] = 1
+                    output.append(node)
+                else:
+                    helper(output, node.left, target)
+                    if output[0] == 1: #if target is found in below, current node is a ancestor for the target
+                        output.append(node)
+                    else:
+                        helper(output, node.right, target)
+                        if output[0] == 1:
+                            output.append(node)
+        
+        arr_1 = [0] # first element is used as a flag, to see if the node is found 
+        arr_2 = [0]
+        helper(arr_1, root, p)
+        helper(arr_2, root, q)
+        # print(arr_1, arr_2)
+        while arr_1 and arr_2 and arr_1[-1] == arr_2[-1]:
+            prev = arr_1.pop()
+            arr_2.pop()
+        return prev
+            
+        
+        
+        
 
-        #         print(arr_p, arr_q)
+        
+# previous solution
 
-        arr_p.pop() #take out the -1 at the end of the arr, it was used to flag the number is found
-        arr_q.pop()
+# # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
-        p_ancester = [arr_p[-1]]
-        while p_ancester[-1] > 0:
-            p_ancester.append((p_ancester[-1]-1)//2) #parent index is (curr-1)//2
+# class Solution:
+#     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+#         def helper(arr, node, idx, find):
+#             if node.val == find:
+#                 arr.append(idx)
+#                 arr.append(-1)
+#             else:
+#                 arr.append(idx)
+#                 if node.left:
+#                     helper(arr, node.left, idx*2+1, find)
+#                 if arr[-1] != -1 and node.right: # if found , no need to proceed
+#                     helper(arr, node.right, idx*2+2, find)
+#         arr_p = []
+#         arr_q = []
+#         helper(arr_p, root, 0, p.val)
+#         helper(arr_q, root, 0, q.val)
 
-        q_ancester = [arr_q[-1]]
-        while q_ancester[-1] > 0:
-            q_ancester.append((q_ancester[-1]-1)//2)
+#         #         print(arr_p, arr_q)
 
-        targetIndex = max(set(p_ancester) & set(q_ancester)) #find the max common parent index
+#         arr_p.pop() #take out the -1 at the end of the arr, it was used to flag the number is found
+#         arr_q.pop()
 
-        def find(output, node, currIndex, targetIndex): # retrieve the node
-            if currIndex == targetIndex:
-                output[0] = node
-            else:
-                if node.left:
-                    find(output, node.left, currIndex*2+1, targetIndex)
-                if node.right:
-                    find(output, node.right, currIndex*2+2, targetIndex)
+#         p_ancester = [arr_p[-1]]
+#         while p_ancester[-1] > 0:
+#             p_ancester.append((p_ancester[-1]-1)//2) #parent index is (curr-1)//2
 
-        output = [None]
-        find(output, root, 0, targetIndex)
-        return output[0]
+#         q_ancester = [arr_q[-1]]
+#         while q_ancester[-1] > 0:
+#             q_ancester.append((q_ancester[-1]-1)//2)
+
+#         targetIndex = max(set(p_ancester) & set(q_ancester)) #find the max common parent index
+
+#         def find(output, node, currIndex, targetIndex): # retrieve the node
+#             if currIndex == targetIndex:
+#                 output[0] = node
+#             else:
+#                 if node.left:
+#                     find(output, node.left, currIndex*2+1, targetIndex)
+#                 if node.right:
+#                     find(output, node.right, currIndex*2+2, targetIndex)
+
+#         output = [None]
+#         find(output, root, 0, targetIndex)
+#         return output[0]
 
 
 
