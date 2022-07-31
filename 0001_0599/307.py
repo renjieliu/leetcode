@@ -1,71 +1,140 @@
 class NumArray:
 
-    def __init__(self, nums: 'List[int]'): #this is to build the segment tree O(n)
-        n = len(nums)
-        total = 1
-        layer = 0
-        while 2**layer < n:
-            layer += 1
-            total += 2**layer
-        self.seg = [0] * total
+    def __init__(self, nums: 'List[int]'): # O( N | NlogN )
         self.nums = nums
-        def buildSeg(nums, seg, node, start, end):
-            if start == end:
-                seg[node] = nums[start]
+        n = 0 #to calc how many nodes need to put into the seg tree
+        total = 0 
+        while 2**(n-1) <= len(nums): #if prev layer nodes is <= len(nums), current layer needs to be added
+            total += 2**n 
+            n += 1 
+        self.tree = [0] * total # initialize the segment tree
+        
+        def build(tree, node, start_idx, end_idx, nums): # start_idx, end_idx are in the nums, O( N | NlogN )
+            if start_idx == end_idx: #single node, just put it into the leaf loc of the tree
+                tree[node] = nums[start_idx] 
             else:
-                mid = (start+end)//2
-                left = buildSeg(nums, seg, node*2+1, start, mid)
-                right = buildSeg(nums, seg, node*2+2, mid+1, end)
-                seg[node] = left + right
-            return seg[node]
-        buildSeg(nums, self.seg, 0, 0, n-1)
-        #print(self.seg)
-
-
-
-    def update(self, index: int, val: int) -> None: # to update the segment tree O(logn)
-        def updateSeg(seg, node, idx, val, start, end):
-            if start == end:
-                seg[node] = val
-            else:
-                mid = (start + end)//2
-                if idx <= mid:
-                    updateSeg(seg, node*2+1, idx, val, start, mid)
+                mid = (start_idx+end_idx)//2 
+                left_node = node*2+1 # this is the node in the segment tree
+                right_node = node*2+2 
+                build(tree, left_node, start_idx, mid, nums) 
+                build(tree, right_node, mid+1, end_idx, nums)
+                tree[node] = tree[left_node] + tree[right_node]
+    
+        build(self.tree, 0, 0, len(self.nums)-1, nums)
+       
+        
+    def update(self, index: int, val: int) -> None:  #O( logN | 1 )
+        def updateTree(tree, node, start_idx, end_idx, idx, val): # update the seg tree
+            if start_idx == end_idx: # it reach the target
+                tree[node] = val 
+            else: 
+                mid = (start_idx + end_idx)//2
+                left_node = 2*node+1 
+                right_node = 2*node+2
+                if start_idx <= idx <= mid:
+                    updateTree(tree, left_node, start_idx, mid, idx, val)
                 else:
-                    updateSeg(seg, node*2+2, idx, val, mid+1, end)
+                    updateTree(tree, right_node, mid+1, end_idx, idx, val)
+                
+                tree[node] = tree[left_node] + tree[right_node]
+        updateTree(self.tree, 0, 0, len(self.nums)-1, index, val)
+        
 
-                seg[node] = seg[node*2+1] + seg[node*2+2]
 
-        updateSeg(self.seg, 0, index, val, 0, len(self.nums)-1)
-
-
-
-    def sumRange(self, left: int, right: int) -> int: # to query O(logn)
-        def query(seg, node, left, right,start, end):
-            #print(left, right, start, end)
-            if left > end or right < start:
+    def sumRange(self, left: int, right: int) -> int: # O( logN | 1 )
+        def query(tree, node, start_idx, end_idx, left, right):
+            if start_idx > right or end_idx < left:
                 return 0
-            elif start >= left and end <= right:
-                return seg[node]
-            elif start == end:
-                return seg[node]
-            mid = (start+end) // 2
-            return query(seg, node*2+1, left, right, start, mid) + query(seg, node*2+2, left, right, mid+1, end)
-
-        return query(self.seg, 0, left, right, 0, len(self.nums)-1)
-
-
-
-
-
-
-
+            elif left <= start_idx <= end_idx <= right:#current node is included in the start, end range, just return current node value
+                return tree[node]
+            else: # as long as current node's range is in the query range
+                mid = (start_idx+end_idx)//2
+                return query(tree, node*2+1, start_idx, mid, left, right) + query(tree, node*2+2, mid+1, end_idx, left, right)
+        return query(self.tree, 0, 0, len(self.nums)-1, left, right)
+                
+            
 
 
 # Your NumArray object will be instantiated and called as such:
 # obj = NumArray(nums)
 # obj.update(index,val)
 # param_2 = obj.sumRange(left,right)
+
+
+
+
+
+
+# previous solution 
+
+# class NumArray:
+
+#     def __init__(self, nums: 'List[int]'): #this is to build the segment tree O(n)
+#         n = len(nums)
+#         total = 1
+#         layer = 0
+#         while 2**layer < n:
+#             layer += 1
+#             total += 2**layer
+#         self.seg = [0] * total
+#         self.nums = nums
+#         def buildSeg(nums, seg, node, start, end):
+#             if start == end:
+#                 seg[node] = nums[start]
+#             else:
+#                 mid = (start+end)//2
+#                 left = buildSeg(nums, seg, node*2+1, start, mid)
+#                 right = buildSeg(nums, seg, node*2+2, mid+1, end)
+#                 seg[node] = left + right
+#             return seg[node]
+#         buildSeg(nums, self.seg, 0, 0, n-1)
+#         #print(self.seg)
+
+
+
+#     def update(self, index: int, val: int) -> None: # to update the segment tree O(logn)
+#         def updateSeg(seg, node, idx, val, start, end):
+#             if start == end:
+#                 seg[node] = val
+#             else:
+#                 mid = (start + end)//2
+#                 if idx <= mid:
+#                     updateSeg(seg, node*2+1, idx, val, start, mid)
+#                 else:
+#                     updateSeg(seg, node*2+2, idx, val, mid+1, end)
+
+#                 seg[node] = seg[node*2+1] + seg[node*2+2]
+
+#         updateSeg(self.seg, 0, index, val, 0, len(self.nums)-1)
+
+
+
+#     def sumRange(self, left: int, right: int) -> int: # to query O(logn)
+#         def query(seg, node, left, right,start, end):
+#             #print(left, right, start, end)
+#             if left > end or right < start:
+#                 return 0
+#             elif start >= left and end <= right:
+#                 return seg[node]
+#             elif start == end:
+#                 return seg[node]
+#             mid = (start+end) // 2
+#             return query(seg, node*2+1, left, right, start, mid) + query(seg, node*2+2, left, right, mid+1, end)
+
+#         return query(self.seg, 0, left, right, 0, len(self.nums)-1)
+
+
+
+
+
+
+
+
+
+# # Your NumArray object will be instantiated and called as such:
+# # obj = NumArray(nums)
+# # obj.update(index,val)
+# # param_2 = obj.sumRange(left,right)
 
 
 
