@@ -1,20 +1,39 @@
 class Solution:
-    def uniquePaths(self, m: int, n: int) -> int:
-        dp = [] 
+    def uniquePaths(self, m: int, n: int) -> int: #O( MN | MN 
+        dp = [[0 for _ in range(n+1)] for _ in range(m+1)] 
         for r in range(m):
-            dp.append([])
             for c in range(n):
-                if r == 0:
-                    if c == 0: 
-                        dp[-1].append(1)
-                    else:
-                        dp[-1].append(dp[-1][-1])
-                else:
-                    if c== 0:
-                        dp[-1].append(dp[r-1][c])
-                    else:
-                        dp[-1].append(dp[r-1][c] + dp[r][c-1])
+                if r == 0:  # only one way to reach, if it's the first row
+                    dp[r+1][c+1] = 1 
+                elif c == 0: # only one way to reach, if it's the first col
+                    dp[r+1][c+1] = 1
+                else: # from top + from left
+                    dp[r+1][c+1] = dp[r+1][c] + dp[r][c+1]
         return dp[-1][-1]
+
+    
+    
+
+
+# previous solution
+
+# class Solution:
+#     def uniquePaths(self, m: int, n: int) -> int:
+#         dp = [] 
+#         for r in range(m):
+#             dp.append([])
+#             for c in range(n):
+#                 if r == 0:
+#                     if c == 0: 
+#                         dp[-1].append(1)
+#                     else:
+#                         dp[-1].append(dp[-1][-1])
+#                 else:
+#                     if c== 0:
+#                         dp[-1].append(dp[r-1][c])
+#                     else:
+#                         dp[-1].append(dp[r-1][c] + dp[r][c-1])
+#         return dp[-1][-1]
 
 
 
