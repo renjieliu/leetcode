@@ -1,17 +1,34 @@
 class Solution:
-    def findPermutation(self, s: str) -> 'List[int]': #O(N | N)
-        stk = [1] #initialize the stack
+    def findPermutation(self, s: str) -> 'List[int]': # O( N | N )
+        stk = [1] # initialize the stk.
         output = []
-        for i, c in enumerate(s): # go through the string
+        for i, c in enumerate(s):
             if c == "I":
-                while stk:
-                    output.append(stk.pop())
-            stk.append(i+2) #add the following number to the stack
-            
-        while stk: # add the rest to the output
-            output.append(stk.pop())
-        
+                output += stk[::-1] # add the stk to output in reverse order
+                stk = []
+            stk.append(i+2) # using the i+2, as the next number.
+        output += stk[::-1]
         return output
+    
+
+
+
+# previous solution 
+
+# class Solution:
+#     def findPermutation(self, s: str) -> 'List[int]': #O(N | N)
+#         stk = [1] #initialize the stack
+#         output = []
+#         for i, c in enumerate(s): # go through the string
+#             if c == "I":
+#                 while stk:
+#                     output.append(stk.pop())
+#             stk.append(i+2) #add the following number to the stack
+            
+#         while stk: # add the rest to the output
+#             output.append(stk.pop())
+        
+#         return output
     
 
 
