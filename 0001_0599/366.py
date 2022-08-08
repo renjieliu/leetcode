@@ -1,34 +1,66 @@
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def findLeaves(self, root: TreeNode) -> 'List[List[int]]':
-        def dfs(output, node):
-            if node.left == node.right == None:
-                if len(output) == 0:
-                    output.append([])
-                output[0].append(node.val)
-                return 0 #this is the 1st to be removed
+    def findLeaves(self, root: 'Optional[TreeNode]') -> 'List[List[int]]': #O( NlogN | N )
+        def dfs(hmp, node): # find which level current node is on.
+            if node.left == node.right == None: 
+                hmp[0].append(node.val)
+                return 0
             else:
-                leftLevel = rightLevel = -float('inf')
+                L = R = -float('inf') 
                 if node.left:
-                    leftLevel = dfs(output, node.left) + 1 #from left bottom
+                    L = 1 + dfs(hmp, node.left)
                 if node.right:
-                    rightLevel = dfs(output, node.right) + 1 # from right bottom
+                    R = 1 + dfs(hmp, node.right)
+                
+                currLevel = max(L, R) # find how many levels from current node to leaf
+                hmp[currLevel].append(node.val)
+                
+                return currLevel
+        hmp = defaultdict(lambda: []) # record how many levels for current node to the leaf
+        dfs(hmp, root)
+        return [hmp[k] for k in sorted(hmp.keys())]
+        
+        
+    
 
-                realLevel= max(leftLevel, rightLevel)
-                if realLevel == len(output): # the new level can only be previous Max + 1
-                    output.append([])
-                output[realLevel].append(node.val)
-                return realLevel
+# previous solution
 
-        output = []
-        dfs(output, root)
-        return output
+# # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+# class Solution:
+#     def findLeaves(self, root: TreeNode) -> 'List[List[int]]':
+#         def dfs(output, node):
+#             if node.left == node.right == None:
+#                 if len(output) == 0:
+#                     output.append([])
+#                 output[0].append(node.val)
+#                 return 0 #this is the 1st to be removed
+#             else:
+#                 leftLevel = rightLevel = -float('inf')
+#                 if node.left:
+#                     leftLevel = dfs(output, node.left) + 1 #from left bottom
+#                 if node.right:
+#                     rightLevel = dfs(output, node.right) + 1 # from right bottom
+
+#                 realLevel= max(leftLevel, rightLevel)
+#                 if realLevel == len(output): # the new level can only be previous Max + 1
+#                     output.append([])
+#                 output[realLevel].append(node.val)
+#                 return realLevel
+
+#         output = []
+#         dfs(output, root)
+#         return output
 
 
 # previous approach
