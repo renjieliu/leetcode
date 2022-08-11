@@ -16,7 +16,6 @@ class Solution:
     
 
 
-
 # previous solution
 
 # # Definition for a binary tree node.
