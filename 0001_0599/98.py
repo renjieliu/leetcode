@@ -11,7 +11,28 @@ class Solution:
                 return L < node.val < R and helper(node.left, L, node.val) and helper(node.right, node.val, R)
             return True
         
-        return helper(root.left, -float('inf'), root.val) and helper(root.right, root.val, float('inf'))
+        return helper(root,-float('inf'), float('inf'))
+
+    
+
+
+
+# previous solution
+
+# # Definition for a binary tree node.
+# # class TreeNode:
+# #     def __init__(self, val=0, left=None, right=None):
+# #         self.val = val
+# #         self.left = left
+# #         self.right = right
+# class Solution:
+#     def isValidBST(self, root: 'Optional[TreeNode]') -> bool: # O( N | 1 )
+#         def helper(node, L, R): #to check if current node is in the range (L, R)
+#             if node: # check if current node is within the range, and verify leftSubtree and rightSubtree
+#                 return L < node.val < R and helper(node.left, L, node.val) and helper(node.right, node.val, R)
+#             return True
+        
+#         return helper(root.left, -float('inf'), root.val) and helper(root.right, root.val, float('inf'))
 
 
 
