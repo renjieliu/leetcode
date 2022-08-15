@@ -1,21 +1,39 @@
 class Solution:
-    def romanToInt(self, s: str) -> int:
-        hmp = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+    def romanToInt(self, s: str) -> int: # O( N | 1 )
+        hmp = {"I": 1 , "V": 5 , "X": 10 , "L": 50 , "C": 100 , "D": 500 , "M": 1000 , "IV": 4 , "IX": 9 , "XL": 40 , "XC": 90 , "CD": 400 , "CM": 900 }
         output = 0
-        i = 0
-        while i < len(s) - 1:
-            curr = s[i]
-            nxt = s[i + 1]
-            if hmp[curr] < hmp[nxt]:
-                output += (hmp[nxt] - hmp[curr])
-                i += 2
+        i = 0 
+        while i < len(s): # go through the string, and add according to the lookup hmp.
+            if s[i:i+2] in hmp: 
+                output += hmp[s[i:i+2]]
+                i+=2
             else:
-                output += hmp[curr]
-                i += 1
-
-        if i == len(s) - 1:  # it reach the last character, which means the last batch is not 2 characters
-            output += hmp[s[-1]]
+                output += hmp[s[i]]
+                i+=1
         return output
+
+
+
+# previous solution
+
+# class Solution:
+#     def romanToInt(self, s: str) -> int:
+#         hmp = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+#         output = 0
+#         i = 0
+#         while i < len(s) - 1:
+#             curr = s[i]
+#             nxt = s[i + 1]
+#             if hmp[curr] < hmp[nxt]:
+#                 output += (hmp[nxt] - hmp[curr])
+#                 i += 2
+#             else:
+#                 output += hmp[curr]
+#                 i += 1
+
+#         if i == len(s) - 1:  # it reach the last character, which means the last batch is not 2 characters
+#             output += hmp[s[-1]]
+#         return output
 
 # previous approach
 # def romanToInt(s):
