@@ -1,11 +1,32 @@
 class Solution:
-    def reorderedPowerOf2(self, N: int) -> bool:
-        lkp = []
-        power = 0
-        while 2 ** power < 10 ** 9:
-            lkp.append(sorted(list(str(2 ** power))))
-            power += 1
-        return sorted(list(str(N))) in lkp
+    def reorderedPowerOf2(self, n: int) -> bool: # O( logN | logN )
+        arr= [0] * 10 
+        while n > 0: #get all the digit occurrence of n, logN complexity
+            arr[n%10]+=1 
+            n //= 10
+        
+        def isSame(arr, n): #compare if the converted n is the same as arr
+            t = [0] * 10 
+            while n > 0:
+                t[n%10]+=1 
+                n //= 10
+            
+            return arr == t
+    
+        return any(isSame(arr, 2**_) for _ in range(30)) # as long as any of the 2**x matches with the arr
+    
+    
+
+# previous solution
+
+# class Solution:
+#     def reorderedPowerOf2(self, N: int) -> bool:
+#         lkp = []
+#         power = 0
+#         while 2 ** power < 10 ** 9:
+#             lkp.append(sorted(list(str(2 ** power))))
+#             power += 1
+#         return sorted(list(str(N))) in lkp
 
 
 
