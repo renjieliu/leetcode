@@ -12,9 +12,34 @@ class Solution:
                 dfs(output, node.left, node.val, 1 + (chain if node.val == prev+1 else 0))
             if node.right:
                 dfs(output, node.right, node.val, 1 + (chain if node.val == prev+1 else 0))
-        output = [1]
+        
+        if root == None:
+            return 0
+        output = [1] # initialize the counter to 1, as long as there's a root. The base would be 1
         dfs(output, root, float('inf'), 0)
         return output[0]
+        
+
+
+# previous solution
+
+# # Definition for a binary tree node.
+# # class TreeNode:
+# #     def __init__(self, val=0, left=None, right=None):
+# #         self.val = val
+# #         self.left = left
+# #         self.right = right
+# class Solution:
+#     def longestConsecutive(self, root: 'Optional[TreeNode]') -> int: # O( N | 1 )
+#         def dfs(output, node, prev, chain):
+#             output[0] = max(output[0], chain + (node.val == prev+1) ) #check if current value is prev + 1, if it is add to the chain
+#             if node.left:
+#                 dfs(output, node.left, node.val, 1 + (chain if node.val == prev+1 else 0))
+#             if node.right:
+#                 dfs(output, node.right, node.val, 1 + (chain if node.val == prev+1 else 0))
+#         output = [1]
+#         dfs(output, root, float('inf'), 0)
+#         return output[0]
         
 
 
