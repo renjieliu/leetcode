@@ -1,28 +1,64 @@
 class Solution:
-    def shortestDistance(self, maze: 'List[List[int]]', start: 'List[int]', destination: 'List[int]') -> int:
-        pq = [[0, start[0], start[1]]] #Dijkstra's algorithm, to get the shortest dist each time
-        heapq.heapify(pq) #[dist, r, c]
-        direction = [[0,1], [1,0], [0,-1] , [-1, 0]]
-        seen = {(start[0], start[1]):0}
+    def shortestDistance(self, maze: 'List[List[int]]', start: 'List[int]', destination: 'List[int]') -> int:  # O( MN*log(MN) | MN )
+        pq = [[0, start]] # to record the total path traveled
+        heapq.heapify(pq)  # Dijkstra's algo, to find the shortest path to reach the destination.
+        direction = [[1,0], [0,1], [-1, 0], [0, -1]]
+        seen = {(start[0], start[1]): 0}
         output = float('inf')
         while pq:
-            dist, sr, sc = heapq.heappop(pq)
-            if dist > output: #no need to check further, all the future dist in the pq will take more walks
-                return output
-            for a, b in direction:
-                r = sr
-                c = sc
-                walk = dist
-                while -1< r+a < len(maze) and -1<c+b<len(maze[0]) and maze[r+a][c+b] == 0:
-                    r+=a
-                    c+=b
-                    walk+=1
-                if r == destination[0] and c == destination[1]: # the ball stops at the destination
-                    output = min(output, walk)
-                elif (r,c) not in seen or walk < seen[(r,c)]:
-                    heapq.heappush(pq, [walk, r, c])
-                    seen[(r,c)] = walk
-        return -1 if output == float('inf') else output
+            prev_dist, [prev_r, prev_c] = heapq.heappop(pq)
+            if prev_r == destination[0] and prev_c == destination[1]: #prev stop at the destination 
+                output = min(output, prev_dist) 
+            else: 
+                for a, b in direction:  # check all the 4 directions, and push the dist to the pq
+                    dist = prev_dist
+                    r = prev_r
+                    c = prev_c
+                    while -1 < r+a < len(maze) and -1 < c+b < len(maze[0]) and maze[r+a][c+b] != 1:
+                        dist += 1
+                        r += a 
+                        c += b
+                    if (r, c) not in seen or dist < seen[(r,c)]: #not seen, or current path is < than before 
+                        heapq.heappush(pq, [dist, [r, c]])
+                        seen[(r,c)] = dist
+                
+                if pq and pq[0][0] > output: #from here on, all the paths are > current output, no need to proceed the iteration
+                    return output
+        
+        return output if output != float('inf') else -1
+    
+
+        
+
+        
+
+# previous solution
+
+# class Solution:
+#     def shortestDistance(self, maze: 'List[List[int]]', start: 'List[int]', destination: 'List[int]') -> int:
+#         pq = [[0, start[0], start[1]]] #Dijkstra's algorithm, to get the shortest dist each time
+#         heapq.heapify(pq) #[dist, r, c]
+#         direction = [[0,1], [1,0], [0,-1] , [-1, 0]]
+#         seen = {(start[0], start[1]):0}
+#         output = float('inf')
+#         while pq:
+#             dist, sr, sc = heapq.heappop(pq)
+#             if dist > output: #no need to check further, all the future dist in the pq will take more walks
+#                 return output
+#             for a, b in direction:
+#                 r = sr
+#                 c = sc
+#                 walk = dist
+#                 while -1< r+a < len(maze) and -1<c+b<len(maze[0]) and maze[r+a][c+b] == 0:
+#                     r+=a
+#                     c+=b
+#                     walk+=1
+#                 if r == destination[0] and c == destination[1]: # the ball stops at the destination
+#                     output = min(output, walk)
+#                 elif (r,c) not in seen or walk < seen[(r,c)]:
+#                     heapq.heappush(pq, [walk, r, c])
+#                     seen[(r,c)] = walk
+#         return -1 if output == float('inf') else output
 
 
 
