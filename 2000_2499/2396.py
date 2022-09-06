@@ -1,6 +1,14 @@
 class Solution:
     def isStrictlyPalindromic(self, n: int) -> bool: # O( 1 | 1 )
-        return False # n-2 base will always be 12, therefore, the result is always be false
+        return False # n-2 base will always be 12, therefore, the result is always false
+    
+
+
+# previous approach
+
+# class Solution:
+#     def isStrictlyPalindromic(self, n: int) -> bool: # O( 1 | 1 )
+#         return False # n-2 base will always be 12, therefore, the result is always be false
     
 
 # previous approach
