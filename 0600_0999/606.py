@@ -8,25 +8,52 @@ class Solution:
     def tree2str(self, root: 'Optional[TreeNode]') -> str: # O( N | N )
         def helper(output, node):
             output[0] += str(node.val) if node else ""
-            if node.left and node.right: #if both subtree exist
+            if node.left: # left subtree exist
                 output[0] += "(" 
                 helper(output, node.left) 
                 output[0] += ")"
+            if node.right: # right subtree exist 
+                output[0] += "()" if node.left == None else "" #if left tree not exists,other wise left tree is added with previous code
                 output[0] += "(" 
                 helper(output, node.right) 
-                output[0] += ")"
-            elif node.left == None and node.right: #only right subtree exists
-                output[0] += "()"
-                output[0] += "(" 
-                helper(output, node.right) 
-                output[0] += ")"
-            elif node.left and node.right == None: #only left subtree exists
-                output[0] += "(" 
-                helper(output, node.left) 
                 output[0] += ")"
         output = [""]
         helper(output, root)
         return output[0]
+            
+        
+
+# previous solution
+
+# # Definition for a binary tree node.
+# # class TreeNode:
+# #     def __init__(self, val=0, left=None, right=None):
+# #         self.val = val
+# #         self.left = left
+# #         self.right = right
+# class Solution:
+#     def tree2str(self, root: 'Optional[TreeNode]') -> str: # O( N | N )
+#         def helper(output, node):
+#             output[0] += str(node.val) if node else ""
+#             if node.left and node.right: #if both subtree exist
+#                 output[0] += "(" 
+#                 helper(output, node.left) 
+#                 output[0] += ")"
+#                 output[0] += "(" 
+#                 helper(output, node.right) 
+#                 output[0] += ")"
+#             elif node.left == None and node.right: #only right subtree exists
+#                 output[0] += "()"
+#                 output[0] += "(" 
+#                 helper(output, node.right) 
+#                 output[0] += ")"
+#             elif node.left and node.right == None: #only left subtree exists
+#                 output[0] += "(" 
+#                 helper(output, node.left) 
+#                 output[0] += ")"
+#         output = [""]
+#         helper(output, root)
+#         return output[0]
             
         
 
