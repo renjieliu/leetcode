@@ -1,29 +1,53 @@
 class Solution:
-    def removeInterval(self, intervals: 'List[List[int]]', toBeRemoved: 'List[int]') -> 'List[List[int]]':
-        output = []
-        for start, end in intervals:
-            if end <= toBeRemoved[0] or start >= toBeRemoved[1]:
-                output.append([start, end])
-            else:
-                if toBeRemoved[0] <= start <= toBeRemoved[1] and toBeRemoved[0] <= end <= toBeRemoved[1]:
-                    continue
-
-                elif start <= toBeRemoved[0] and end >= toBeRemoved[1]:
-                    if start != toBeRemoved[0]:
-                        output.append([start, toBeRemoved[0]])
-                    if end != toBeRemoved[1]:
-                        output.append([toBeRemoved[1], end])
-
-                elif toBeRemoved[0] <= start <= toBeRemoved[1]:
-                    s = toBeRemoved[1]
-                    if s != end:
-                        output.append([s, end])
-
-                elif toBeRemoved[0] <= end <= toBeRemoved[1]:
-                    e = toBeRemoved[0]
-                    if start != e:
-                        output.append([start, e])
+    def removeInterval(self, intervals: 'List[List[int]]', toBeRemoved: 'List[int]') -> 'List[List[int]]': # O( N | N )
+        output = [] 
+        for s, e in intervals:
+            if s >= toBeRemoved[1] or e <= toBeRemoved[0]: # no overlapping
+                output.append([s,e])
+            elif toBeRemoved[0] <= s < toBeRemoved[1] and e > toBeRemoved[1]: # s in between, e after tBR[1]
+                output.append([toBeRemoved[1], e])
+            elif s < toBeRemoved[0] < e and toBeRemoved[1] >= e: # tBR[0] in between, and tBT[1] after e
+                output.append([s, toBeRemoved[0]])
+            elif s < toBeRemoved[0] < toBeRemoved[1] <= e: # tBR fully overlapped under s, e 
+                output.append([s, toBeRemoved[0]])
+                output.append([toBeRemoved[1], e])
+            else: # the entire interval needs to be removed
+                continue 
         return output
+    
+
+
+
+# previous solution
+
+# class Solution:
+#     def removeInterval(self, intervals: 'List[List[int]]', toBeRemoved: 'List[int]') -> 'List[List[int]]':
+#         output = []
+#         for start, end in intervals:
+#             if end <= toBeRemoved[0] or start >= toBeRemoved[1]:
+#                 output.append([start, end])
+#             else:
+#                 if toBeRemoved[0] <= start <= toBeRemoved[1] and toBeRemoved[0] <= end <= toBeRemoved[1]:
+#                     continue
+
+#                 elif start <= toBeRemoved[0] and end >= toBeRemoved[1]:
+#                     if start != toBeRemoved[0]:
+#                         output.append([start, toBeRemoved[0]])
+#                     if end != toBeRemoved[1]:
+#                         output.append([toBeRemoved[1], end])
+
+#                 elif toBeRemoved[0] <= start <= toBeRemoved[1]:
+#                     s = toBeRemoved[1]
+#                     if s != end:
+#                         output.append([s, end])
+
+#                 elif toBeRemoved[0] <= end <= toBeRemoved[1]:
+#                     e = toBeRemoved[0]
+#                     if start != e:
+#                         output.append([start, e])
+#         return output
+
+
 
 
 #previous approach
