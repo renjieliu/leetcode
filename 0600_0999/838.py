@@ -1,6 +1,6 @@
 class Solution:
-    def pushDominoes(self, dominoes: str) -> str:
-        stk = 0
+    def pushDominoes(self, dominoes: str) -> str: # O( N | N )
+        stk = 0 
         output = ""
         prevForce = None
         for d in dominoes:
@@ -17,17 +17,17 @@ class Solution:
                             output += "." * stk
                     elif d == prevForce:
                         output += prevForce*stk
-                    elif d == "L" and prevForce == "R":
+                    elif d == "L" and prevForce == "R": 
                         output += "R" * (stk//2)
                         output += "." if stk % 2 else ""
                         output += "L" * (stk//2)
                     elif d == "R" and prevForce == "L":
                         output += "." * stk
 
-                    output += d
+                    output += d 
                 stk = 0
                 prevForce = d
-
+        
         if stk:
             if prevForce == "R":
                 output += "R" * stk
@@ -35,6 +35,52 @@ class Solution:
                 output += "." * stk
 
         return output
+                    
+                    
+
+            
+            
+            
+
+# previous solution
+
+# class Solution:
+#     def pushDominoes(self, dominoes: str) -> str:
+#         stk = 0
+#         output = ""
+#         prevForce = None
+#         for d in dominoes:
+#             if d == ".":
+#                 stk += 1
+#             else:
+#                 if stk == 0: #if nothing in the stk, just add curr Force
+#                     output += d
+#                 else: #take out the . from the stk , and add curr
+#                     if prevForce == None:
+#                         if d == "L":
+#                             output += d*stk
+#                         elif d == "R":
+#                             output += "." * stk
+#                     elif d == prevForce:
+#                         output += prevForce*stk
+#                     elif d == "L" and prevForce == "R":
+#                         output += "R" * (stk//2)
+#                         output += "." if stk % 2 else ""
+#                         output += "L" * (stk//2)
+#                     elif d == "R" and prevForce == "L":
+#                         output += "." * stk
+
+#                     output += d
+#                 stk = 0
+#                 prevForce = d
+
+#         if stk:
+#             if prevForce == "R":
+#                 output += "R" * stk
+#             else:
+#                 output += "." * stk
+
+#         return output
 
 
 
