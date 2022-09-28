@@ -1,25 +1,54 @@
 # Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
 class Solution:
-    def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+    def removeNthFromEnd(self, head: 'Optional[ListNode]', n: int) -> 'Optional[ListNode]': # O( N | N )
         def helper(node, n):
             if node == None:
-                return [0, None]  # [layer 0, None]
+                return [None, 0]  #[returned node, lvl to end]
+            nxt, lvl = helper(node.next, n)
+            
+            if n == lvl+1: # current level is n to the end 
+                return [nxt, lvl+1]
             else:
-                layer_nodes = helper(node.next, n)
-                if -(layer_nodes[
-                         0] + 1) == -n:  # if current layer is the layer n from end, then return the nodes below it.
-                    return [layer_nodes[0] + 1, layer_nodes[1]]
-                else:
-                    curr = ListNode(node.val)  # else, add the current node to the return chain
-                    curr.next = layer_nodes[1]
-                    return [layer_nodes[0] + 1, curr]
+                node.next = nxt 
+                return [node, lvl+1]
+        
+        return helper(head, n)[0]
+    
 
-        return helper(head, n)[1]
+
+
+
+# previous solution
+
+# # Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+# class Solution:
+#     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+#         def helper(node, n):
+#             if node == None:
+#                 return [0, None]  # [layer 0, None]
+#             else:
+#                 layer_nodes = helper(node.next, n)
+#                 if -(layer_nodes[
+#                          0] + 1) == -n:  # if current layer is the layer n from end, then return the nodes below it.
+#                     return [layer_nodes[0] + 1, layer_nodes[1]]
+#                 else:
+#                     curr = ListNode(node.val)  # else, add the current node to the return chain
+#                     curr.next = layer_nodes[1]
+#                     return [layer_nodes[0] + 1, curr]
+
+#         return helper(head, n)[1]
+
+
+
 
 # previous approach
 # # Definition for singly-linked list.
