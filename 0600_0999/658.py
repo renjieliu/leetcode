@@ -1,6 +1,68 @@
 class Solution:
-    def findClosestElements(self, arr: 'List[int]', k: int, x: int) -> 'List[int]': # O( NlogN | 1 )
-        return sorted(sorted(arr, key = lambda m: abs(m-x))[:k]) #sort by the distance, and return the final array sorted
+    def findClosestElements(self, arr: 'List[int]', k: int, x: int) -> 'List[int]': # O( logN | 1 )
+        s = 0 
+        e = len(arr)-1-k
+        while s <= e: #the arr is sorted, just need to find the starting return point.
+            mid = s - (s-e) //2 
+            if x - arr[mid] <= arr[mid + k] - x : # see below explanation from mid is the end or mid +k as the end
+                e = mid - 1 
+            else:
+                s = mid + 1 
+        return arr[s:s+k]
+
+
+    
+# if arr[mid] <= x <= arr[mid+k]: # force to move to the left
+# abs(x-arr[mid])  == x-arr[mid]
+# abs(arr[mid+k] - x) == arr[mid+k] - x
+
+# if  x <= arr[mid]<= arr[mid+k]: #force to move to the left
+# x-arr[mid], to be negative, force the 
+# abs(arr[mid+k] - x) == arr[mid+k] - x
+
+
+# if arr[mid] <= arr[mid+k] <= x: # force to move to the right
+    
+
+# below is from the comments of the problem solution - 
+
+# The corner case that breaks abs(x - arr[mid]) > abs(arr[mid + k] - x) is when arr[mid] to arr[mid + k] are all the same and the numbers are smaller than x (if they're larger it's no problem). For example,
+
+# [1,1,2,2,2,2,2,3,3]
+# 3
+# 3
+# In the first iteration, mid equals to 3 and arr[3] to arr[3 + 3] is [2,2,2,2]. Because abs(x - arr[mid]) == abs(arr[mid + k] - x), we will recursive into the left half, which is wrong.
+
+# Now let's see how x - arr[mid] > arr[mid + k] - x works:
+# There are 3 possible positions x can be relative to arr[mid] and arr[mid + k]. Say this array is sorted from small to large, : [x1, arr[mid], x2, arr[mid + k], x3]
+
+# Case x1:
+# x1 is smaller than both arr[mid] and arr[mid + k]. We should recurse into the left.
+# x - arr[mid] is negative and arr[mid + k] - x is positive.
+# The condition is false and we recurse to left. With abs(), we also recurse to left.
+
+# Case x2:
+# x2 is in between arr[mid] and arr[mid + k]. We should recurse to the side that is closer to x.
+# x - arr[mid] and arr[mid + k] - x are both positive.
+# The comparison works the same as using abs(); we recursive to the closer side.
+# (When in the case of arr[mid] == arr[mid + k], the condition is false and we recurse to the left.)
+
+# Case x3:
+# x3 is larger than both arr[mid] and arr[mid + k]. We should recurse into the right.
+# x - arr[mid] is positive and arr[mid + k] - x is negative.
+# The condition is true and we recurse to right.
+# Now the previously failed corner case arr[mid] == arr[mid + k] < x3 doesn't cause a problem anymore because the sign of the numbers we're comparing is still the same.
+    
+    
+
+
+
+
+# previous solution
+
+# class Solution:
+#     def findClosestElements(self, arr: 'List[int]', k: int, x: int) -> 'List[int]': # O( NlogN | 1 )
+#         return sorted(sorted(arr, key = lambda m: abs(m-x))[:k]) #sort by the distance, and return the final array sorted
     
 
 
