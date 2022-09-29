@@ -1,24 +1,32 @@
 class Solution:
-    def findClosestElements(self, arr: 'List[int]', k: int, x: int) -> 'List[int]':
-        #just need to find the start of the k elements O(log(N))
-        s = 0
-        e = len(arr)-1-k
-        while s<=e :
-            mid = s-(s-e)//2
-            if x - arr[mid] <= arr[mid+k] - x: #the starting point is on the left
-                e = mid-1
-            else: #the starting point is on the right
-                s = mid+1
-        return arr[s:s+k]
+    def findClosestElements(self, arr: 'List[int]', k: int, x: int) -> 'List[int]': # O( NlogN | 1 )
+        return sorted(sorted(arr, key = lambda m: abs(m-x))[:k]) #sort by the distance, and return the final array sorted
+    
 
 
-        #(O(N))
-        # i = 0
-        # while i < len(arr)-k:
-        #     if arr[i]!=arr[i+k] and abs(arr[i]-x) <= abs(arr[i+k]-x):
-        #         break
-        #     i+=1
-        # return arr[i:i+k]
+# previous solution
+
+# class Solution:
+#     def findClosestElements(self, arr: 'List[int]', k: int, x: int) -> 'List[int]':
+#         #just need to find the start of the k elements O(log(N))
+#         s = 0
+#         e = len(arr)-1-k
+#         while s<=e :
+#             mid = s-(s-e)//2
+#             if x - arr[mid] <= arr[mid+k] - x: #the starting point is on the left
+#                 e = mid-1
+#             else: #the starting point is on the right
+#                 s = mid+1
+#         return arr[s:s+k]
+
+
+#         #(O(N))
+#         # i = 0
+#         # while i < len(arr)-k:
+#         #     if arr[i]!=arr[i+k] and abs(arr[i]-x) <= abs(arr[i+k]-x):
+#         #         break
+#         #     i+=1
+#         # return arr[i:i+k]
 
 
 
