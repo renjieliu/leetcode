@@ -1,29 +1,56 @@
 # Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def findTarget(self, root: 'Optional[TreeNode]', k: int) -> bool:# O( N | N )
+        def helper(seen, node, k): 
+            if node:
+                if k - node.val in seen: # if the diff is seen, then it can find a pair
+                    return True
+                else:
+                    seen.add(node.val)
+                    return helper(seen, node.left, k) or helper(seen, node.right, k)
+        
+        return helper(set(), root, k)
 
-class Solution: #RL 20210823: #simple DFS approach O(n) + space O(n)
-    def findTarget(self, root: 'Optional[TreeNode]', k: int) -> bool:
-        def helper(lkp, node, k):
-            if k-node.val in lkp :
-                return True
-            else:
-                lkp.add(node.val)
-                A = B = False
-                if node.left:
-                    A = helper(lkp, node.left, k)
-                    if A:
-                        return True
-                if node.right:
-                    B = helper(lkp, node.right, k)
-                    if B:
-                        return True
-                return False
-        lkp = set()
-        return helper(lkp, root, k)
+
+
+# previous solution
+
+# # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+# class Solution: #RL 20210823: #simple DFS approach O(n) + space O(n)
+#     def findTarget(self, root: 'Optional[TreeNode]', k: int) -> bool:
+#         def helper(lkp, node, k):
+#             if k-node.val in lkp :
+#                 return True
+#             else:
+#                 lkp.add(node.val)
+#                 A = B = False
+#                 if node.left:
+#                     A = helper(lkp, node.left, k)
+#                     if A:
+#                         return True
+#                 if node.right:
+#                     B = helper(lkp, node.right, k)
+#                     if B:
+#                         return True
+#                 return False
+#         lkp = set()
+#         return helper(lkp, root, k)
+
+
+
+
+
 
 
 # # Definition for a binary tree node.
