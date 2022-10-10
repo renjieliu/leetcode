@@ -1,11 +1,27 @@
 class Solution:
-    def breakPalindrome(self, palindrome: str) -> str:
-        s = palindrome
-        for i, c in enumerate(s):
-            t = s[:i] + 'a' + s[i+1:]
-            if t != t[::-1]:
-                return t
-        return "" if len(s) <= 1 else s[:-1]+'b'
+    def breakPalindrome(self, palindrome: str) -> str: # O( N | 1 )
+        if len(palindrome) == 1:
+            return ""
+        else:
+            # replace the first non-a to a
+            for i in range(len(palindrome)):
+                if palindrome[i] != 'a': 
+                    if len(palindrome)%2 == 0 or (len(palindrome)%2 and  i != len(palindrome)//2): # if even length or (odd and current is not the middle one)
+                        return palindrome[:i]+'a'+palindrome[i+1:] 
+            return palindrome[:-1] + 'b'  # replace the last one as 'b' and return
+
+        
+
+# previous solution
+
+# class Solution:
+#     def breakPalindrome(self, palindrome: str) -> str:
+#         s = palindrome
+#         for i, c in enumerate(s):
+#             t = s[:i] + 'a' + s[i+1:]
+#             if t != t[::-1]:
+#                 return t
+#         return "" if len(s) <= 1 else s[:-1]+'b'
 
 
 # previous approach
