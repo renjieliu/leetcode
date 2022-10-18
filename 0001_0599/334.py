@@ -1,14 +1,31 @@
 class Solution:
     def increasingTriplet(self, nums: 'List[int]') -> bool: # O( N | 1 )
-        a = b = float('inf') # first and second number
+        a = b = float('inf') # the first 2 numbers
         for n in nums:
-            if n <= a: # n <= a 
-                a = n  
-            elif n <= b: # n > a and n <= b 
+            if n <= a: # first number
+                a = n
+            elif n <= b: # n is > a, meaning b > a
                 b = n 
-            else: # n > b > a 
-                return True 
-        return False 
+            else: # n > b > a
+                return True
+        
+        return False
+    
+
+
+# previous solution
+
+# class Solution:
+#     def increasingTriplet(self, nums: 'List[int]') -> bool: # O( N | 1 )
+#         a = b = float('inf') # first and second number
+#         for n in nums:
+#             if n <= a: # n <= a 
+#                 a = n  
+#             elif n <= b: # n > a and n <= b 
+#                 b = n 
+#             else: # n > b > a 
+#                 return True 
+#         return False 
     
 
     
