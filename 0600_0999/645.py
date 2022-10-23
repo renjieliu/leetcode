@@ -1,17 +1,33 @@
 class Solution:
-    def findErrorNums(self, nums: 'List[int]') -> 'List[int]':
-        total = ( 1+len(nums) ) * len(nums) //2
-        curr = sum(nums)
-        lkp = set()
-        dup = None
+    def findErrorNums(self, nums: 'List[int]') -> 'List[int]': # O( N | N )
+        total = (1+len(nums)) * len(nums) // 2 
+        s = sum(nums)
+        lkp = set() 
         for n in nums:
-            if n not in lkp:
-                lkp.add(n)
-            else:
-                dup = n
-                break
-        missing = total - (curr - dup)
-        return [dup, missing]
+            if n in lkp:
+                return [n, n - (s - total)] #[the number doubled, (doubled - delta) is the one it replaced]
+            lkp.add(n)
+            
+
+
+
+
+# previous solution
+
+# class Solution:
+#     def findErrorNums(self, nums: 'List[int]') -> 'List[int]':
+#         total = ( 1+len(nums) ) * len(nums) //2
+#         curr = sum(nums)
+#         lkp = set()
+#         dup = None
+#         for n in nums:
+#             if n not in lkp:
+#                 lkp.add(n)
+#             else:
+#                 dup = n
+#                 break
+#         missing = total - (curr - dup)
+#         return [dup, missing]
 
 
 # previous approach
