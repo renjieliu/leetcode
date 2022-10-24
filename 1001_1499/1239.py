@@ -1,22 +1,44 @@
 class Solution:
-    def maxLength(self, arr: 'List[str]') -> int:
-        def combo(output, curr, nums, arr,  v): #to get all the possible combinations, and check each string
-            if len(curr) == v:
-                tmp = ""
-                for c in curr:
-                    tmp += arr[c]
-                if len(set(tmp)) == len(tmp): #all uniqiue
-                    output[0] = max(output[0], len(tmp))
+    def maxLength(self, arr: 'List[str]') -> int: # O( 2**N | 2**N )
+        def helper(output, pool, arr, curr, lvl, v): # find all the possible combo for the concat strings
+            if lvl == v:
+                output[0] = max(output[0], len(curr))
             else:
-                for i in range(len(nums)):
-                    combo(output, curr+[nums[i]], nums[i+1:], arr, v)
+                for i in range(len(arr)):
+                    if arr[i] & curr == set(): # all the characters are unique in the current concatenation
+                        helper(output, pool, arr[i+1:], curr | arr[i], lvl+1, v)
+        
+        arr = [set(a) for a in arr if len(set(a)) == len(a)] #the string itself cannot have repeat characters
+        output = [-float('inf')]
+        for v in range(1, len(arr)+1):
+            helper(output, set(), arr, set(), 0, v)
+        
+        return max(output[0], 0) #if none of the string is valid, return 0
+    
 
-        output = [0]
-        n = len(arr)
-        nums = list(range(n))
-        for i in range(n+1):
-            combo(output, [], nums, arr, i)
-        return output[0]
+
+
+# previous solution 
+
+# class Solution:
+#     def maxLength(self, arr: 'List[str]') -> int:
+#         def combo(output, curr, nums, arr,  v): #to get all the possible combinations, and check each string
+#             if len(curr) == v:
+#                 tmp = ""
+#                 for c in curr:
+#                     tmp += arr[c]
+#                 if len(set(tmp)) == len(tmp): #all uniqiue
+#                     output[0] = max(output[0], len(tmp))
+#             else:
+#                 for i in range(len(nums)):
+#                     combo(output, curr+[nums[i]], nums[i+1:], arr, v)
+
+#         output = [0]
+#         n = len(arr)
+#         nums = list(range(n))
+#         for i in range(n+1):
+#             combo(output, [], nums, arr, i)
+#         return output[0]
 
 
 
