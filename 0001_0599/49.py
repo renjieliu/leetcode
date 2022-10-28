@@ -1,13 +1,31 @@
 class Solution:
-    def groupAnagrams(self, strs: 'List[str]') -> 'List[List[str]]':
-        sigature = lambda x: "".join(sorted(list(x))) #reorganize the letter, sorted alphabetically
-        hmp = {}
-        for s in strs:
-            sig = sigature(s)
-            if sig not in hmp:
-                hmp[sig] = []
-            hmp[sig].append(s)
+    def groupAnagrams(self, strs: 'List[str]') -> 'List[List[str]]': # O( N*k | N*k ) k being the length of the longest word in the strs
+        def sig(w): # find the occurrence of each character in each word
+            arr = [0] * 26 
+            for c in w :
+                arr[ord(c) - ord('a')] += 1
+            return '-'.join(str(_) for _ in arr) # return concatenated of the occurrence as signature
+        
+        hmp = defaultdict(lambda: [])
+        for w in strs:
+            hmp[sig(w)].append(w) # group the words with same signature together
+        
         return hmp.values()
+
+
+
+# previous solution
+
+# class Solution:
+#     def groupAnagrams(self, strs: 'List[str]') -> 'List[List[str]]':
+#         sigature = lambda x: "".join(sorted(list(x))) #reorganize the letter, sorted alphabetically
+#         hmp = {}
+#         for s in strs:
+#             sig = sigature(s)
+#             if sig not in hmp:
+#                 hmp[sig] = []
+#             hmp[sig].append(s)
+#         return hmp.values()
 
 
 # previous approach
