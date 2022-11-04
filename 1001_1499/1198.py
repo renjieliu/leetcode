@@ -1,25 +1,56 @@
 class Solution:
-    def smallestCommonElement(self, mat: 'List[List[int]]') -> int:
-        if len(mat)==1: return mat[0][0]
-        else:
-            curr = mat[0]
-            common = mat[0] #take the first row as common, and compare with the following rows
-            for m in mat[1:]:
-                curr = common
-                common = []
-                while curr and m: #keep popping the current list or the m, if the element is < than the other[0]
-                    while curr and m and curr[0] < m[0]:
-                        curr.pop(0)
-                    while curr and m and curr[0] == m[0]:
-                        common.append(curr.pop(0))
-                        m.pop(0)
-                    while curr and m and curr[0] > m[0]:
-                        m.pop(0)
+    def smallestCommonElement(self, mat: 'List[List[int]]') -> int: # O( NlogN | 1 )
+        def binFind(v, arr): # to find v in arr with binary search
+            if v < arr[0] or v > arr[-1]:
+                return 0 
+            else:
+                s = 0 
+                e = len(arr)-1 
+                while s <= e:
+                    mid = s - (s-e)//2
+                    if arr[mid] == v:
+                        return 1
+                    elif arr[mid] > v:
+                        e = mid - 1 
+                    else:
+                        s = mid + 1 
+                return 0
+        
+        for n in mat[0]: # go through each element in first row, and find the first (smallest) element in all the rows
+            cnt = 1
+            for arr in mat[1:]:
+                cnt += binFind(n, arr)
+            if cnt == len(mat):
+                return n
+        return -1
+    
+    
 
-                if common == []:
-                    return -1
 
-            return common[0]
+# previous solution
+
+# class Solution:
+#     def smallestCommonElement(self, mat: 'List[List[int]]') -> int:
+#         if len(mat)==1: return mat[0][0]
+#         else:
+#             curr = mat[0]
+#             common = mat[0] #take the first row as common, and compare with the following rows
+#             for m in mat[1:]:
+#                 curr = common
+#                 common = []
+#                 while curr and m: #keep popping the current list or the m, if the element is < than the other[0]
+#                     while curr and m and curr[0] < m[0]:
+#                         curr.pop(0)
+#                     while curr and m and curr[0] == m[0]:
+#                         common.append(curr.pop(0))
+#                         m.pop(0)
+#                     while curr and m and curr[0] > m[0]:
+#                         m.pop(0)
+
+#                 if common == []:
+#                     return -1
+
+#             return common[0]
 
 
 
