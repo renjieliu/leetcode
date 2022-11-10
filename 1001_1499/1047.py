@@ -1,12 +1,29 @@
 class Solution:
-    def removeDuplicates(self, s: str) -> str:
-        stk = []
-        for c in s:
-            stk.append(c)
-            while len(stk) > 1 and stk[-2] == stk[-1]:
+    def removeDuplicates(self, s: str) -> str: # O( N | N )
+        arr = list(s)
+        stk = [arr.pop(0)]
+        while arr:
+            while stk and arr and arr[0] == stk[-1]: # keep taking out the same characters from the stk and first of arr 
                 stk.pop()
-                stk.pop()
+                arr.pop(0)
+            if arr:
+                stk.append(arr.pop(0))
+        
         return ''.join(stk)
+    
+
+
+# previous solution
+
+# class Solution:
+#     def removeDuplicates(self, s: str) -> str:
+#         stk = []
+#         for c in s:
+#             stk.append(c)
+#             while len(stk) > 1 and stk[-2] == stk[-1]:
+#                 stk.pop()
+#                 stk.pop()
+#         return ''.join(stk)
 
 
 # previous approach
