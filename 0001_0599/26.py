@@ -13,7 +13,6 @@ class Solution:
         return l
                 
 
-        
 
 
 # previous solution
