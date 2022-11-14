@@ -1,27 +1,35 @@
 class Solution:
-    def reverseWords(self, s: str) -> str:
-        arr = [""]
-        for c in s:
-            if c == " ":
-                if arr and arr[-1] != "":
-                    arr.append("")
-            else:
-                arr[-1] += c
+    def reverseWords(self, s: str) -> str: # O( N | N )
+        return ' '.join(_ for _ in s.split(' ')[::-1] if _) # split the s to arr, and see if each element is not empty, and join with ' ' as a new string
+
+    
+
+# previous solution
+
+# class Solution:
+#     def reverseWords(self, s: str) -> str:
+#         arr = [""]
+#         for c in s:
+#             if c == " ":
+#                 if arr and arr[-1] != "":
+#                     arr.append("")
+#             else:
+#                 arr[-1] += c
         
-        output = ""
-        for a in arr[::-1]:
-            output += (a+" ") if a else ""
-        
-        return output[:-1] #take out the last space
-        
-        
-        
-#         arr = s.split(" ")[::-1]
 #         output = ""
-#         for a in arr:
-#             if a: 
-#                 output+=a + " "
-#         return output.rstrip(" ") #remove the last space from the output
+#         for a in arr[::-1]:
+#             output += (a+" ") if a else ""
+        
+#         return output[:-1] #take out the last space
+        
+        
+        
+# #         arr = s.split(" ")[::-1]
+# #         output = ""
+# #         for a in arr:
+# #             if a: 
+# #                 output+=a + " "
+# #         return output.rstrip(" ") #remove the last space from the output
     
 
 
