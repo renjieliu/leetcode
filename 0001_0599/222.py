@@ -5,8 +5,53 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def countNodes(self, root: 'Optional[TreeNode]') -> int: # O( N | N )
-        return (self.countNodes(root.left) + 1 + self.countNodes(root.right)) if root else 0 
+    def countNodes(self, root: 'Optional[TreeNode]') -> int: # O( hlogN | 1 ) , h is the height of the tree
+        if root == None:
+            return 0
+        lvls = lambda node: (1 + lvls(node.left)) if node else 0 # total levels in the tree
+        h = lvls(root) - 1 # -1 to make it easier for the last level nodes count. last level total count should be 2**(h-1)
+        def exists(node, idx, h): # to find the last exists node index
+            s = 0 
+            e = 2**h-1
+            for _ in range(h):
+                mid = (s+e)//2
+                if idx <= mid:
+                    e = mid - 1
+                    node = node.left
+                else:
+                    s = mid + 1 
+                    node = node.right
+            return node != None          
+            
+        s = 0 # start node index on the last row 
+        e = 2**h-1 # end node index on the last row
+        last = 0
+        while s <= e: # binary search to find the first missed index on the last row
+            mid = (s+e)//2 
+            if exists(root, mid, h):
+                last = mid+1 # count is index + 1
+                s = mid + 1 
+            else:
+                e = mid -1 
+        
+        return 2**h-1 + last # last index +1 is the count of nodes in the tree
+            
+
+    
+
+
+
+# previous solution
+
+# # Definition for a binary tree node.
+# # class TreeNode:
+# #     def __init__(self, val=0, left=None, right=None):
+# #         self.val = val
+# #         self.left = left
+# #         self.right = right
+# class Solution:
+#     def countNodes(self, root: 'Optional[TreeNode]') -> int: # O( N | N )
+#         return (self.countNodes(root.left) + 1 + self.countNodes(root.right)) if root else 0 
 
 
 
