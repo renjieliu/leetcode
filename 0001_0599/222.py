@@ -5,44 +5,58 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def countNodes(self, root: 'Optional[TreeNode]') -> int:
-        if root == None:
-            return 0 
-        else:
-            h = 0
-            node = root
-            while node.left:
-                h+=1 
-                node = node.left
-            if h == 0:
-                return 1 
-            else:
-                def exists(node, idx, h): #check if current idx is a not None node
-                    left = 0
-                    right = 2**h - 1
-                    for _ in range(h):
-                        mid = (left+ right) // 2
-                        if idx <= mid:
-                            node = node.left
-                            right = mid - 1 
-                        else:
-                            node = node.right
-                            left = mid + 1 
-                    return node != None
+    def countNodes(self, root: 'Optional[TreeNode]') -> int: # O( N | N )
+        return (self.countNodes(root.left) + 1 + self.countNodes(root.right)) if root else 0 
+
+
+
+# previous solution
+
+# # Definition for a binary tree node.
+# # class TreeNode:
+# #     def __init__(self, val=0, left=None, right=None):
+# #         self.val = val
+# #         self.left = left
+# #         self.right = right
+# class Solution:
+#     def countNodes(self, root: 'Optional[TreeNode]') -> int:
+#         if root == None:
+#             return 0 
+#         else:
+#             h = 0
+#             node = root
+#             while node.left:
+#                 h+=1 
+#                 node = node.left
+#             if h == 0:
+#                 return 1 
+#             else:
+#                 def exists(node, idx, h): #check if current idx is a not None node
+#                     left = 0
+#                     right = 2**h - 1
+#                     for _ in range(h):
+#                         mid = (left+ right) // 2
+#                         if idx <= mid:
+#                             node = node.left
+#                             right = mid - 1 
+#                         else:
+#                             node = node.right
+#                             left = mid + 1 
+#                     return node != None
                     
                 
-                left = 0
-                right = 2**h-1
-                index = float('inf') # index of the last not None node in the last row
-                while left <= right: # binary search to find the last not None node
-                    mid = (left+ right) // 2 
-                    if exists(root, mid, h):
-                        left = mid + 1
-                        index = mid
-                    else:
-                        right = mid - 1
+#                 left = 0
+#                 right = 2**h-1
+#                 index = float('inf') # index of the last not None node in the last row
+#                 while left <= right: # binary search to find the last not None node
+#                     mid = (left+ right) // 2 
+#                     if exists(root, mid, h):
+#                         left = mid + 1
+#                         index = mid
+#                     else:
+#                         right = mid - 1
                 
-                return 2**h-1 + (index+1) # index+1 is the count
+#                 return 2**h-1 + (index+1) # index+1 is the count
                 
 
                 
