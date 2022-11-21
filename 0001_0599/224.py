@@ -1,9 +1,9 @@
 class Solution:
-    def calculate(self, s: str) -> int:
+    def calculate(self, s: str) -> int: # RL 20221120 copied previous solution, O( N | N )
         def calc(txt):
             txt = txt.replace("--", "+").replace("-","+-")
-            return sum(int(_) for _ in txt.split("+") if _ ) #filter if _ is "" blank
-
+            return sum(int(_) for _ in txt.split("+") if _ ) #filter if _ is "" blank 
+        
         s = s.replace(" ", "")
         entire = ""
         stk = []
@@ -11,18 +11,50 @@ class Solution:
             if c == "(": #put into a stk
                 stk.append("")
             elif c == ")":
-                local = calc(stk.pop()) #calc the local string
+                local = calc(stk.pop()) #calc the local string 
                 if stk:
                     stk[-1] += str(local)
                 else:
-                    entire+=str(local)
+                    entire+=str(local)            
             else:
                 if stk:
                     stk[-1] += c
                 else:
                     entire += c
-
+                    
         return calc(entire) #calc the entire string
+            
+
+        
+
+
+# previous solution
+
+# class Solution:
+#     def calculate(self, s: str) -> int:
+#         def calc(txt):
+#             txt = txt.replace("--", "+").replace("-","+-")
+#             return sum(int(_) for _ in txt.split("+") if _ ) #filter if _ is "" blank
+
+#         s = s.replace(" ", "")
+#         entire = ""
+#         stk = []
+#         for c in s:
+#             if c == "(": #put into a stk
+#                 stk.append("")
+#             elif c == ")":
+#                 local = calc(stk.pop()) #calc the local string
+#                 if stk:
+#                     stk[-1] += str(local)
+#                 else:
+#                     entire+=str(local)
+#             else:
+#                 if stk:
+#                     stk[-1] += c
+#                 else:
+#                     entire += c
+
+#         return calc(entire) #calc the entire string
 
 
 
