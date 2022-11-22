@@ -1,14 +1,32 @@
 class Solution:
     def numSquares(self, n: int) -> int: # O( N**(3/2) | N )
-        stk = [_**2 for _ in range(1, int(n**0.5)+1)] 
-        dp = [0, 1]  #[0 squares to form 0, 1 square to form 1]
-        for i in range(2, n+1): #for each number, find the minimum required
-            curr = float('inf')
-            for s in stk:
+        dp = [0] + [float('inf')] * n # initialize the dp and [0 squares to form 0], dp[0] = 0
+        stk = [_**2 for _ in range(1, int(n**0.5)+1)] # N**(1/2) 
+        for i in range(1, n+1): #for each number, find the minimum required, O( N )
+            for s in stk: # O( N**(1/2) )  
                 if i-s >= 0:
-                    curr = min(curr, dp[i-s] + 1)
-            dp.append(curr)
+                    dp[i] = min(dp[i], dp[i-s] + 1)
+                else: 
+                    break
         return dp[-1]
+    
+
+
+
+
+# previous solution
+
+# class Solution:
+#     def numSquares(self, n: int) -> int: # O( N**(3/2) | N )
+#         stk = [_**2 for _ in range(1, int(n**0.5)+1)] 
+#         dp = [0, 1]  #[0 squares to form 0, 1 square to form 1]
+#         for i in range(2, n+1): #for each number, find the minimum required
+#             curr = float('inf')
+#             for s in stk:
+#                 if i-s >= 0:
+#                     curr = min(curr, dp[i-s] + 1)
+#             dp.append(curr)
+#         return dp[-1]
     
 
 
