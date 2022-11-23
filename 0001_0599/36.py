@@ -1,41 +1,86 @@
 class Solution:
-    def isValidSudoku(self, board: 'List[List[str]]') -> bool:
-        def checkCol(board):
-            for c in range(len(board[0])):
-                hmp = set()
-                for r in range(len(board)):
-                    if board[r][c] != '.':
-                        if board[r][c] in hmp:
-                            return False
-                        else:
-                            hmp.add(board[r][c])
-            return True
-
-        def checkRow(board):
+    def isValidSudoku(self, board: 'List[List[str]]') -> bool: # O( MN | MN )
+        for r in board: # check rows
+            curr = set()
+            for c in r:
+                if c != ".":
+                    if c in curr:
+                        return False
+                    curr.add(c)
+        
+        for c in range(len(board[0])): #check each col
+            curr = set()
             for r in range(len(board)):
-                hmp = set()
-                for c in range(len(board[0])):
-                    if board[r][c] != '.':
-                        if board[r][c] in hmp:
-                            return False
-                        else:
-                            hmp.add(board[r][c])
-            return True
+                if board[r][c] != ".":
+                    if board[r][c] in curr:
+                        return False
+                    curr.add(board[r][c])
+            
+        for r in range(0, len(board), 3): # check each cube
+            for c in range(0, len(board[0]), 3):
+                curr = set()
+                for i in range(3):
+                    for j in range(3):
+                        if board[r+i][c+j] != ".":
+                            if board[r+i][c+j] in curr:
+                                return False
+                            curr.add(board[r+i][c+j])
+        
+        return True 
 
-        def checkSmall9(board):
-            for i in range(3):
-                for j in range(3):
-                    hmp = set()
-                    for r in range(3):
-                        for c in range(3):
-                            curr_r = 3*i+r
-                            curr_c = 3*j+c
-                            if board[curr_r][curr_c] != '.':
-                                if board[curr_r][curr_c] in hmp:
-                                    return False
-            return True
+    
 
-        return checkSmall9(board) and checkRow(board) and checkCol(board)
+
+
+# previous solution
+
+# class Solution:
+#     def isValidSudoku(self, board: 'List[List[str]]') -> bool:
+#         def checkCol(board):
+#             for c in range(len(board[0])):
+#                 hmp = set()
+#                 for r in range(len(board)):
+#                     if board[r][c] != '.':
+#                         if board[r][c] in hmp:
+#                             return False
+#                         else:
+#                             hmp.add(board[r][c])
+#             return True
+
+#         def checkRow(board):
+#             for r in range(len(board)):
+#                 hmp = set()
+#                 for c in range(len(board[0])):
+#                     if board[r][c] != '.':
+#                         if board[r][c] in hmp:
+#                             return False
+#                         else:
+#                             hmp.add(board[r][c])
+#             return True
+
+#         def checkSmall9(board):
+#             for i in range(3):
+#                 for j in range(3):
+#                     hmp = set()
+#                     for r in range(3):
+#                         for c in range(3):
+#                             curr_r = 3*i+r
+#                             curr_c = 3*j+c
+#                             if board[curr_r][curr_c] != '.':
+#                                 if board[curr_r][curr_c] in hmp:
+#                                     return False
+#             return True
+
+#         return checkSmall9(board) and checkRow(board) and checkCol(board)
+
+
+
+
+
+
+
+
+
 
 
 # previous approach
