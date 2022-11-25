@@ -1,31 +1,109 @@
 class Solution:
-    def exist(self, board: 'List[List[str]]', word: str) -> bool:
-        target = list(word)
-        def dfs(board, r, c, curr, target, seen):
-            if curr == target[0]:
-                target.pop(0)
-                if target == []:
-                    return True
-                direction = [[0,1], [1,0], [-1,0], [0,-1]]
-                for a , b in direction:
-                    if -1 < r+a < len(board) and -1 < c+b < len(board[0]) and (r+a, c+b) not in seen:
-                        seen.add((r+a, c+b))
-                        if dfs(board, r+a, c+b, board[r+a][c+b], target[:], seen) == 0:
-                            seen.remove((r+a, c+b))
-                        else:
-                            return True
-                return False
+    def exist(self, board: 'List[List[str]]', word: str) -> bool: # O( N*(3**k) | K ), N is the total cell in the board, k = len(word)
+        def dfs(seen, board, r, c, word): # from r, c search for the rest of the word
+            if word== "":
+                return True
             else:
-                return False
-
-        for r in range(len(board)):
+                direction = [[1, 0], [-1, 0], [0, -1], [0, 1]]
+                for a, b in direction:
+                    nxt_r = r + a
+                    nxt_c = c + b
+                    if -1 < nxt_r < len(board) and -1 < nxt_c < len(board[0]) and board[nxt_r][nxt_c] == word[0] and (nxt_r, nxt_c) not in seen:
+                        seen.add((nxt_r, nxt_c))
+                        T = dfs(seen, board, nxt_r, nxt_c, word[1:])
+                        if T:
+                            return True 
+                        else:
+                            seen.discard((nxt_r, nxt_c))
+                
+                return False 
+        
+        for r in range(len(board)): # find the entry point, and try to find the word
             for c in range(len(board[0])):
-                if board[r][c]==target[0]:
+                if board[r][c] == word[0]:
                     seen = {(r, c)}
-                    if dfs(board, r, c, board[r][c], target[:], seen):
-                        return True
-                    seen.remove((r,c))
+                    t = dfs(seen, board, r, c, word[1:])
+                    if t:
+                        return True 
+                    else:
+                        seen.discard((r, c))
         return False
+
+    
+
+        
+
+
+
+# previous solution
+
+
+# class Solution:
+#     def exist(self, board: 'List[List[str]]', word: str) -> bool: # O( N*(3**k) | K ), N is the total cell in the board, k = len(word)
+#         def dfs(seen, board, r, c, word): # from r, c search for the rest of the word
+#             if word== "":
+#                 return True
+#             else:
+#                 direction = [[1, 0], [-1, 0], [0, -1], [0, 1]]
+#                 for a, b in direction:
+#                     nxt_r = r + a
+#                     nxt_c = c + b
+#                     if -1 < nxt_r < len(board) and -1 < nxt_c < len(board[0]) and board[nxt_r][nxt_c] == word[0] and (nxt_r, nxt_c) not in seen:
+#                         seen.add((nxt_r, nxt_c))
+#                         T = dfs(seen, board, nxt_r, nxt_c, word[1:])
+#                         if T:
+#                             return True 
+#                         else:
+#                             seen.discard((nxt_r, nxt_c))
+                
+#                 return False 
+        
+#         for r in range(len(board)): # find the entry point, and try to find the word
+#             for c in range(len(board[0])):
+#                 if board[r][c] == word[0]:
+#                     seen = {(r, c)}
+#                     t = dfs(seen, board, r, c, word[1:])
+#                     if t:
+#                         return True 
+#                     else:
+#                         seen.discard((r, c))
+#         return False
+
+    
+
+        
+
+
+# previous solution
+
+# class Solution:
+#     def exist(self, board: 'List[List[str]]', word: str) -> bool:
+#         target = list(word)
+#         def dfs(board, r, c, curr, target, seen):
+#             if curr == target[0]:
+#                 target.pop(0)
+#                 if target == []:
+#                     return True
+#                 direction = [[0,1], [1,0], [-1,0], [0,-1]]
+#                 for a , b in direction:
+#                     if -1 < r+a < len(board) and -1 < c+b < len(board[0]) and (r+a, c+b) not in seen:
+#                         seen.add((r+a, c+b))
+#                         if dfs(board, r+a, c+b, board[r+a][c+b], target[:], seen) == 0:
+#                             seen.remove((r+a, c+b))
+#                         else:
+#                             return True
+#                 return False
+#             else:
+#                 return False
+
+#         for r in range(len(board)):
+#             for c in range(len(board[0])):
+#                 if board[r][c]==target[0]:
+#                     seen = {(r, c)}
+#                     if dfs(board, r, c, board[r][c], target[:], seen):
+#                         return True
+#                     seen.remove((r,c))
+#         return False
 
 
 
