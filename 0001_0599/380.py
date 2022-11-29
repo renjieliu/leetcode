@@ -47,6 +47,50 @@ class RandomizedSet:
 # class RandomizedSet:
 
 #     def __init__(self):
+#         self.loc = {} # to record the location of the values
+#         self.arr = []
+        
+
+#     def insert(self, val: int) -> bool: # O( 1 | 1 )
+#         if val not in self.loc: # add the new val to the end of the arr
+#             self.arr.append(val)
+#             self.loc[val] = len(self.arr) - 1 
+#             return True 
+#         return False
+
+#     def remove(self, val: int) -> bool: # O( 1 | 1 )
+#         if val not in self.loc:
+#             return False
+#         val_loc = self.loc[val] # the new location of current last val
+        
+#         self.arr[-1], self.arr[val_loc] = self.arr[val_loc], self.arr[-1] # swap val with the last value
+#         self.loc[self.arr[val_loc]] = val_loc # record the new location for the previous last value
+#         del self.loc[val]
+#         self.arr.pop()
+#         return True 
+
+#     def getRandom(self) -> int: # O( 1 | 1 )
+#         return random.choice(self.arr)
+        
+
+
+# # Your RandomizedSet object will be instantiated and called as such:
+# # obj = RandomizedSet()
+# # param_1 = obj.insert(val)
+# # param_2 = obj.remove(val)
+# # param_3 = obj.getRandom()
+
+
+
+
+
+# previous solution
+
+# import random
+
+# class RandomizedSet:
+
+#     def __init__(self):
 #         self.lkp = set()
         
 
