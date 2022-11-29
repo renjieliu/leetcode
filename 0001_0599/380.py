@@ -1,33 +1,25 @@
+import random
+
 class RandomizedSet:
 
     def __init__(self):
-        self.hmp_loc = {}
-        self.arr = []
+        self.lkp = set()
         
 
-    def insert(self, val: int) -> bool:
-        if val in self.hmp_loc:
-            return False
-        self.hmp_loc[val] = len(self.arr)
-        self.arr.append(val)
-        return True
-        
-        
-
-    def remove(self, val: int) -> bool:
-        if val not in self.hmp_loc:
-            return False
-        else:
-            loc = self.hmp_loc[val]
-            self.arr[loc], self.arr[-1] = self.arr[-1], self.arr[loc] #swap the value loc with the last value of arr
-            self.hmp_loc[self.arr[loc]] = loc #update the last value location
-            del self.hmp_loc[val] #del the previous loc from the hmp
-            self.arr.pop()       # pop the last value
+    def insert(self, val: int) -> bool: # O( 1 | 1 )
+        if val not in self.lkp:
+            self.lkp.add(val)
             return True
-        
+        return False
 
-    def getRandom(self) -> int:
-        return random.choice(self.arr)
+    def remove(self, val: int) -> bool: # O( 1 | 1)
+        if val not in self.lkp:
+            return False
+        self.lkp.remove(val)
+        return True
+
+    def getRandom(self) -> int: # O(N)
+        return list(self.lkp)[random.randint(0, len(self.lkp)-1)]
         
 
 
@@ -36,6 +28,49 @@ class RandomizedSet:
 # param_1 = obj.insert(val)
 # param_2 = obj.remove(val)
 # param_3 = obj.getRandom()
+
+
+
+# previous solution
+
+# class RandomizedSet:
+
+#     def __init__(self):
+#         self.hmp_loc = {}
+#         self.arr = []
+        
+
+#     def insert(self, val: int) -> bool:
+#         if val in self.hmp_loc:
+#             return False
+#         self.hmp_loc[val] = len(self.arr)
+#         self.arr.append(val)
+#         return True
+        
+        
+
+#     def remove(self, val: int) -> bool:
+#         if val not in self.hmp_loc:
+#             return False
+#         else:
+#             loc = self.hmp_loc[val]
+#             self.arr[loc], self.arr[-1] = self.arr[-1], self.arr[loc] #swap the value loc with the last value of arr
+#             self.hmp_loc[self.arr[loc]] = loc #update the last value location
+#             del self.hmp_loc[val] #del the previous loc from the hmp
+#             self.arr.pop()       # pop the last value
+#             return True
+        
+
+#     def getRandom(self) -> int:
+#         return random.choice(self.arr)
+        
+
+
+# # Your RandomizedSet object will be instantiated and called as such:
+# # obj = RandomizedSet()
+# # param_1 = obj.insert(val)
+# # param_2 = obj.remove(val)
+# # param_3 = obj.getRandom()
 
 
 
