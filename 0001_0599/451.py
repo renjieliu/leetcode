@@ -1,22 +1,42 @@
 class Solution:
-    def frequencySort(self, s: str) -> str:
-        hmp = {}
+    def frequencySort(self, s: str) -> str: # O( K*NlogN | N) K is the distinct letter count in the s
+        counter = defaultdict(lambda : 0)
         for c in s:
-            if c not in hmp: 
-                hmp[c] = 0 
-            hmp[c]+=1 
-        
-        counter = {} 
-        for k, v in hmp.items():
-            if v not in counter:
-                counter[v] = []
-            counter[v].append(k)
-        
+            counter[c] += 1 
+        lst = sorted(set(counter.values()), reverse = True ) # remove dups from the counter list
         output = ""
-        for k in sorted(counter.keys(), reverse = True):
-            for i in counter[k]:
-                output += k*i
+        for t in lst:
+            for k, v in counter.items():
+                if t == v:
+                    output += k*v
         return output
+
+
+
+
+
+
+# previous solution
+
+# class Solution:
+#     def frequencySort(self, s: str) -> str:
+#         hmp = {}
+#         for c in s:
+#             if c not in hmp: 
+#                 hmp[c] = 0 
+#             hmp[c]+=1 
+        
+#         counter = {} 
+#         for k, v in hmp.items():
+#             if v not in counter:
+#                 counter[v] = []
+#             counter[v].append(k)
+        
+#         output = ""
+#         for k in sorted(counter.keys(), reverse = True):
+#             for i in counter[k]:
+#                 output += k*i
+#         return output
 
 
 
