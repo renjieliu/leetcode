@@ -4,33 +4,62 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def oddEvenList(self, head: 'Optional[ListNode]') -> 'Optional[ListNode]': # O( N | N )
-        if head == None: 
-            return head 
-        odd = []
-        even = []
-        i = 1 
-        while head: # flat based on the index and generate a new list
-            if i % 2:
-                odd.append(head.val)
-            else:
-                even.append(head.val)
-            i+=1
-            head = head.next
+    def oddEvenList(self, head: 'Optional[ListNode]') -> 'Optional[ListNode]': # O( N | 1 )
+        if head == None:
+            return None
+        odd = head # assign the head to odd
+        even = head.next # head.next is even
+        firstEven = head.next # this is the first even to return
+        
+        while even and even.next: #iterate with the even pointer
+            odd.next = even.next # assign the even next to odd next
+            odd = odd.next # move the odd pointer 
+            
+            even.next = odd.next # assign the odd next to even 
+            even = even.next # move the even pointer 
+        odd.next = firstEven  # merge oddList with evenList
+    
+        return head
+
         
 
         
-        newRoot = ListNode(odd.pop(0))
-        curr = newRoot
-        while odd:
-            curr.next = ListNode(odd.pop(0))
-            curr = curr.next
 
-        while even:
-            curr.next = ListNode(even.pop(0))
-            curr = curr.next
+# previous solution
 
-        return newRoot 
+# # Definition for singly-linked list.
+# # class ListNode:
+# #     def __init__(self, val=0, next=None):
+# #         self.val = val
+# #         self.next = next
+# class Solution:
+#     def oddEvenList(self, head: 'Optional[ListNode]') -> 'Optional[ListNode]': # O( N | N )
+#         if head == None: 
+#             return head 
+#         odd = []
+#         even = []
+#         i = 1 
+#         while head: # flat based on the index and generate a new list
+#             if i % 2:
+#                 odd.append(head.val)
+#             else:
+#                 even.append(head.val)
+#             i+=1
+#             head = head.next
+        
+
+        
+#         newRoot = ListNode(odd.pop(0))
+#         curr = newRoot
+#         while odd:
+#             curr.next = ListNode(odd.pop(0))
+#             curr = curr.next
+
+#         while even:
+#             curr.next = ListNode(even.pop(0))
+#             curr = curr.next
+
+#         return newRoot 
     
     
     
@@ -102,4 +131,3 @@ class Solution:
 #             node.next = ListNode(odd.pop(0))
 #             node = node.next
 #         return head
-
