@@ -5,20 +5,35 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def rangeSumBST(self, root: 'Optional[TreeNode]', low: int, high: int) -> int:
-        def helper(output, node, low, high):
-            if node:
-                if node.val > high: #exclude the invalid node
-                    helper(output, node.left, low, high)
-                elif node.val < low: #exclude the invalid node
-                    helper(output, node.right, low, high)
-                else:
-                    output[0] += node.val
-                    helper(output, node.left, low, high)
-                    helper(output, node.right, low, high)
-        output = [0]
-        helper(output, root, low, high)
-        return output[0]
+    def rangeSumBST(self, root: 'Optional[TreeNode]', low: int, high: int) -> int: # O( N | 1 )
+        return (self.rangeSumBST(root.left, low, high) + (root.val if low <= root.val <= high else 0 ) + self.rangeSumBST(root.right, low, high)) if root else 0
+    
+
+
+
+# previous solution
+
+# # Definition for a binary tree node.
+# # class TreeNode:
+# #     def __init__(self, val=0, left=None, right=None):
+# #         self.val = val
+# #         self.left = left
+# #         self.right = right
+# class Solution:
+#     def rangeSumBST(self, root: 'Optional[TreeNode]', low: int, high: int) -> int:
+#         def helper(output, node, low, high):
+#             if node:
+#                 if node.val > high: #exclude the invalid node
+#                     helper(output, node.left, low, high)
+#                 elif node.val < low: #exclude the invalid node
+#                     helper(output, node.right, low, high)
+#                 else:
+#                     output[0] += node.val
+#                     helper(output, node.left, low, high)
+#                     helper(output, node.right, low, high)
+#         output = [0]
+#         helper(output, root, low, high)
+#         return output[0]
 
 
 # previous approach 
