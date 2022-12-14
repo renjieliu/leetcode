@@ -1,16 +1,37 @@
 class Solution:
-    def rob(self, nums: 'List[int]') -> int: #dp approach
-        if len(nums) <= 2:
-            return max(nums)
-        a = nums[0] 
-        b = nums[1]
-        output = max(a, b)
-        for n in nums[2:]:
-            c = max(n+a, b) #max at current, either take a or use b as is
-            output = max(output, c)
-            a = max(a, b) 
-            b = max(b, c)
-        return output
+    def rob(self, nums: 'List[int]') -> int: # O( N | N )
+        def helper(dp, idx, arr):
+            if idx in dp:
+                return dp[idx]
+            dp[idx] = 0 
+            if idx >= len(arr):
+                return dp[idx]
+            else: # take current, go to idx+2, or ignore current, go to idx+1
+                A = arr[idx] + helper(dp, idx+2, arr)
+                B = helper(dp, idx+1, arr)
+                dp[idx] = max(A, B)
+                return dp[idx]
+        
+        return helper({}, 0, nums)
+
+
+
+
+# previous solution
+
+# class Solution:
+#     def rob(self, nums: 'List[int]') -> int: #dp approach
+#         if len(nums) <= 2:
+#             return max(nums)
+#         a = nums[0] 
+#         b = nums[1]
+#         output = max(a, b)
+#         for n in nums[2:]:
+#             c = max(n+a, b) #max at current, either take a or use b as is
+#             output = max(output, c)
+#             a = max(a, b) 
+#             b = max(b, c)
+#         return output
 
 
 
