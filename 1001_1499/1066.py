@@ -1,30 +1,58 @@
 class Solution:
-    def assignBikes(self, workers: 'List[List[int]]', bikes: 'List[List[int]]') -> int: #RL 20211022: Copied solution
-        def calc_dist(i, j):
-            worker, bike = workers[i], bikes[j]
-            return abs(worker[0] - bike[0]) + abs(worker[1] - bike[1])
+    def assignBikes(self, workers: 'List[List[int]]', bikes: 'List[List[int]]') -> int: # O(P(M,N)⋅log(P(M,N))+(M⋅log(P(M,N))⋅2**M | P(M,N)+2**M )
+        pq = [(0, [])] # currDistance, takenBike 
+        manhattan = lambda A, B: abs(A[0] - B[0]) + abs(A[1] - B[1]) 
+        seen = set()
+        while pq:
+            curr, takenBike = heapq.heappop(pq)
+            if len(takenBike) == len(workers):
+                return curr
+            else:
+                combo = tuple(sorted(takenBike)) # taken bike list
+                if combo in seen:
+                    continue
+                else:
+                    seen.add(combo)
+                    currentWorker = len(takenBike) # [ len(takenBike) - 1 ] workers have been processed.
+                    for _ in range(len(bikes)):
+                        if _ not in takenBike:
+                            heapq.heappush(pq, ( curr + manhattan(workers[currentWorker], bikes[_] ), takenBike+[_] ))
+    
+
+    
+
+
+
+# previous solution
+
+
+# class Solution:
+#     def assignBikes(self, workers: 'List[List[int]]', bikes: 'List[List[int]]') -> int: #RL 20211022: Copied solution
+#         def calc_dist(i, j):
+#             worker, bike = workers[i], bikes[j]
+#             return abs(worker[0] - bike[0]) + abs(worker[1] - bike[1])
         
-        W, B = len(workers), len(bikes)
-		#heap contains (sum_of_distance_so_far, choice_of_bike_indexes_so_far)
-        heap = [(0, [])]
-		#to avoid double count
-        memo = set()
+#         W, B = len(workers), len(bikes)
+# 		#heap contains (sum_of_distance_so_far, choice_of_bike_indexes_so_far)
+#         heap = [(0, [])]
+# 		#to avoid double count
+#         memo = set()
         
-        while True:
-            cur_dist, taken = heapq.heappop(heap)
-            if tuple(sorted(taken)) in memo: 
-                continue
-            memo.add(tuple(sorted(taken)))
-			#if we have taken bikes for everyone
-            if len(taken) == W:
-                break
-            cur_idx = len(taken)
-            for new_idx in range(B):
-                if new_idx not in taken:
-                    new_dist = calc_dist(cur_idx, new_idx)
-                    heapq.heappush(heap, (cur_dist + new_dist, taken + [new_idx]))
+#         while True:
+#             cur_dist, taken = heapq.heappop(heap)
+#             if tuple(sorted(taken)) in memo: 
+#                 continue
+#             memo.add(tuple(sorted(taken)))
+# 			#if we have taken bikes for everyone
+#             if len(taken) == W:
+#                 break
+#             cur_idx = len(taken)
+#             for new_idx in range(B):
+#                 if new_idx not in taken:
+#                     new_dist = calc_dist(cur_idx, new_idx)
+#                     heapq.heappush(heap, (cur_dist + new_dist, taken + [new_idx]))
         
-        return cur_dist
+#         return cur_dist
 
     
         

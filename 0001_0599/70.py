@@ -1,15 +1,33 @@
 class Solution:
-    def climbStairs(self, n: int) -> int: #fib, with a =1, b = 2, c = a+b, to n
-        if n == 1 or n == 2:
-            return n
-        else:
-            a = 1
-            b = 2
-            for i in range(3, n+1):
-                c = a+b
-                a = b
-                b = c
-            return c
+    def climbStairs(self, n: int) -> int: # O( N | 1 )
+        if n <= 1: 
+            return 1 
+        a = 1
+        b = 1 
+        for i in range(2, n+1): # fibonacci sequence
+            c = a+b
+            a = b 
+            b = c 
+        return c 
+    
+
+
+
+
+# previous solution
+
+# class Solution:
+#     def climbStairs(self, n: int) -> int: #fib, with a =1, b = 2, c = a+b, to n
+#         if n == 1 or n == 2:
+#             return n
+#         else:
+#             a = 1
+#             b = 2
+#             for i in range(3, n+1):
+#                 c = a+b
+#                 a = b
+#                 b = c
+#             return c
 
 
 
