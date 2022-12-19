@@ -1,16 +1,37 @@
 class Solution:
-    def dailyTemperatures(self, temperatures: 'List[int]') -> 'List[int]':
-        output = [0 for _ in temperatures]
-        stk = []  # monotone stk.
-        for i in range(len(temperatures)-1, -1, -1):
-            while stk and temperatures[i] >= temperatures[stk[-1]]: # keep popping the ones <= current temp
+    def dailyTemperatures(self, temperatures: 'List[int]') -> 'List[int]': # O( N | N )
+        stk = []
+        output = [] 
+        for i in range(len(temperatures)-1, -1, -1): 
+            while stk and temperatures[stk[-1]] <= temperatures[i]: # monotone stk, keep popping if the previous temp <= current 
                 stk.pop()
-            if stk and temperatures[stk[-1]] > temperatures[i]: # if the stack top temperature is > current temp
-                output[i] = stk[-1]-i
-            
+            if stk == []: # no warmer temperature, add 0 
+                output.append(0)
+            else:
+                output.append(stk[-1] - i) 
             stk.append(i)
+        return output[::-1] #return the output in reverse order, since the traversal is from back to front
+    
+
+    
+    
+
+
+# previous solution
+
+# class Solution:
+#     def dailyTemperatures(self, temperatures: 'List[int]') -> 'List[int]':
+#         output = [0 for _ in temperatures]
+#         stk = []  # monotone stk.
+#         for i in range(len(temperatures)-1, -1, -1):
+#             while stk and temperatures[i] >= temperatures[stk[-1]]: # keep popping the ones <= current temp
+#                 stk.pop()
+#             if stk and temperatures[stk[-1]] > temperatures[i]: # if the stack top temperature is > current temp
+#                 output[i] = stk[-1]-i
+            
+#             stk.append(i)
         
-        return output
+#         return output
     
 
 
