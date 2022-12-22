@@ -1,22 +1,50 @@
 class Solution:
-    def validPath(self, n: int, edges: 'List[List[int]]', start: int, end: int) -> bool:
-        def find(root, v):
-            if root[v]!=v:
-                root[v] = find(root,  root[v])
-            return root[v]
+    def validPath(self, n: int, edges: 'List[List[int]]', source: int, destination: int) -> bool: # O( N | N )
+        from_to = defaultdict(lambda:[])  
+        for a, b in edges: # flat the edges array, to record the nxt nodes from curr
+            from_to[a].append(b)
+            from_to[b].append(a)
+        
+        def dfs(seen, from_to, curr, destination): # dfs from curr node to destination
+            if curr == destination:
+                seen[curr] = True 
+                return seen[curr]
+            else:
+                seen[curr] = False
+                for nxt in from_to[curr]:
+                    if nxt not in seen:
+                        seen[curr] = dfs(seen, from_to, nxt, destination)
+                        if seen[curr]:
+                            return True
+                return seen[curr]
+        
+        return dfs({}, from_to, source, destination)
+    
 
-        def union(root, a, b):
-            p_a = find(root, a)
-            p_b = find(root, b)
-            if p_a!=p_b:
-                root[p_b] = p_a
 
-        root = [_ for _ in range(n)]
 
-        for a, b in edges:
-            union(root, a, b)
 
-        return find(root, start) == find(root, end)
+# previous solution
+
+# class Solution:
+#     def validPath(self, n: int, edges: 'List[List[int]]', start: int, end: int) -> bool:
+#         def find(root, v):
+#             if root[v]!=v:
+#                 root[v] = find(root,  root[v])
+#             return root[v]
+
+#         def union(root, a, b):
+#             p_a = find(root, a)
+#             p_b = find(root, b)
+#             if p_a!=p_b:
+#                 root[p_b] = p_a
+
+#         root = [_ for _ in range(n)]
+
+#         for a, b in edges:
+#             union(root, a, b)
+
+#         return find(root, start) == find(root, end)
 
 
 # previous approach
