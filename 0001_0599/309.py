@@ -1,15 +1,30 @@
 class Solution:
-    def maxProfit(self, prices: 'List[int]') -> int: # O( N**2 | N )
-        dp = [0] * len(prices)
-        for i in range(len(prices)-1, -1, -1): # buy
-            curr = prices[i]
-            for j in range(i+1, len(prices)): # sell 
-                if prices[j] > curr:
-                    dp[i] = max(dp[i], prices[j] - curr + (dp[j+2] if j+2 < len(prices) else 0))
-            dp[i] = max(dp[i], 0 if i+1 >= len(prices) else dp[i+1]) #no action from current location 
-        return dp[0]
-    
+    def maxProfit(self, prices: 'List[int]') -> int: # O( N | 1 )
+        sold, hold, nothing = -float('inf'), -float('inf'), 0 # state: sold, hold, or do nothing
+        for p in prices: # assign the state at the same time, to avoid intermediate variables
+            sold, hold, nothing = hold + p, max(hold, nothing - p), max(nothing, sold) 
+            # sold = hold + p (sell, and pocket the money)
+            # hold = money out from doing nothing state.. or keep holding. 
+            # nothing = previous doing nothing, and doing nothing again. or previous sold, current still sold 
+        return max(sold, nothing) # sold or doing nothing. hold is losing money, will not be considered
 
+
+
+
+# previous solution
+
+
+# class Solution:
+#     def maxProfit(self, prices: 'List[int]') -> int: # O( N**2 | N )
+#         dp = [0] * len(prices)
+#         for i in range(len(prices)-1, -1, -1): # buy
+#             curr = prices[i]
+#             for j in range(i+1, len(prices)): # sell 
+#                 if prices[j] > curr:
+#                     dp[i] = max(dp[i], prices[j] - curr + (dp[j+2] if j+2 < len(prices) else 0))
+#             dp[i] = max(dp[i], 0 if i+1 >= len(prices) else dp[i+1]) #no action from current location 
+#         return dp[0]
+    
 
 
 # previous solution
