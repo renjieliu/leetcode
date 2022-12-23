@@ -5,8 +5,23 @@ class Solution:
             sold, hold, nothing = hold + p, max(hold, nothing - p), max(nothing, sold) 
             # sold = hold + p (sell, and pocket the money)
             # hold = money out from doing nothing state.. or keep holding. 
+            # hold cannot be from sold, becasue 1 day cooldown
             # nothing = previous doing nothing, and doing nothing again. or previous sold, current still sold 
         return max(sold, nothing) # sold or doing nothing. hold is losing money, will not be considered
+
+
+
+
+
+# class Solution:
+#     def maxProfit(self, prices: 'List[int]') -> int: # O( N | 1 )
+#         sold, hold, nothing = -float('inf'), -float('inf'), 0 # state: sold, hold, or do nothing
+#         for p in prices: # assign the state at the same time, to avoid intermediate variables
+#             sold, hold, nothing = hold + p, max(hold, nothing - p), max(nothing, sold) 
+#             # sold = hold + p (sell, and pocket the money)
+#             # hold = money out from doing nothing state.. or keep holding. 
+#             # nothing = previous doing nothing, and doing nothing again. or previous sold, current still sold 
+#         return max(sold, nothing) # sold or doing nothing. hold is losing money, will not be considered
 
 
 
