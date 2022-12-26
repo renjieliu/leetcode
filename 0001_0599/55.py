@@ -1,17 +1,35 @@
 class Solution:
-    def canJump(self, nums: 'List[int]') -> bool:
-        if len(nums) == 1:
-            return True
+    def canJump(self, nums: 'List[int]') -> bool: # O( N | 1 )
         currMax = 0
-        for i in range(len(nums) - 1):
-            if i > currMax:  # curr location cannot be reached
-                return False
-            else:
-                currMax = max(i + nums[i], currMax)  # furthest can be reached from current location
-                if currMax >= len(nums) - 1:
-                    return True
+        for i, n in enumerate(nums): # check the max index can be reached from current
+            if i > currMax: # cannot even reach current index
+                return False 
+            currMax = max(currMax, i+n)
+        return currMax >= len(nums)-1
 
-        return False
+
+
+
+# previous solution
+
+# class Solution:
+#     def canJump(self, nums: 'List[int]') -> bool:
+#         if len(nums) == 1:
+#             return True
+#         currMax = 0
+#         for i in range(len(nums) - 1):
+#             if i > currMax:  # curr location cannot be reached
+#                 return False
+#             else:
+#                 currMax = max(i + nums[i], currMax)  # furthest can be reached from current location
+#                 if currMax >= len(nums) - 1:
+#                     return True
+
+#         return False
+
+
+
+
 
 # previous approach
 # class Solution:
