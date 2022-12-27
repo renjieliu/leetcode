@@ -1,6 +1,6 @@
 class Solution:
     def maximumBags(self, capacity: 'List[int]', rocks: 'List[int]', additionalRocks: int) -> int: # O( NlogN | N )
-        diff = sorted(abs(a-b) for a, b in zip(capacity, rocks)) # find the deficit of current rocks and full capacity
+        diff = sorted(a-b for a, b in zip(capacity, rocks)) # find the deficit of current rocks and full capacity
         cnt = 0 
         while diff and diff[0] == 0:  #count the ones already full 
             cnt += 1
@@ -10,6 +10,23 @@ class Solution:
             additionalRocks -= diff.pop(0)
         
         return cnt
+
+
+
+# previous solution
+
+# class Solution:
+#     def maximumBags(self, capacity: 'List[int]', rocks: 'List[int]', additionalRocks: int) -> int: # O( NlogN | N )
+#         diff = sorted(abs(a-b) for a, b in zip(capacity, rocks)) # find the deficit of current rocks and full capacity
+#         cnt = 0 
+#         while diff and diff[0] == 0:  #count the ones already full 
+#             cnt += 1
+#             diff.pop(0)
+#         while diff and additionalRocks >= diff[0]: # put rocks to the smallest deficit
+#             cnt += 1
+#             additionalRocks -= diff.pop(0)
+        
+#         return cnt
 
 
 
