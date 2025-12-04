@@ -58,6 +58,7 @@ insert into Purchases (user_id, time_stamp, amount) values ('2', '2022-03-19 19:
 insert into Purchases (user_id, time_stamp, amount) values ('3', '2022-03-18 12:03:09', '4523')
 insert into Purchases (user_id, time_stamp, amount) values ('3', '2022-03-30 09:43:42', '626')
 
+go
 
 CREATE FUNCTION getUserIDs(@startDate DATE, @endDate DATE, @minAmount INT) RETURNS INT AS
 BEGIN
