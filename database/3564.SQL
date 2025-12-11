@@ -154,8 +154,6 @@ insert into products (product_id, product_name, category) values ('5', 'Yoga Mat
 ; 
 
 
-
-
 /* Write your T-SQL query statement below */
 with cte as (
 select 
@@ -163,7 +161,9 @@ ap1.season
 , p.category
 , total_quantity = sum(quantity)
 , total_revenue = sum(price * quantity)
-from sales s inner join products p 
+, sort = row_number() over (partition by ap1.season order by sum(quantity) desc, sum(price * quantity) desc )
+from sales s 
+inner join products p 
 on s.product_id = p.product_id 
 cross apply (select season = case when month(sale_date) in (12, 1,2) then 'Winter'
                                   when month(sale_date) in (3, 4,5) then 'Spring' 
@@ -173,22 +173,55 @@ cross apply (select season = case when month(sale_date) in (12, 1,2) then 'Winte
                                   
             ) ap1 
 group by ap1.season, p.category
-)
-, rpt as (
-select 
-rn = row_number() over (partition by season order by total_quantity desc, total_revenue desc)
-, * 
-from 
-cte 
 ) 
-select 
+select
 season
 , category
 , total_quantity
 , total_revenue
-from rpt
-where rn = 1 
+from cte
+where sort = 1 
 order by season
+
+
+
+
+---- Previous approach 
+
+
+-- /* Write your T-SQL query statement below */
+-- with cte as (
+-- select 
+-- ap1.season
+-- , p.category
+-- , total_quantity = sum(quantity)
+-- , total_revenue = sum(price * quantity)
+-- from sales s inner join products p 
+-- on s.product_id = p.product_id 
+-- cross apply (select season = case when month(sale_date) in (12, 1,2) then 'Winter'
+--                                   when month(sale_date) in (3, 4,5) then 'Spring' 
+--                                   when month(sale_date) in (6, 7, 8) then 'Summer'
+--                                   when month(sale_date) in (9, 10,11) then 'Fall'
+--                               end
+                                  
+--             ) ap1 
+-- group by ap1.season, p.category
+-- )
+-- , rpt as (
+-- select 
+-- rn = row_number() over (partition by season order by total_quantity desc, total_revenue desc)
+-- , * 
+-- from 
+-- cte 
+-- ) 
+-- select 
+-- season
+-- , category
+-- , total_quantity
+-- , total_revenue
+-- from rpt
+-- where rn = 1 
+-- order by season
 
 
 
